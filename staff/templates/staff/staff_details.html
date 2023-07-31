@@ -115,10 +115,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="profile-blog">
-                            <h5 class="text-primary d-inline">General Information</h5>
+                            <h5 class="text-primary d-inline">Staff Bio</h5>
                             <img src="images/profile/1.jpg" alt="" class="img-fluid mt-4 mb-4 w-100">
-                            <h4><a href="post-details.html" class="text-black">Darwin Creative Agency Theme</a></h4>
-                            <p class="mb-0">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                            <h4><a href="post-details.html" class="text-black">Brief Bio Info</a></h4>
+                            <p class="mb-0">{{ staffprofile.user.profile.bio}}</p>
                         </div>
                     </div>
                 </div>
@@ -130,11 +130,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="profile-news">
-                            <h5 class="text-primary d-inline">School Latest News</h5>
+                            <h5 class="text-primary d-inline">Staff Achievements</h5>
                             <div class="media pt-3 pb-3">
                                 <img src="{{user.profile.image.url}}" alt="image" class="me-3 rounded" width="75">
                                 <div class="media-body">
-                                    <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of textile samples</a></h5>
+                                    <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection Staff Achievements</a></h5>
                                     <p class="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
                                 </div>
                             </div>

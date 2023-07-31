@@ -2,7 +2,7 @@
 {% extends 'portal/portal-home.html'%}
 {% load static %}
 
-{% block title %}<title>Student Detail </title>{% endblock title%}
+{% block title %}<title>Lesson Detail </title>{% endblock title%}
 
 
 
@@ -15,7 +15,7 @@
 		<div class="row page-titles">
 			<ol class="breadcrumb">
 				<li class="breadcrumb-item active"><a href="javascript:void(0)">{{ lessons.subject }}</a></li>
-				<li class="breadcrumb-item"><a href="javascript:void(0)">Topic:  {{ lessons.name }}</b><span> - Class:{{ lessons.standard }}</span></a></li>
+				<li class="breadcrumb-item"><a href="javascript:void(0)">Topic :  {{ lessons.name }}</b><span> - Class : {{ lessons.standard }}</span></a></li>
 			</ol>
 		</div>
 		
@@ -78,34 +78,32 @@
 											</div>
 											{% endif %}
 											<div class="read-content-body">
-												<p class="mb-2"><strong>Teacher's Highlights:</strong><br><i>Teacher's explanations</i> </p>
+												<p class="mb-2"><strong>Teacher's Highlights:</strong><br> </p>
 												<p class="mb-2">{{ lessons.comment }}
 												</p>
 												
 												<hr>
 											</div>
 											<div class="read-content-attachment">
-												<h6><i class="fa fa-download mb-2"></i> Attachments
-													<span>(2)</span></h6>
-												<div class="row attachment">
+												<h6><i class="fa fa-download mb-2"></i> Download or view Lesson Attachments</h6>
+													<div class="row attachment">
 													<div class="col-auto">
 														{% if lessons.ppt %}
-														<a href="{{ lessons.ppt.url }}"  download="{{ lessons.ppt.url }}" class="text-muted">Download Lesson</a>
+														<a href="{{ lessons.ppt.url }}"  download="{{ lessons.ppt.url }}" class="text-muted"><span style="color:red;"></span>Download Lesson</span></a>
 													</div>
-													<div class="col-auto">
-														<a href="{{ lessons.ppt.url }}" class="text-muted">Read Lesson</a>
+													<div class="col-auto" >
+														<a href="{{ lessons.ppt.url }}" class="text-muted"><span style="color:red;">Read Lesson</span></a>
 													</div>
 													{% endif %}
 												</div>
 											</div>
 											<hr>
 											<div class="mb-3 pt-3">
-
 												
-													<h3>Comment Area</h3>
+													<h6>Comment Area</h6>
 													<div class="">
 														
-														<h4>Post your comment or question below:</h4>
+														<h6>Post your comment or question below:</h6>
 												<form method="post">
 												<div class="">
 												{% csrf_token %}

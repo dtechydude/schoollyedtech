@@ -11,7 +11,7 @@ class PaymentChartAdmin(admin.ModelAdmin):
 
 class PaymentDetailAdmin(admin.ModelAdmin):
     
-    list_display=('student', 'payment_name', 'amount_paid', 'payment_date', 'confirmed', 'file',)
+    list_display=('payee', 'payment_name', 'amount_paid', 'payment_date', 'confirmed', 'file',)
     
 
 

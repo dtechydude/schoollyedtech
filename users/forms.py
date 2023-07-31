@@ -22,7 +22,7 @@ class UserUpdateForm(forms.ModelForm):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['phone', 'address', 'region_origin', 'image', ]
+        fields = ['phone', 'address', 'region_origin', 'image', 'bio', ]
         widgets = {
             'dob': forms.DateInput(
                 format=('%d/%m/%Y'),

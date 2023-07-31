@@ -11,7 +11,7 @@ home
 
 {% block content %}
 
-hello everyone
+
 
 <!-- Modal -->
 <div class="modal fade" id="quizStartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -35,7 +35,7 @@ hello everyone
 
 <div class="h1">Quiz List</div>
 <p>You are logged in as: <b>{{ user }}</b></p>
-<p>Instruction: Click the Submit once you are done, do not click twice</p>
+<p><b>Instruction:</b> Click quiz name to start</p>
 <hr>
 
 {% for obj in object_list %}
@@ -49,7 +49,7 @@ hello everyone
         data-pass = "{{obj.required_score_to_pass}}"
         data-toggle="modal"
         data-target="#quizStartModal">
-        {{obj.name}}
+       {{obj.pk}} - {{obj.name}}
     </button><br>
 
 {% endfor %}

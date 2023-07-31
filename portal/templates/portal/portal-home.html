@@ -195,7 +195,7 @@
 							{% if user.is_authenticated and user.profile.user_type == 'student' %}
 							<li><a href="{% url 'results:my-result' %}">Download Result</a></li>
 							<li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li>
-							<li><a href="{% url 'payment:payment_form' %}">Make Payment</a></li>
+							<li><a href="{% url 'payment:payment-create' %}">Make Payment</a></li>
 							<li><a href="{% url 'payment:my_payments' %}">Payment History</a></li>
 							<li><a href="{% url 'payment:payment_chart' %}">Payment Chart</a></li>
 

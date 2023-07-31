@@ -8,7 +8,7 @@ class PaymentFilter(django_filters.FilterSet):
         model = PaymentDetail
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
-        fields = {'student', 'payment_name', 'payment_date'}
+        fields = {'payee', 'payment_name', 'payment_method'}
 
 class MyPaymentFilter(django_filters.FilterSet):
 

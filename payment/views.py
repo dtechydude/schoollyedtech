@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from payment.forms import PaymentForm, PaymentChartForm, PaymentCatForm
+from django.urls import reverse, reverse_lazy
+from payment.forms import PaymentForm, PaymentChartForm, PaymentCatForm,PaymentCreateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -30,15 +31,11 @@ import csv
 # Create your views here.
 @login_required
 def payment_form(request):
-    if request.method == 'POST':
-       
+    if request.method == 'POST':       
         payment_form = PaymentForm(request.POST)
-        # p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        if payment_form.is_valid():
-         
+
+        if payment_form.is_valid():         
             payment_form.save()
-
-
             messages.success(request, f'The Payment has been entered successfully')
             return redirect('payment:payment_form')
     else:
@@ -49,14 +46,20 @@ def payment_form(request):
     }
     return render(request, 'payment/make_payment.html', context)
 
-class PaymentCreateView(CreateView):
-    template_name = 'payment/make_payment.html'
-    form_class = PaymentForm
-    queryset = PaymentDetail.objects.all()
+class PaymentCreateView(LoginRequiredMixin, CreateView):
+    template_name = 'payment/student_payment_form.html'
+    form_class = PaymentCreateForm
+    success_url = reverse_lazy('payment:my_payments')
 
-    def form_valid():
-        print(form.cleaned_data)
-        return super().form_valid()
+    def form_valid(self, form):
+        print('form_valid called')
+        object = form.save(commit=False)
+        object.payee = self.request.user
+        object.save()
+        return super(PaymentCreateView, self).form_valid(form)
+
+
+
 
 
 @login_required
@@ -107,7 +110,8 @@ def paymentlist(request):
 
 @login_required
 def view_self_payments(request):
-    mypayment = PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user))
+    # mypayment = PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user))
+    mypayment = PaymentDetail.objects.filter(payee=User.objects.get(username=request.user))
     mypayment_filter = MyPaymentFilter(request.GET, queryset=mypayment)
     mypayment = mypayment_filter.qs
 
@@ -120,7 +124,8 @@ def view_self_payments(request):
     except EmptyPage:
         mypayment = paginator.page(paginator.num_pages)
     context = {
-        'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
+        # 'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
+        'mypayment' : PaymentDetail.objects.filter(payee=User.objects.get(username=request.user)).order_by("payment_date"),
         'mypayment':mypayment,
         'mypayment_filter' : mypayment_filter,
     }

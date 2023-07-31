@@ -70,11 +70,11 @@
 															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
 															</div>
 														</th>
-														<th>Student ID</th>
+														<th>PAYEE ID</th>
 														<th>Class</th>
 														<th>Depositor</th>
 														<th>Type</th>
-                                                        <th>Amount Paid</th>
+                                                        <th>Paid</th>
 														<th>Date Paid</th>
 														<th>Status</th>
 													</tr>
@@ -90,11 +90,10 @@
 															</div>
 														</td>
 														<td>
-															<div class="concierge-bx d-flex align-items-center">
-																<img class="me-3 rounded" src="{{payment.student.user.profile.image.url}}" alt="">
-																<div>
-																	<h6 class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
-																		{{ payment.student.last_name}} - {{ payment.student.first_name}}</a></h6>
+															
+																	<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
+																		<span>{{ payment.payee.studentdetail.first_name}} - {{ payment.payee.studentdetail.last_name}}</span><br>
+																		{{payment.payee }}</a></span>
 													
 																</div>
 															</div>
@@ -102,7 +101,7 @@
 														
 														<td class="text-nowrap">
 															
-															<h6 class="text-nowrap">{{ payment.student.current_class}}</h6>
+															<h6 class="text-nowrap">{{ payment.payee.studentdetail.current_class}}</h6>
 														
 														</td>
 														
@@ -137,7 +136,7 @@
 																{% if payment.confirmed == True %}
 																<span><i class="far fa-check-circle text-success" style="font-size:20px;"></i></span>		
 																{% else %}
-																<span><i>processing</i></span>
+																<span style="color:red;">unconfirmed</span>
 																{% endif %}
 															</div>
 																									

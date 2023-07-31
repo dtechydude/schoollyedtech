@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from curriculum.models import Session
 from students.models import StudentDetail
-
+from django.conf import settings
+from django.core.validators import MinLengthValidator
 # Create your models here.
 
 
@@ -38,9 +39,10 @@ class PaymentChart(models.Model):
     
 
 class PaymentDetail(models.Model):
-    student = models.ForeignKey(StudentDetail, on_delete=models.CASCADE)
+    # student = models.ForeignKey(StudentDetail, on_delete=models.CASCADE)
+    payee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
     payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE)
-    amount_paid =models.IntegerField() 
+    amount_paid =models.IntegerField(validators=[MinLengthValidator(2, "at least 3digits required")]) 
     payment_date = models.DateField()  
 
     cash = 'cash'
@@ -65,7 +67,7 @@ class PaymentDetail(models.Model):
 
 
     def __str__ (self):
-        return f'{self.student}'
+        return f'{self.payee}'
 
     def get_absolute_url(self):
         return reverse('payment:payment_detail', kwargs={'id':self.id})
