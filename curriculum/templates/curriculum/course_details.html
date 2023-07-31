@@ -1,0 +1,241 @@
+{% extends 'demoschool/index.html' %}
+{% load embed_video_tags %}
+{% load static %}
+
+
+{% block section %}
+    <!--SECTION START-->
+    <div class="container">
+    <h2 style="align:center">E-Learning Area</h2>
+    </div>
+    <section>
+        <div class="container com-sp pad-bot-70 pg-inn">
+            <div class="row">
+                <div class="cor">
+                    <div class="col-md-3">
+                        <div class="cor-top-deta cor-side-com">
+                            <div class="cor-top-deta">
+                                <div class="ho-st-login cor-apply field-com">
+                                    <div class="col s12">
+                                        <form class="col s12">
+                                            <div class="cor-left-app-tit">
+                                                <h4>Get Information</h4>
+                                                <p>Needs more info about this.</p>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input type="text" class="validate">
+                                                    <label>Full Name</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input type="text" class="validate">
+                                                    <label>Email id</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input type="text" class="validate">
+                                                    <label>Phone</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <select>
+									  <option value="" disabled selected>Select Course</option>
+									  <option value="1">This Course</option>
+
+									</select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="input-field col s12">
+                                                    <input type="submit" value="SEND" class="waves-effect waves-light light-btn">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cor-side-com">
+                            <div class="">
+                                <div class="de-left-tit">
+                                    <h4>Upcoming Classes</h4>
+                                </div>
+                            </div>
+                            <div class="ho-event">
+                                <ul>
+                                    <li>
+                                        <div class="ho-ev-link ho-ev-link-full">
+                                            <a href="#">
+                                                <h4>Workshop PHP</h4>
+                                            </a>
+                                            <p>Nulla at velit convallis venenatis.</p>
+                                            <span>9:15 am – 5:00 pm</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ho-ev-link ho-ev-link-full">
+                                            <a href="#">
+                                                <h4>Workshop PHP</h4>
+                                            </a>
+                                            <p>Nulla at velit convallis venenatis.</p>
+                                            <span>9:15 am – 5:00 pm</span>
+                                        </div>
+                                    </li>
+                        
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% if user.is_authenticated %}
+                     
+    
+
+                    <div class="col-md-6">
+                        <h2>Subject: {{ lessons.subject }} </h2>
+                        <b> Topic:  {{ lessons.name }}</b><span> - Class:{{ lessons.standard }}</span>
+                         <br /> 
+                                <b>Created on {{ lessons.created_at }} by: {{ lessons.created_by}}</b><br />
+                                <hr>
+                                <h4>Lesson Video</h4>
+                        <div class="cor-mid-img">
+                            {% comment %} <img src="{% static 'demoschool/images/course.jpg' %}" alt=""> {% endcomment %}
+                            <iframe width="420" height="345" 
+                            src="{{ lessons.video }}" allowfullscreen>                            
+                            
+                            </iframe>                     
+                           
+                        </div>
+                        <hr>
+                        <div class="cor-con-mid">
+                            <div class="cor-p1">                                
+                                 <h4> Lesson File: PDF</h4> 
+                                 <p>You can download the lesson file with the button below</p>                    
+                                <div class="share-btn">
+                                    <ul>
+                                        {% if lessons.ppt %}
+                                        <li><a href="{{ lessons.ppt.url }}" download="{{ lessons.ppt.url }}"><b>Download Lesson Note (PDF): </b> </a> 
+                                            {% else%} <h5>"Oops! No current file uploaded" for this lesson</h5>
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                               
+                                </div>
+                            </div>
+                            <div class="cor-p4">
+                                <h4>Lesson Details:</h4>
+                               <p><b>Teacher's Highlights:</b></p> 
+                                <p>{{ lessons.comment}}</p>
+                                
+                            </div>
+                            {% if user.is_authenticated and user.profile.user_type == 'teacher' or user.is_superuser %}
+
+                    
+                            <div class="share-btn">
+                                <ul>
+                                    <li> 
+                                    </li>
+                                    <li><a href="{% url 'curriculum:lesson_update' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug %}">Update Lesson</a>
+                                    </li>
+                                    <li><a href="{% url 'curriculum:lesson_delete' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug %}">Delete Lesson</a>
+                                    </li>
+                                </ul>
+                            </div>
+                                {% endif %}
+        
+                               
+
+                               
+                            </div>
+                            <div class="cor-p6">
+                                <h3>Comment Area</h3>
+                                <div class="cor-p7-revi">
+                                    
+                                    <h4>Post your comment or question below:</h4>
+        <form method="post">
+            <div class="form-group">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" name="form" value="Add Comment" class="btn btn-primary btn-sm">
+            </div>
+        </form>
+
+{% for comment in lessons.comments.all %}
+        <h4>{{comment.author}}<small><i>Posted on {{comment.date_added}}</i></small></h4>
+        <p>{{comment.body}}</p>
+            {% for reply in comment.replies.all %}
+            <h5>{{reply.author}}<small><i>Posted on {{reply.date_added}}</i></small></h5>
+            <p>{{reply.reply_body}}</p>
+            
+            {% endfor %}
+            <!-- form to post reply -->
+            <form method="post">
+               
+                <input type="hidden", name="comment.id" value="{{comment.id}}">
+                <input type="hidden", name="comment.comm_name" value="{{comment.comm_name}}">
+                {% csrf_token %}
+                {{form2.as_p}}
+                <input type="submit" name="form2" value="Add Reply" class="btn btn-warning btn-sm">
+
+            </form>
+
+    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="cor-side-com">
+                            <div class="ho-ev-latest ho-ev-latest-bg-3">
+                                <div class="ho-lat-ev">
+                                    <h4>Assignments</h4>
+                                    <p>Submit Course Work.</p>
+                                </div>
+                            </div>
+                            <div class="ho-st-login">
+                                <div class="col s12">
+                                    <form class="col s12">
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                                
+                                                <p>No current assigment for this class</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="input-field col s12">
+                                              
+                                                <p>"Check to see if you have an assignment"</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                     
+                            </div>
+                           
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        {% else %}
+        <h3>You must be registered to access this lesson </h3>
+        {% endif %}
+ 
+    </section>
+  
+
+    <!--SECTION END-->
+
+
+    {% endblock section %}

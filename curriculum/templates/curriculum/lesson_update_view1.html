@@ -1,0 +1,52 @@
+{% extends 'demoschool/index.html'%}
+{% load embed_video_tags %}
+
+{% load static %}
+
+
+{% block section%}
+<section class="pop-cour">
+   
+    <div class="container com-sp pad-bot-70">
+        <div class="row justify-content-center">
+      
+        </div>
+		
+        <div class="row justify-content-center">
+
+            <div class="col-md-6">
+            
+                  <div class="row justify-content-center">
+                  
+                    <h3>Update Lesson</h3>
+                   <p>Use the form below to update your lesson</p> 
+                      
+                  <div class="home-top-cour">
+                    
+                       <div class="col-md-12 home-top-cour-desc">                            
+            
+                        <form method="post" enctype="multipart/form-data">
+                            {% if user.is_authenticated%}
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <p>
+                            <input type="submit" name="" value="Submit">
+                            <a href="{% url 'curriculum:lesson_detail' standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug % }" class="btn btn-danger btn-block"> Cancel Update</a>
+                            
+                            </span>{% endif %}
+                        </form>
+                                        
+                          
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+    
+  
+
+
+</section>
+
+
+{% endblock section %}

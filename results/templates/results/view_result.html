@@ -1,0 +1,82 @@
+{% extends 'portal/portal-home.html'%} 
+{% load static %}
+{% block title %}<time>Student Results</time>{% endblock title%}
+
+{% block content_body %}
+
+<div class="content-body">
+    <div class="container-fluid">
+        
+         <!-- row -->
+        
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+
+                        <h4 class="card-title">Student Result Management</h4>
+                    </div>
+                    {% if user.is_superuser or user.profile.user_type == 'parent' %}
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            
+                            <table id="example" class="display" style="min-width: 845px">
+                        
+                                <thead>
+                                    
+                                    <tr>
+                                        <th>S/N</th>
+                                        <th>Student Identity</th>
+                                        <th>Exam</th>
+                                        <th>Session</th>
+                                        <th>Term</th>
+                                        <th colspan="2">Download/View</th>
+                                        
+                                        
+                                    </tr>
+                                </thead>
+                                {% for res in result %}
+                               
+                                <tbody>
+                                                                    
+                                    <tr>                                    
+                                        <td> {{ res.id }}</td>
+                                        <td> {{ res.student }}</td>
+                                        <td> {{ res.exam}}</td>
+                                        <td> {{ res.session }}</td>
+                                        <td> {{ res.term }}</td>
+                                      {% if res.file %}
+                                        <td><a href="{{ res.file.url }}" download = "{{ res.file.url }}" ><span style="color:red;">Download</span> </a></td>
+                                        {% else %}
+                                        <td><a href=""> No file!</a></td>
+                                        {% endif%}
+                                        <td>View result</span> </a></td>  
+                                      </tr> 
+                                                                
+                                     
+                                                                        
+                                      {% endfor %}
+                                                         
+                                </tbody>
+                                                             
+                            </table>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                
+                            {% else %}
+                            <h1> Oops! You do not have permission to view this resource</h1>
+                            
+                            {% endif %} 
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endblock content_body %}

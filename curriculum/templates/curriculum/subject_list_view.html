@@ -1,0 +1,18 @@
+
+
+{% block content %}
+<h5>Lists of Subjects in: -:{{standards.name }}</h5>
+
+{% for subject in standards.subjects.all %}
+<ul>
+    <li>
+        <a href="{% url 'curriculum:lesson_list' slug=subject.slug standard=standards.slug %}">{{subject.name}}</a><br />
+        {{subject.description|truncatechars:75 }}
+    </li>
+</ul>
+
+
+{% comment %} <p>{{subject.description|truncatechars:75 }}</p><br><br> {% endcomment %}
+{% endfor %}
+
+{% endblock %}

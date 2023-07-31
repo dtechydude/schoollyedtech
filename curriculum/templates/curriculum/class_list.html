@@ -1,0 +1,64 @@
+
+{% extends 'demoschool/index.html'%}
+{% load static %}
+
+{% block section%}
+<section class="pop-cour">
+    <div class="container com-sp pad-bot-70">
+        <div class="row">
+            <div class="con-title">
+                <h3>E- Learning<span> - Platform</span></h3>
+                <h2>All <span>Classes</span></h2>
+
+                {% if user.is_authenticated %}
+                 <p>Use the links below to explore courses in each class.</p>
+                             
+            </div>
+        </div>
+
+		
+        <div class="row">
+			{% for standard in standards %} 
+            <div class="col-md-6">
+				
+				
+                <div>
+                    <!--POPULAR COURSES-->
+                    <div class="home-top-cour">
+                        <!--POPULAR COURSES IMAGE-->
+						 
+						
+                        <div class="col-md-3"> <img src="{% static 'demoschool/images/course/sm-1.jpg' %}" alt=""> </div>
+                        <!--POPULAR COURSES: CONTENT-->
+                        <div class="col-md-9 home-top-cour-desc">
+							
+							{% comment %} <h3><a href="{% url 'curriculum:subject_list' slug=standard.slug %}"></h3> {% endcomment %}
+							 								
+						<h3>{{standard.name }}</h3>
+								
+                        <p>follow the link below to explore the list of subjects in {{standard.name }}</p> <span class="home-top-cour-rat">100%</span>
+                            <div class="hom-list-share">
+                                <ul>
+                                    <li><a href="{% url 'curriculum:subject_list' slug=standard.slug %}">Go to > {{standard.name }}</a> </li>
+                                    <li><a href="course-details.html"><i class="fa fa-eye" aria-hidden="true"></i>10 Aavailable</a> </li>
+                                    <li><a href="course-details.html"><i class="fa fa-share-alt" aria-hidden="true"></i> 570</a> </li>
+                                </ul>
+                           
+                               
+                 
+                   
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+	{% endfor %}
+    {% else %}
+    <p>You must be a registered student to access this area.</p>
+     {% endif%}
+</section>
+	
+
+
+{% endblock section %}

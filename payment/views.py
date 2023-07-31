@@ -1,0 +1,329 @@
+from django.shortcuts import render, redirect
+from payment.forms import PaymentForm, PaymentChartForm, PaymentCatForm
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+import os
+from payment.models import PaymentDetail, PaymentChart
+from students.models import StudentDetail
+from django.http import HttpResponse
+from django.http import FileResponse
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import(ListView, FormView, CreateView, UpdateView, DeleteView)
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
+import io
+from reportlab.pdfgen import canvas
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter
+
+# For Filter
+from .filters import PaymentFilter, MyPaymentFilter, PaymentChartFilter
+from django_filters.views import FilterView
+# For panigation
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+# for csv
+import csv
+
+
+# Create your views here.
+@login_required
+def payment_form(request):
+    if request.method == 'POST':
+       
+        payment_form = PaymentForm(request.POST)
+        # p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if payment_form.is_valid():
+         
+            payment_form.save()
+
+
+            messages.success(request, f'The Payment has been entered successfully')
+            return redirect('payment:payment_form')
+    else:
+        payment_form = PaymentForm()
+
+    context ={
+        'payment_form' : payment_form
+    }
+    return render(request, 'payment/make_payment.html', context)
+
+class PaymentCreateView(CreateView):
+    template_name = 'payment/make_payment.html'
+    form_class = PaymentForm
+    queryset = PaymentDetail.objects.all()
+
+    def form_valid():
+        print(form.cleaned_data)
+        return super().form_valid()
+
+
+@login_required
+def payment_cat_form(request):
+    if request.method == 'POST':
+        payment_cat_form = PaymentCatForm(request.POST)
+        # p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if payment_cat_form.is_valid():
+            payment_cat_form.save()
+
+            messages.success(request, f'The Payment Category has been entered successfully')
+            return redirect('payment:payment_chart')
+    else:
+        payment_cat_form = PaymentCatForm()
+
+    context ={
+        'payment_cat_form' : payment_cat_form
+    }
+    return render(request, 'payment/payment_cat_form.html', context)
+
+
+
+@login_required
+def paymentlist(request):
+    paymentlist = PaymentDetail.objects.all()
+    paymentlist_filter = PaymentFilter(request.GET, queryset=paymentlist)
+    paymentlist = paymentlist_filter.qs
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(paymentlist, 4)
+    try:
+        paymentlist = paginator.page(page)
+    except PageNotAnInteger:
+        paymentlist = paginator.page(1)
+    except EmptyPage:
+        paymentlist = paginator.page(paginator.num_pages)
+
+
+    context = {
+        'paymentlist': PaymentDetail.objects.all(),
+        'paymentlist_filter': paymentlist_filter,
+        'paymentlist' : paymentlist
+
+    }
+    return render (request, 'payment/all_payments.html', context )
+
+
+
+@login_required
+def view_self_payments(request):
+    mypayment = PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user))
+    mypayment_filter = MyPaymentFilter(request.GET, queryset=mypayment)
+    mypayment = mypayment_filter.qs
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(mypayment, 10)
+    try:
+        mypayment = paginator.page(page)
+    except PageNotAnInteger:
+        mypayment = paginator.page(1)
+    except EmptyPage:
+        mypayment = paginator.page(paginator.num_pages)
+    context = {
+        'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
+        'mypayment':mypayment,
+        'mypayment_filter' : mypayment_filter,
+    }
+
+    return render(request, 'payment/view_self_payment.html', context)
+
+
+@login_required
+def payment_chart_form(request):
+    if request.method == 'POST':
+        payment_chart_form = PaymentChartForm(request.POST)
+        # p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if payment_chart_form.is_valid():
+            payment_chart_form.save()
+
+            messages.success(request, f'The Payment has been entered successfully')
+            return redirect('payment:payment_record')
+    else:
+        payment_chart_form = PaymentChartForm()
+
+    context ={
+        'payment_chart_form' : payment_chart_form
+    }
+    return render(request, 'payment/payment_chart_form.html', context)
+
+
+@login_required
+def payment_chart_list(request):
+    payment_chart_list = PaymentChart.objects.all()
+    payment_chart_filter = PaymentChartFilter(request.GET, queryset=payment_chart_list)
+    payment_chart_list = payment_chart_filter.qs
+   
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(payment_chart_list, 15)
+    try:
+        payment_chart_list = paginator.page(page)
+    except PageNotAnInteger:
+        paymentChart = paginator.page(1)
+    except EmptyPage:
+        payment_chart_list = paginator.page(paginator.num_pages)
+
+
+    context = {
+        'payment_chart_list': PaymentDetail.objects.all(),
+        'payment_chart_filter' : payment_chart_filter,
+        'payment_chart_list' : payment_chart_list
+
+    }
+    return render (request, 'payment/payment_chart.html', context )
+
+
+
+# class MypaymentListView(LoginRequiredMixin, ListView):
+#     model = PaymentDetail
+#     # context_object_name = mypayment
+#     template_name = 'payment/view_self_payment.html'
+#     def get_queryset(self):
+#         return PaymentDetail.objects.filter(student=self.request.user)
+
+
+# FUNCTION FOR DOWNLOADING FILE
+def download(request,path):
+    file_path=os.path.join(settings.MEDIA_ROOT,path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb')as fh:
+            response=HttpResponse(fh.read(),content_type="application/file")
+            response['Content-Disposition']='inline;filename='+os.path.basename(file_path)
+            return response
+
+    raise Http404
+
+
+#  Function for pdf and csv
+
+# Generate a PDF staff list
+def mypayment_pdf(request):
+    # create Bytestream buffer
+    buf = io.BytesIO()
+    #create a canvas
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    # create a text object
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont("Helvetica", 12)
+    # Add some lines of text
+    # lines = [
+    #     "This is line 1",
+    #     "This is line 2",
+    #     "This is line31",
+    #     "This is line 4",
+    # ]
+    # Designate the model
+    payment = PaymentDetail.objects.all()
+
+    # Create a blank list
+
+    lines = [" PAYMENT DETAIL REPORT"]
+
+    for payments in payment:
+        lines.append(""),
+        lines.append("Username: " + payments.user.username),
+        lines.append("Amount: " + str(payments.amount_paid)),
+        lines.append("Date: " + str(payments.payment_date)),
+        lines.append("Method:" + payments.payment_method),
+
+        lines.append("------->----------->----------->"),
+
+
+    # loop
+    for line in lines:
+        textob.textLine(line)
+    #fininsh up
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+    # Return something
+    return FileResponse(buf, as_attachment=False, filename='payment.pdf')
+
+
+# Generate a CSV staff list
+def mypayment_csv(request):
+    response = HttpResponse(content_type ='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=payment.csv'
+
+# Create a csv writer
+    writer = csv.writer(response)
+
+    payment = PaymentDetail.objects.all()
+
+    # Add column headings to the csv files
+    writer.writerow(['USERNAME ', 'FIRST NAME', 'LAST NAME', 'AMOUNT PAID', 'PURPOSE', 'PAYMENT DATE', 'METHOD', 'DEPOSITOR', 'BANK', 'DESCRIPTION', 'IS_CONFIRMED'])
+
+
+    # Loop thru and output
+    for payments in payment:
+        writer.writerow([payments.student.user, payments.student.first_name, payments.student.last_name,
+        payments.amount_paid, payments.payment_name, payments.payment_date, payments.payment_method, payments.depositor, payments.bank_name, payments.description, payments.confirmed])
+
+    return response
+
+
+def payment_chart_pdf(request):
+    # create Bytestream buffer
+    buf = io.BytesIO()
+    #create a canvas
+    c = canvas.Canvas(buf, pagesize=letter, bottomup=0)
+    # create a text object
+    textob = c.beginText()
+    textob.setTextOrigin(inch, inch)
+    textob.setFont("Helvetica", 12)
+    # Add some lines of text
+
+    # Designate the model
+    payment_chart = PaymentChart.objects.all()
+
+    # Create a blank list
+
+    lines = [" PAYMENT CHART "]
+
+    for payment in payment_chart:
+        lines.append(""),
+        lines.append("PAYMENT NAME: " + payment.name),
+        lines.append("CATEGORY: " + str(payment.payment_cat)),
+        lines.append("SESSION: " + str(payment.session)),
+        lines.append("TERM:" + payment.term),
+        lines.append("AMOUNT:" + payment.amount_due),
+
+        lines.append("------->----------->----------->"),
+
+
+    # loop
+    for line in lines:
+        textob.textLine(line)
+    #fininsh up
+    c.drawText(textob)
+    c.showPage()
+    c.save()
+    buf.seek(0)
+    # Return something
+    return FileResponse(buf, as_attachment=False, filename='payment_chart.pdf')
+
+
+# Generate a CSV staff list
+def payment_chart_csv(request):
+    response = HttpResponse(content_type ='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=payment_chart.csv'
+
+# Create a csv writer
+    writer = csv.writer(response)
+
+    payment_chart = PaymentChart.objects.all()
+
+    # Add column headings to the csv files
+    writer.writerow(['PAYMENT NAME ', 'CATEGORY', 'SESSION', 'TERM', 'AMOUNT DUE',])
+
+
+    # Loop thru and output
+    for payment in payment_chart:
+        writer.writerow([payment.name, payment.payment_cat, payment.session,
+        payment.term, payment.amount_due,])
+
+    return response
+
+

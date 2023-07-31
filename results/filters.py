@@ -1,0 +1,13 @@
+import django_filters
+from .models import UploadResult
+from django.contrib.auth.models import User
+
+class MyresultFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = UploadResult
+        # # fields = '__all__'
+        # fields = {'current_class': ['exact']}
+        fields = {'exam', 'session',}
+        
+

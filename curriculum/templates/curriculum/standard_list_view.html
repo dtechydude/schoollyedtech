@@ -1,0 +1,21 @@
+
+
+{% block content %}
+
+
+
+<h3>standards List</h3>
+{% for standard in standards %}
+
+<ul >
+
+    <li>
+        <a href="{% url 'curriculum:subject_list' slug=standard.slug %}">{{standard.name }}</a>
+    </li>
+</ul>
+
+
+{% endfor %}
+
+
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'pages/schoolly-home.html' %}
+{% load static %}
+
+  {% block title %}<title>Schoolly Blog </title>{% endblock title %}
+
+  ><!-- End Header -->
+{% block slide %}
+  <!-- ======= Breadcrumbs ======= -->
+  <div class="breadcrumbs">
+    <div class="container">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>SchoollyBlog</h2>
+        <ol>
+          <!-- <li><a href="{% url 'pages:schoolly_home' %}">Home</a></li>
+          <li>Blog</li> -->
+        </ol>
+      </div>
+
+    </div>
+  </div><!-- End Breadcrumbs -->
+
+{% endblock slide %}
+  <main id="main">
+
+  
+{% block content_body %}
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
+
+        <div class="row g-5">
+
+          <div class="col-lg-8">
+            
+            <div class="row gy-4 posts-list">
+              {% for post in posts %}
+
+              <div class="col-lg-6">
+                
+                <article class="d-flex flex-column">
+                  
+                  
+                  <div class="post-img">
+                    <img src="{{ post.post_img.url }}" alt="" class="img-fluid">
+                   
+                  </div>
+
+                  <h2 class="title">
+                    <a href="{% url 'blog:post_detail' post.id %}"> {{ post.title }}</a>
+                  </h2>
+
+                  <div class="meta-top">
+                    <ul>
+                      <li class="d-flex align-items-center"><i class="bi bi-person"></i> {{ post.author }}</li>
+                      <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="#"><time datetime="2022-01-01"> {{ post.date_posted|date:"F d, Y" }}</time></a></li>
+   
+                    </ul>
+                  </div>
+
+                  <div class="content">
+                    <p>
+                      {{ post.content|truncatechars_html:150|safe  }}
+                    </p>
+                  </div>
+
+                  <div class="read-more mt-auto align-self-end">
+                    <a href="{% url 'blog:post_detail' post.id %}">Read More</a>
+                    
+                  </div>
+                 
+                 
+                  
+                </article>
+                
+                
+                
+              </div><!-- End post list item -->
+              {% endfor %}
+             
+            </div><!-- End blog posts list -->
+
+            <div class="blog-pagination justify-content-center">
+              <!-- <ul class="justify-content-center">
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+              </ul>
+            </div> -->
+            <!-- End blog pagination -->
+
+            {% if is_paginated %}
+
+              {% if page_obj.has_previous%}
+                <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+                <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                 
+                {% if page_obj.number == num %}
+                  <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                  {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                  <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                  {% endif %}
+                  
+                  {% endfor %}
+                 
+                  {% if page_obj.has_next %}
+                  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number}}">Next</a>
+                  <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                  {% endif %}
+
+            {% endif %}
+          </div>
+
+          </div>
+
+          <div class="col-lg-4">
+
+            <div class="sidebar">
+
+              <div class="sidebar-item search-form">
+                <h3 class="sidebar-title">Search</h3>
+                <form action="" class="mt-3">
+                  <input type="text">
+                  <button type="submit"><i class="bi bi-search"></i></button>
+                </form>
+              </div><!-- End sidebar search formn-->
+
+              <div class="sidebar-item categories">
+                <h5 class="sidebar-title">Training Category</h5>
+                <ul class="mt-3">
+                  <li><a href="#">Coding <span></span></a></li>
+                  <li><a href="#">Microsoft <span></span></a></li>
+                  <li><a href="#">Graphics <span></span></a></li>
+                  <li><a href="#">CyberSecurity <span></span></a></li>
+                  <li><a href="#">Data Science <span></span></a></li>
+                  <li><a href="#">UI/UX <span></span></a></li>
+                </ul>
+              </div><!-- End sidebar categories-->
+
+
+
+              <div class="sidebar-item recent-posts">
+                <h3 class="sidebar-title">Recent Posts</h3>
+            
+                <div class="mt-3">
+            
+                  <div class="post-item mt-3">
+                    {% for post in posts %}
+                    <img src="{{ post.post_img.url }}" alt="" class="flex-shrink-0">
+                    <div>
+                      <h4><a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></h4>
+                      <time datetime="2020-01-01">{{ post.date_posted|date:"F d, Y" }}</time>
+                    </div>
+                    {% endfor %}
+                  </div><!-- End recent post item-->
+            <!-- End recent post item-->
+            
+                </div>
+            
+              </div><!-- End sidebar recent posts-->
+            
+              <!-- End sidebar tags-->
+            
+            </div><!-- End Blog Sidebar -->
+            
+            </div>
+            </div>
+            
+            </div>
+            </section><!-- End Blog Details Section -->
+            
+            </main><!-- End #main -->
+
+            
+  {% endblock content_body %}
+
+  <!-- ======= Footer ======= -->
+ 

@@ -1,0 +1,17 @@
+{% extends 'demoschool/index.html' %}
+
+{% load static %}
+
+{% block section %}
+<div class="container">
+<h3>Are you sure you want to delete ?</h3>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="submit" name="" value="delete">
+    <a href="{% url 'curriculum:standard_list'  %}"> Cancel</a>
+</form>
+<h1></h1>
+</div>
+
+{% endblock section %}

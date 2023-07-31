@@ -1,0 +1,17 @@
+
+
+{% block content %}
+<h5>Lists of Lessons in: -:{{ subjects.standard }} - {{subjects.name }}</h5>
+
+{% for lesson in subjects.lessons.all %}
+
+
+<a href="{% url 'curriculum:lesson_detail' slug=lesson.slug subject=subjects.slug standard=lesson.standard.slug %}"> Chapter - {{ lesson.position}}: {{lesson.name }}</a> <br />
+{% endfor %}
+
+{% if user.is_authenticated and user.profile.user_type == 'teacher' or user.is_superuser %}
+
+<a href="{% url 'curriculum:lesson_create' standard=subjects.standard.slug slug=subjects.slug %}">Create Lesson</a>
+{% endif %}
+
+{% endblock %}
