@@ -1,15 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Schoolly Portal Home Page</title>
-</head>
-<body>
-    <div class="container">
-    <h1 style="text-align:center">Hello Schoolly!!! <span><br>
-        <a href="{% url 'login' %}">Login here</a></span></h1>
- 
-</div>
-</body>
-</html>
+{% extends 'users/login.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<body class="vh-100">
+    <div class="authincation h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100 align-items-center">
+                <div class="col-md-6">
+                    <div class="authincation-content">
+                        <div class="row no-gutters">
+                            <div class="col-xl-12">
+                                <div class="auth-form">
+									<div class="text-center mb-3">
+										<a href="{% url 'pages:schoolly_home' %}"><img src="{% static 'portal/images/logo-full.png' %}" alt=""></a>
+									</div>
+                                    <h4 class="text-center mb-4">Sign in to your account</h4>
+                                    <main class="px-3">
+                                        
+                                        <p class="lead">Please use the button below to login to your account. You can also navigate to the school website through the link provided below</p>
+                                        <p class="lead">
+                                          <!-- <a href="{% url 'login' %}" class="btn btn-lg ">Login</a> -->
+                                          <a href="{% url 'login' %}"><button type="" value="" class="btn btn-primary btn-block" >Login here</button></a>
+                                          
+                                          <div class="new-account mt-3">
+                                        <p><a href=""> <b>>> School's Website Home Page</b></a></p>
+                                        </div>
+                                        </p>
+                                      </main>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+    <!--**********************************
+        Scripts
+    ***********************************-->
+  
