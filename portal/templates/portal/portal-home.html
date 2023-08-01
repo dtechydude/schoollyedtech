@@ -92,6 +92,8 @@
 								Parent Dashboard
 								{% elif user.is_authenticated and user.is_superuser %}
 								Admin Dashboard
+								{% elif user.is_authenticated and user.profile.user_type == 'admin' %}
+								Admin Dashboard
 								{% else %}
 								User Type is "Inactive"
 								{% endif%}
