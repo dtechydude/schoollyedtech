@@ -42,7 +42,7 @@ class PaymentDetail(models.Model):
     # student = models.ForeignKey(StudentDetail, on_delete=models.CASCADE)
     payee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
     payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE)
-    amount_paid =models.IntegerField(validators=[MinLengthValidator(2, "at least 3digits required")]) 
+    amount_paid =models.IntegerField() 
     payment_date = models.DateField()  
 
     cash = 'cash'

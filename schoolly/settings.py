@@ -267,3 +267,20 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 #     }
 #  }
 # CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
+
+
+#AWS ACCESS
+# AWS_ACCESS_KEY_ID = "AKIASGDZDIWWIYUWBVN3"
+# AWS_SECRET_ACCESS_KEY = "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"
+# AWS_STORAGE_BUCKET_NAME = "schoolly"
+
+# # AWS without environment variable- Please use this during production
+# AWS_ACCESS_KEY_ID = "AKIAU7WRHVNVL3BEVXXW"
+# AWS_SECRET_ACCESS_KEY = "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"
+# AWS_STORAGE_BUCKET_NAME = "django-schoolly-files"
+
+# AWS_S3_FILE_OVERWRITE = False
+# AWS_DEFAULT_ACL = None
+
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
