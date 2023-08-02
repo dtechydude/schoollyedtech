@@ -269,7 +269,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 
-#AWS ACCESS
+# #AWS ACCESS
 # AWS_ACCESS_KEY_ID = "AKIASGDZDIWWIYUWBVN3"
 # AWS_SECRET_ACCESS_KEY = "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"
 # AWS_STORAGE_BUCKET_NAME = "schoolly"
@@ -282,5 +282,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
 
+# # #add region name to connect
+# AWS_S3_REGION_NAME = 'us-west-2'
+# AWS_S3_ADDRESSING_STYLE = 'virtual'
+
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# STORAGES = {"staticfiles": {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"}}

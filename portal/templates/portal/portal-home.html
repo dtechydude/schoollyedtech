@@ -182,12 +182,19 @@
 							<i class="flaticon-025-dashboard"></i>
 							<span class="nav-text">DASHBOARD HOME</span>
 						</a>
+						<li>
+							{% if user.is_authenticated and user.is_superuser or user.is_staff %}
+							<a href=""><i style="font-size:14px;"><b>GO TO ADMIN PAGE</b></i></a>
+						{% endif %}
+						</li>
+						
 						<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-025-dashboard"></i>
 							<span class="nav-text">Students Tools</span>
 						</a>
 						<ul aria-expanded="false">
 							{% if user.is_authenticated and user.profile.user_type == 'student' %}
+							
 							<li><a href="{% url 'results:my-result' %}">Download Result</a></li>
 							<li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li>
 							<li><a href="{% url 'payment:payment-create' %}">Make Payment</a></li>
