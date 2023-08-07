@@ -290,3 +290,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # STORAGES = {"staticfiles": {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"}}
+
+USE_THOUSAND_SEPARATOR = True

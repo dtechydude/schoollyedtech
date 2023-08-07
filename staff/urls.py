@@ -11,6 +11,7 @@ urlpatterns = [
     path('staff-create/', user_views.staffprofile, name="staff_create"),
     # path('staff-academic/', user_views.staffacademic, name="staff-academic"),
     path('staff-list', user_views.stafflist, name="staff_list"),
+    path('my-students/', user_views.self_student_list, name="my-students"),
     # path('', StaffListView.as_view(), name="staff_list"),
     path('<str:id>/', StaffDetailView.as_view(), name="staff_detail"),
     path('<int:id>/update/', StaffUpdateView.as_view(), name="staff_update"),

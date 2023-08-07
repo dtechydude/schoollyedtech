@@ -24,6 +24,7 @@ def quiz_data_view(request, pk):
     return JsonResponse({
         'data': questions,
         'time': quiz.time,
+       
     })
 
 def save_quiz_view(request, pk):

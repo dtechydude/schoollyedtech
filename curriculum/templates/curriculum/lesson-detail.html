@@ -1,6 +1,7 @@
 
 {% extends 'portal/portal-home.html'%}
 {% load static %}
+{% load embed_video_tags %}
 
 {% block title %}<title>Lesson Detail </title>{% endblock title%}
 
@@ -62,21 +63,24 @@
 											<div class="media mb-2 mt-3">
 												
 												<div class="media-body">
-													<h2 class="mb-4">Lesson Details:</h2>
+													<h2 class="mb-4">Lesson Details:</h2>																								
 													
-													{% if lessons.video %}
 													<p class="read-content-email">
 														Watch Lesson video here..</p>
 												</div>
 											</div>
 											<div>
-												<iframe width="620" height="345" 
-												src="{{ lessons.video}}" allowfullscreen>                          
+											
+												<!-- make sure the video link looks like this https://www.youtube.com/embed/dGF1x14QNGA -->
+												<iframe width="620" height="345" 									
+												src="{{ lessons.video  }}" frameborder="0" allowfullscreen>  
+												                     
 												
 												</iframe>                     
-											   
+												
 											</div>
-											{% endif %}
+
+											
 											<div class="read-content-body">
 												<p class="mb-2"><strong>Teacher's Highlights:</strong><br> </p>
 												<p class="mb-2">{{ lessons.comment }}

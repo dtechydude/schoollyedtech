@@ -6,6 +6,9 @@ from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from staff.forms import StaffRegisterForm, StaffUpdateForm
 from staff.models import StaffProfile
+from students.models import StudentDetail
+from curriculum.models import Standard
+from django.contrib.auth.models import User
 from users.models import Profile
 from users.forms import UserUpdateForm, UserRegisterForm
 from django.http import HttpResponse
@@ -70,10 +73,20 @@ def stafflist(request):
     context = {
         'stafflist' : StaffProfile.objects.all(),
         'staffprofile_filter': staffprofile_filter,
-        'stafflist': stafflist
+        'stafflist': stafflist,
 
     }
     return render (request, 'staff/staff_list.html', context)
+
+@login_required
+def self_student_list(request):
+    my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
+    
+    context = {
+        'my_students': my_students
+    }
+
+    return render (request, 'staff/my_students.html', context)
 
 
 

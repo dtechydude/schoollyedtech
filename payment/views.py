@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
+from django.db.models import F
 from payment.forms import PaymentForm, PaymentChartForm, PaymentCatForm,PaymentCreateForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -86,6 +87,9 @@ def payment_cat_form(request):
 def paymentlist(request):
     paymentlist = PaymentDetail.objects.all()
     paymentlist_filter = PaymentFilter(request.GET, queryset=paymentlist)
+    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
+  
+
     paymentlist = paymentlist_filter.qs
 
     page = request.GET.get('page', 1)
@@ -101,7 +105,10 @@ def paymentlist(request):
     context = {
         'paymentlist': PaymentDetail.objects.all(),
         'paymentlist_filter': paymentlist_filter,
-        'paymentlist' : paymentlist
+        'paymentlist' : paymentlist,
+        'balance_pay': balance_pay,
+      
+     
 
     }
     return render (request, 'payment/all_payments.html', context )
