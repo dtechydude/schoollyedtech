@@ -167,7 +167,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
-
+ 
+# DEVELOPMENT STATIC AND MEDIA CONFIGURATION
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
@@ -269,10 +270,16 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 
-# #AWS ACCESS
+# #AWS ACCESS WITH AWS MANAGEING STATIC FILES
 # AWS_ACCESS_KEY_ID = "AKIASGDZDIWWIYUWBVN3"
 # AWS_SECRET_ACCESS_KEY = "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"
 # AWS_STORAGE_BUCKET_NAME = "schoolly"
+# # ADDITIONAL CONFIG FOR USING AWS_BUCKET FOR STATIC
+# AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+# AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+
+# AWS_LOCATION = 'static'
+# STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 # # AWS without environment variable- Please use this during production
 # AWS_ACCESS_KEY_ID = "AKIAU7WRHVNVL3BEVXXW"
@@ -282,12 +289,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
 
-# # #add region name to connect
+# # # #add region name to connect
 # AWS_S3_REGION_NAME = 'us-west-2'
 # AWS_S3_ADDRESSING_STYLE = 'virtual'
 
 # DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
 
 # STORAGES = {"staticfiles": {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"}}
 
