@@ -8,6 +8,7 @@ import os
 from embed_video.fields import EmbedVideoField
 from django.urls import reverse
 from ckeditor.fields import RichTextField
+from django.utils.html import strip_tags
 
 
 
@@ -116,6 +117,11 @@ class Lesson(models.Model):
 
     def get_absolute_url(self):
         return reverse('curriculum:lesson_list', kwargs={'slug':self.subject.slug, 'standard':self.standard.slug})
+
+    @property
+    def html_stripped(self):
+       
+       return strip_tags(self.comment)
             
 
 # comment module

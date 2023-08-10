@@ -228,11 +228,13 @@
 							<span class="nav-text">Staff Info</span>
 						</a>
 						<ul aria-expanded="false">
-							{% if user.is_authenticated and user.profile.user_type == 'teacher'%}
+							{% if user.is_authenticated and user.profile.user_type == 'admin'%}
 							<li><a href="{% url 'staff:staff_list' %}">Staff List</a></li>
-							{% else %}
 							<li><a href="{% url 'staff:staff_list' %}">Staff List</a></li>
 							<li><a href="{% url 'staff:staff_create' %}">Add New Staff</a></li>
+							{% else %}
+							<li><a href="{% url 'staff:staff_create' %}">Can't view Info</a></li>
+							
 							{% endif %}
 						
 							{% endif %}
@@ -277,8 +279,11 @@
 						<ul aria-expanded="false">
 							{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
 							<li>Noting to show</li>
-							{% else %}
+							{% elif user.is_authenticated and user.profile.user_type == 'student' %}
+							<li><a href="{% url 'curriculum:my-standard' %}">Learning Center</a></li>
+							{% elif user.is_authenticated and user.profile.user_type == 'teacher' or user.profile.user_type == 'admin' %}
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
+							{% else %}
 							{% if user.is_authenticated and user.is_superuser %}
 							<li><a href="{% url 'portal:register-class' %}">Add New class</a></li>
 							<li><a href="{% url 'portal:register-classgroup' %}">Add Class Section </a></li>

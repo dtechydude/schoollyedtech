@@ -8,14 +8,27 @@ from .models import Lesson, Standard, Subject, save_lesson_files
 from .forms import CommentForm, LessonForm, ReplyForm
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from students.models import StudentDetail
 
 
+class StandardSelfListView(LoginRequiredMixin, ListView):
+    context_object_name = 'standards'
+    model = Standard
+    # template_name = 'curriculum/class_list.html'
+    template_name = 'curriculum/my_class.html'
+ 
+    # Student can only view their class elearning
+    def get_queryset(self):
+        return Standard.objects.filter(name = self.request.user.studentdetail.current_class)
+
+# Standard list view for the admin and teachers
 class StandardListView(LoginRequiredMixin, ListView):
     context_object_name = 'standards'
     model = Standard
     # template_name = 'curriculum/class_list.html'
     template_name = 'curriculum/elearning_class.html'
 
+    
 class SubjectListView(DetailView):
     context_object_name = 'standards'
     model = Standard
@@ -151,3 +164,12 @@ class LessonDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         if self.request.user == post.created_by:
             return True
         return False
+
+
+
+# def my_standard_list(request):
+#     my_standard = StudentDetail.objects.filter(current_class__name = request.user)
+#     context = {
+#         'my_standard' : my_standard,
+#     }
+#     return render(request, 'curriculum/my_class.html', context)

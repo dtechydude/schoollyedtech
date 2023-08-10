@@ -35,10 +35,12 @@
                             {{ form|crispy}}
                             
                             <button type="submit" name="submit" class="btn btn-success btn-block mt-3 mb-3" >Update Lesson</button>
-                            <a href="{% url 'curriculum:lesson_detail standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug' % }" class="btn btn-danger btn-block"> Cancel Update</a>
+                        </form>
+                            <!-- <a href="{% url 'curriculum:lesson_detail standard=lessons.standard.slug subject=lessons.subject.slug' slug=lessons.slug' % }" class="btn btn-danger btn-block"> Cancel Update</a><BR> -->
+                            <a href="{% url 'curriculum:standard_list' %}" class="btn btn-danger btn-block">Cancel Update</a>
 
                             {% endif %}
-                        </form>
+                       
                         </div>
                     </div>
                 </div>

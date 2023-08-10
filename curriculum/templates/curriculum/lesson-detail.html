@@ -79,13 +79,12 @@
 												</iframe>                     
 												
 											</div>
-
 											
 											<div class="read-content-body">
 												<p class="mb-2"><strong>Teacher's Highlights:</strong><br> </p>
-												<p class="mb-2">{{ lessons.comment }}
-												</p>
-												
+												{{ lessons.comment | safe }}
+												<p class="mb-2"></p>
+																								
 												<hr>
 											</div>
 											<div class="read-content-attachment">

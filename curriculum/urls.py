@@ -1,11 +1,13 @@
 from django.urls import path
 from . import views
+from curriculum import views as curriculum_view
 
 
 app_name = 'curriculum'
 
 urlpatterns = [
     path('', views.StandardListView.as_view(), name='standard_list'),
+    path('my-standard/', views.StandardSelfListView.as_view(), name='my-standard'),
     path('<slug:slug>/', views.SubjectListView.as_view(), name='subject_list'),
     path('<str:standard>/<slug:slug>/', views.LessonListView.as_view(), name='lesson_list'),
     path('<str:standard>/<str:slug>/create/', views.LessonCreateView.as_view(), name='lesson_create'),
