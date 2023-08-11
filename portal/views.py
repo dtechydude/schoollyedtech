@@ -7,7 +7,7 @@ from students.models import StudentDetail
 from staff.models import StaffProfile
 from notification.models import SchoolCalendar
 from django.views.generic import  ListView
-from .forms import ClassRegisterForm, ClassgroupRegisterForm
+from .forms import ClassRegisterForm, ClassgroupRegisterForm, SessionRegisterForm, ExamRegisterForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
@@ -97,6 +97,49 @@ def register_new_classgroup(request):
 
     return render(request, 'portal/register_new_classgroup.html', context)
 
+
+@login_required
+def register_new_session(request):
+    if request.method == 'POST':
+        
+        new_session = SessionRegisterForm(request.POST)
+        if new_session.is_valid():
+           
+            new_session.save()
+            messages.success(request, f'New Session Registered successfully, Register another or go to class list')
+            return redirect('portal:register-session')
+    else:
+      
+        new_session = SessionRegisterForm
+
+    context = {
+        
+        'new_session': new_session,
+    }
+
+    return render(request, 'portal/register_new_session.html', context)
+
+
+@login_required
+def register_exam(request):
+    if request.method == 'POST':
+        
+        new_exam = ExamRegisterForm(request.POST)
+        if new_exam.is_valid():
+           
+            new_exam.save()
+            messages.success(request, f'New Exam Registered successfully, Register another or go to class list')
+            return redirect('portal:register-exam')
+    else:
+      
+        new_exam = ExamRegisterForm
+
+    context = {
+        
+        'new_exam': new_exam,
+    }
+
+    return render(request, 'portal/register_exam.html', context)
 
 
     

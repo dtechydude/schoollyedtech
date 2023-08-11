@@ -23,11 +23,7 @@
                     </div>
                     <div class="card-body">
                         <div id="smartwizard" class="form-wizard order-create">
-                            <ul class="nav nav-wizard">
-                                <li>
-                                       <p>Create new class for the school</p>
-                               
-                            </ul>
+                          
                             {% if messages %}
                             {% for message in messages %}
                             <div class ="alert alert-{{ message.tags }}">{{ message }}</div>

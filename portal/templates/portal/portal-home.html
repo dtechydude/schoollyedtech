@@ -230,7 +230,6 @@
 						<ul aria-expanded="false">
 							{% if user.is_authenticated and user.profile.user_type == 'admin'%}
 							<li><a href="{% url 'staff:staff_list' %}">Staff List</a></li>
-							<li><a href="{% url 'staff:staff_list' %}">Staff List</a></li>
 							<li><a href="{% url 'staff:staff_create' %}">Add New Staff</a></li>
 							{% else %}
 							<li><a href="{% url 'staff:staff_create' %}">Can't view Info</a></li>
@@ -285,8 +284,10 @@
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
 							
 							{% if user.is_authenticated and user.is_superuser %}
+							<li><a href="{% url 'portal:register-session' %}">Add New Session </a></li>
 							<li><a href="{% url 'portal:register-class' %}">Add New class</a></li>
-							<li><a href="{% url 'portal:register-classgroup' %}">Add Class Section </a></li>
+							<li><a href="{% url 'portal:register-classgroup' %}">Add ClassArm </a></li>
+							<li><a href="{% url 'portal:register-exam' %}">Register Exams </a></li>
 							{% else %}
 							<li><a href="">Nothing to show</a></li>
 							{% endif %}
