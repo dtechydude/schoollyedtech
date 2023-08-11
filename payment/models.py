@@ -39,7 +39,6 @@ class PaymentChart(models.Model):
     
 
 class PaymentDetail(models.Model):
-    # student = models.ForeignKey(StudentDetail, on_delete=models.CASCADE)
     payee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
     payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE)
     amount_paid =models.DecimalField(max_digits=15, decimal_places=2, default=0.0) 

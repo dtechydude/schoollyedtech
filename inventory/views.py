@@ -29,7 +29,6 @@ import csv
 # Create your views here.
 
 
-
 class InventoryListView(LoginRequiredMixin, ListView):
     context_object_name = 'inventory'
     model = InventoryItems

@@ -184,7 +184,7 @@
 						</a>
 						<li>
 							{% if user.is_authenticated and user.is_superuser or user.is_staff %}
-							<a href=""><i style="font-size:14px;"><b>GO TO ADMIN PAGE</b></i></a>
+							<a href="/admin"><i style="font-size:14px;"><b>GO TO ADMIN PAGE</b></i></a>
 						{% endif %}
 						</li>
 						
@@ -283,10 +283,12 @@
 							<li><a href="{% url 'curriculum:my-standard' %}">Learning Center</a></li>
 							{% elif user.is_authenticated and user.profile.user_type == 'teacher' or user.profile.user_type == 'admin' %}
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
-							{% else %}
+							
 							{% if user.is_authenticated and user.is_superuser %}
 							<li><a href="{% url 'portal:register-class' %}">Add New class</a></li>
 							<li><a href="{% url 'portal:register-classgroup' %}">Add Class Section </a></li>
+							{% else %}
+							<li><a href="">Nothing to show</a></li>
 							{% endif %}
 												
 							{% endif %}
@@ -1519,7 +1521,7 @@
 		***********************************-->
 		<div class="footer">
 			<div class="copyright">
-				<p>Copyright © Developed by <a href="https://fizcos.com/" target="_blank">Fizcos Infotech</a> 2022</p>
+				<p>Copyright © Developed by <a href="https://fizcos.com/" target="_blank">Fizcos Infotech</a> 2023</p>
 			</div>
 		</div>
 		

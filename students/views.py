@@ -123,11 +123,8 @@ def student_summary(request):
         # 'studentdetail_filter': studentdetail_filter,
         # 'studentlist' : studentlist,
        
-
     }
     return render (request, 'students/student_summary.html', context)
-
-
 
 
 

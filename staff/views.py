@@ -18,14 +18,12 @@ from .filters import StaffFilter
 from django_filters.views import FilterView
 # For panigation
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
 #for pdf
 from django.http import FileResponse
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
-
 # for csv
 import csv
 
@@ -98,7 +96,6 @@ class StaffListView(LoginRequiredMixin, ListView):
     paginate_by = 10
     # filterset_class = StaffFilter
     
-
 
 
 # Generate a PDF staff list
@@ -223,4 +220,3 @@ def staffprofile(request):
     }
 
     return render(request, 'staff/staff_register_form.html', context)
-

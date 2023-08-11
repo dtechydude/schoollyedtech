@@ -93,7 +93,7 @@ def paymentlist(request):
     paymentlist = paymentlist_filter.qs
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(paymentlist, 4)
+    paginator = Paginator(paymentlist, 10)
     try:
         paymentlist = paginator.page(page)
     except PageNotAnInteger:
@@ -184,14 +184,6 @@ def payment_chart_list(request):
     }
     return render (request, 'payment/payment_chart.html', context )
 
-
-
-# class MypaymentListView(LoginRequiredMixin, ListView):
-#     model = PaymentDetail
-#     # context_object_name = mypayment
-#     template_name = 'payment/view_self_payment.html'
-#     def get_queryset(self):
-#         return PaymentDetail.objects.filter(student=self.request.user)
 
 
 # FUNCTION FOR DOWNLOADING FILE

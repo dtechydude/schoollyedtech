@@ -167,9 +167,4 @@ class LessonDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 
 
-# def my_standard_list(request):
-#     my_standard = StudentDetail.objects.filter(current_class__name = request.user)
-#     context = {
-#         'my_standard' : my_standard,
-#     }
-#     return render(request, 'curriculum/my_class.html', context)
+   

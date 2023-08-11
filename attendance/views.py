@@ -33,13 +33,10 @@ def student_attendance(request):
             return redirect('attendance:attendance_form')
     else:
          attd_form = StudentAttendanceForm()
-    
-       
-            
+                  
     context = {
         'attd_form': attd_form,
-       
-   
+         
     }
 
     return render(request, 'attendance/take-attendance.html', context)

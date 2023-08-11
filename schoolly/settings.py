@@ -43,7 +43,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG_VALUE')
 
 
@@ -164,6 +163,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+USE_THOUSAND_SEPARATOR = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -224,7 +225,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'dtechydude@gmail.com'
 EMAIL_HOST_PASSWORD = 'eawtvpskkrujiwgo'
-
 
 
 
@@ -289,7 +289,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
 
-# # # #add region name to connect
+# # # # #add region name to connect
 # AWS_S3_REGION_NAME = 'us-west-2'
 # AWS_S3_ADDRESSING_STYLE = 'virtual'
 
@@ -300,4 +300,3 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # STORAGES = {"staticfiles": {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"}}
 
-USE_THOUSAND_SEPARATOR = True
