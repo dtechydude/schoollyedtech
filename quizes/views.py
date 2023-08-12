@@ -4,6 +4,16 @@ from django.views.generic import ListView
 from django.http import JsonResponse
 from quiz_questions.models import Question, Answer
 from quiz_results.models import QuizResult
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from quizes.forms import QuizForm
+
+
+class QuizCreateView(LoginRequiredMixin, CreateView):
+    form_class = QuizForm
+    model = Quiz
+    template_name = 'quizes/quiz_create_form.html'
+
 
 class QuizListView(ListView):
     model = Quiz 
@@ -74,3 +84,4 @@ def save_quiz_view(request, pk):
             return JsonResponse({'passed': True, 'score': score_, 'results': results})
         else:
             return JsonResponse({'passed': False, 'score': score_, 'results': results})
+

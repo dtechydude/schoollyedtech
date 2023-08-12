@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import QuizListView, quiz_view, quiz_data_view, save_quiz_view
+from .views import QuizListView, quiz_view, quiz_data_view, save_quiz_view, QuizCreateView
 
 
 app_name = 'quizes'
@@ -9,4 +9,5 @@ urlpatterns = [
     path('<pk>/', quiz_view, name = 'quiz-view'),
     path('<pk>/save/', save_quiz_view, name = 'save-view'),
     path('<pk>/data/', quiz_data_view, name = 'quiz-data-view'),
+    path('quiz-create/', QuizCreateView.as_view(), name = 'quiz-create'),
 ]
