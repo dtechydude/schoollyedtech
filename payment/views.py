@@ -11,7 +11,7 @@ from students.models import StudentDetail
 from django.http import HttpResponse
 from django.http import FileResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.views.generic import(ListView, FormView, CreateView, UpdateView, DeleteView)
+from django.views.generic import(ListView, FormView, CreateView, UpdateView, DeleteView, DetailView)
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 import io
@@ -123,7 +123,7 @@ def view_self_payments(request):
     mypayment = mypayment_filter.qs
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(mypayment, 10)
+    paginator = Paginator(mypayment, 20)
     try:
         mypayment = paginator.page(page)
     except PageNotAnInteger:
@@ -262,7 +262,7 @@ def mypayment_csv(request):
 
     # Loop thru and output
     for payments in payment:
-        writer.writerow([payments.student.user, payments.student.first_name, payments.student.last_name,
+        writer.writerow([payments.payee.username, payments.payee.profile.code, payments.payee.profile.code,
         payments.amount_paid, payments.payment_name, payments.payment_date, payments.payment_method, payments.depositor, payments.bank_name, payments.description, payments.confirmed])
 
     return response
@@ -330,4 +330,17 @@ def payment_chart_csv(request):
 
     return response
 
+#This code generates the receipt
+class PaymentDetailView(LoginRequiredMixin, DetailView):
+    model = PaymentDetail
+    context_object_name = 'my_receipt'
+    template_name = 'payment/receipt.html'
 
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        new_str = self.kwargs.get('pk') or self.request.GET.get('pk') or None
+
+        queryset = queryset.filter(pk=new_str)
+        obj = queryset.get()
+        return obj

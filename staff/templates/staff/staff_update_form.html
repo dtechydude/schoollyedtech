@@ -38,6 +38,8 @@
                             <button type="submit" name="submit" class="btn btn-primary form-control mt-3"><h5>Update Staff Profile</h5></button>
                         
                         </form>
+                        <a href="{% url 'staff:staff_list'%}"><button class="btn btn-secondary form-control mt-3" ><h5 style="color:red;">Cancel Update</h5></button></a>
+
                        {% else %}
                         <div>
                             <h1>Permission Denied!</h1>

@@ -4,6 +4,7 @@ from payment.views import PaymentCreateView
 from . import views
 
 
+
 app_name = 'payment'
 
 urlpatterns = [
@@ -20,4 +21,6 @@ urlpatterns = [
     path('payment-csv', payment_views.mypayment_csv, name="payment-csv"),
     path('payment_chart-pdf', payment_views.payment_chart_pdf, name="payment_chart-pdf"),
     path('payment_chart-csv', payment_views.payment_chart_csv, name="payment_chart-csv"),
+
+    path('<int:pk>/', views.PaymentDetailView.as_view(), name='payment_detail'),
 ]

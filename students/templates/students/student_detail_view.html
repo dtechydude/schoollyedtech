@@ -62,7 +62,8 @@
                                     {% if user.is_superuser %}
                                     <a href="{% url  'students:students-update' studentdetail.id %}" class="btn btn-primary mb-1 me-1">Update Student</a> 
                                     <a href="{% url  'students:students-delete' studentdetail.id %}" class="btn btn-primary mb-1">Delete Student</a>
-                                
+
+                                                                        
                               {% else %}
                                 <a href="javascript:void(0);" class="btn btn-primary mb-1 me-1">E-learning Center</a> 
                                 <a href="javascript:void(0);" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">Send Message</a>

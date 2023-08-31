@@ -93,7 +93,8 @@
 														</td>														
 														<td>
                                                             <div>
-                                                        <h5 class="text-nowrap">{{ payment.payment_name }}</h5>
+                                                        <!-- <h5 class="text-nowrap">{{ payment.payment_name }}</h5> -->
+														<a href="{% url 'payment:payment_detail' pk=payment.pk  %}">{{payment.payment_name }}</a>
 															<span></span>
                                                         </div>
 														</td>
@@ -124,10 +125,11 @@
 														
 														<td>
 															<div>
-                                                                {% if payment.file %}
-                                                                    <a href="{{ payment.file.url }}">Receipt</a>
+                                                               
+																	{% if payment.confirmed %}
+                                                                    <a href="{% url 'payment:payment_detail' pk=payment.pk  %}">Receipt</a>
                                                                     {% else %}
-                                                                    <a href="">No Receipt file yet</a>
+                                                                    <a href="">Not Yet Confirmed</a>
                                                                     {% endif %}
 															    </div>																										
 															   </td>	

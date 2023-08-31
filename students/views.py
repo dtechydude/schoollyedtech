@@ -11,9 +11,10 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from students.models import StudentDetail
-from students.forms import StudentUpdateForm, StudentRegisterForm
+from students.forms import StudentUpdateForm, StudentRegisterForm, StudentResultUpdateForm
 from users.forms import UserRegisterForm
 from curriculum.models import Standard
+from results.models import UploadResult
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
@@ -85,7 +86,7 @@ def studentupdateform(request):
 
 @login_required
 def studentlist(request):
-    studentlist = StudentDetail.objects.all()
+    studentlist = StudentDetail.objects.all().order_by('-date_admitted')
     studentdetail_filter = StudentFilter(request.GET, queryset=studentlist) 
     studentlist = studentdetail_filter.qs
 
@@ -313,7 +314,7 @@ def mystudent_csv(request):
 # for rest framework
 class MyStudentList(APIView):
     def get(self, request):
-        students1 = StudentDetail.objects.all()
+        students1 = StudentDetail.objects.all().order_by('-date_admitted')
         serializer = StudentDetailSerializer(students1, many=True)
         return Response(serializer.data)
 
@@ -342,3 +343,16 @@ def studentupdate(request):
 
     return render(request, 'users/student_update_form.html', context)
 
+
+class StudentResultUpdateView(LoginRequiredMixin, UpdateView):
+    form_class = StudentResultUpdateForm
+    template_name = 'students/student_result_update_form.html'
+ 
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(UploadResult, id=id_)
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)

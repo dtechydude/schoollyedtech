@@ -14,7 +14,7 @@ class SubjectAdmin(admin.ModelAdmin):
 
 class LessonAdmin(admin.ModelAdmin):
        
-    list_display=('lesson_id', 'standard', 'subject', 'comment',)
+    list_display=(  'standard', 'subject', 'lesson_id', 'name' )
 
 class SessionAdmin(admin.ModelAdmin):
    
