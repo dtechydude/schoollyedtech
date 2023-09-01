@@ -88,7 +88,7 @@
 														<th>Admin Date</th>
 														<th>Current Class</th>
 														<th>Teacher ID</th>
-														<th>Parent</th>
+														<th>Parent's Phone</th>
 														<th>Status</th>
 													
 														
@@ -117,21 +117,17 @@
 														<td class="text-nowrap">
 															<span>{{ student.date_admitted}}</span>
 														</td>
-														<td>
-															<div>
-																<h5 class="text-nowrap">{{ student.current_class}}</h5>
-																
-															</div>
+														<td class="text-nowrap">
+															
+																<span>{{ student.current_class}}</span>	
+																<span></span>										
 														</td>
-														<td>
-															<div>
-																<h5 class="text-nowrap">{{ student.class_teacher.user.username }}</h5>
+														<td class="text-nowrap">
+															<span>{{ student.class_teacher.user.username }}</span>
 																<span></span>
-															</div>
 														</td>
-														<td>
-														<div>
-															<h5 class="text-nowrap">{{ student.guardian_phone }}</h5>
+														<td class="text-nowrap">
+														<span>{{ student.guardian_phone }}</span>
 															<span></span>
 														</div>
 														

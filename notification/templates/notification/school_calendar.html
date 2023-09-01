@@ -1,7 +1,7 @@
 {% extends 'portal/portal-home.html' %}
 {% load static %}
 {% load crispy_forms_tags %}
-{% block title %}<title>Schoolly School Calendar</title> {% endblock title%}
+{% block title %}<title>SchoollyEdTech School Calendar</title> {% endblock title%}
 
         <!--**********************************
             Content body start
@@ -90,10 +90,11 @@
                                     <div class="col-lg-8 order-lg-1">
                                         
                                         {% for s in events %}
+                                        <div class="card">
                                         <div class="d-flex align-items-center mb-3">
                                             
                                             <div class="ms-4 bed-text">
-                                        
+                                                                                      
                                                 <h4>{{ s.event_name }}</h4>
                                                 <div class="users d-flex align-items-center">
                                                     

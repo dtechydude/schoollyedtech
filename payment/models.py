@@ -41,8 +41,8 @@ class PaymentChart(models.Model):
 class PaymentDetail(models.Model):
     payee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
     payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE)
-    amount_paid =models.DecimalField(max_digits=15, decimal_places=2, default=0.0) 
-    
+    amount_paid = models.DecimalField(max_digits=15, decimal_places=2, default=0.0)
+      
     payment_date = models.DateField()  
 
     cash = 'cash'
@@ -61,7 +61,6 @@ class PaymentDetail(models.Model):
     bank_name = models.CharField(max_length=150) 
     teller = models.CharField(max_length=150, blank=True) 
     description = models.CharField(max_length=200, blank=True)
-    file = models.FileField(upload_to='payments', blank=True, verbose_name='upload receipt')
     confirmed = models.BooleanField(default=False) 
     payment_recorded_date = models.DateField(auto_now_add=True)     
 

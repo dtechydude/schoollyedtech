@@ -1,13 +1,7 @@
-
-
-
-
-
-
-
 {% extends 'portal/portal-home.html'%}
 {% load crispy_forms_tags %}
 {% load static %}
+{% block title %}<title>Student Payment</title>{% endblock title%}
 
 {% block content_body %}
 
@@ -104,20 +98,20 @@
 														</td>
 														<td>
 															<div>
-																<h5 class="text-nowrap">{{ payment.payment_date }}</h5>
+																<span class="text-nowrap">{{ payment.payment_date }}</span>
 																<span></span>
 															</div>
 														</td>
 														<td>
 														<div>
-															<h5 class="text-nowrap">{{ payment.depositor }}</h5>
+															<span class="text-nowrap">{{ payment.depositor }}</span>
 															<span></span>
 														</div>
 														
 														</td>
                                                         <td>
                                                             <div>
-                                                                <h5 class="text-nowrap">{{ payment.payment_method }}</h5>
+                                                                <span class="text-nowrap">{{ payment.payment_method }}</span>
                                                                 <span></span>
                                                             </div>
                                                             
@@ -127,9 +121,9 @@
 															<div>
                                                                
 																	{% if payment.confirmed %}
-                                                                    <a href="{% url 'payment:payment_detail' pk=payment.pk  %}">Receipt</a>
+                                                                    <a href="{% url 'payment:payment_detail' pk=payment.pk  %}"><strong style="color:green;"><u>Get Receipt</u></strong></a>
                                                                     {% else %}
-                                                                    <span style="color:red;">Not Yet Confirmed</span>
+                                                                    <a href="{% url 'payment:payment_detail' pk=payment.pk  %}"><span style="color:red;">View Status</span></a>
                                                                     {% endif %}
 															    </div>																										
 															   </td>	

@@ -1,9 +1,4 @@
-<h2>My Receipt</h2>
-
-
-
-{{my_receipt.payment_name }}
-
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +7,7 @@
 
 <title>Official Receipt - SchoollyEdTech</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image/png" href="{% static 'portal/images/logo.png' %}" />
 <link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
 <style type="text/css">
     	body{
@@ -33,7 +29,7 @@
 
 <div class="col-lg-6">
 
-<div class="invoice-logo"><img width="100" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Invoice logo"></div>
+<div class="invoice-logo"><img width="300" src="{% static 'pages/schoolly_banner.png' %}" alt="Invoice logo"></div>
 </div>
 
 <div class="col-lg-6">
@@ -55,20 +51,24 @@
 <div class="invoice-details mt25">
 <div class="well">
 <ul class="list-unstyled mb0">
-<li><strong>Receipt</strong> #936988</li>
-<li><strong>Payment Date:</strong> Monday, October 10th, 2015</li>
-<li><strong>Total Amount Due:</strong> Thursday, December 1th, 2015</li>
-<li><strong>Status:</strong> <span class="label label-danger">PAID</span></li>
+<li><h4><strong style="font-size:14px;">Receipt No: </strong><span style="color:red;">#{{user.profile.code}}-00{{my_receipt.id}}</span></h4></span></li>
+<li><strong>Payment Made On:</strong> {{ my_receipt.payment_date }}</li>
+<li><strong>Payment Recorded On:</strong> {{ my_receipt.payment_recorded_date }}</li>
+<li><strong>Depositor's Name :</strong> {{ my_receipt.depositor }}</li><br />
+{% if my_receipt.confirmed %}
+<li><strong>Status:</strong> <span class="label label-success" style="font-size:medium;">PAID - "Confirmed"</span></li>
+{% else %}
+<li><strong>Status:</strong> <span class="label label-danger" style="font-size:medium;">UNCONFIRMED</span></li>
+{% endif %}
 </ul>
 </div>
 </div>
 <div class="invoice-to mt25">
 <ul class="list-unstyled">
-<li><strong>Receipt Generated For:</strong></li>
-<li><strong>Name : </strong>Student Name</li>
-<li><strong>Current Class : </strong>Current Class</li>
-<li><strong>Term :</strong>Term</li>
-<li>Nigeria</li>
+<li><strong>Receipt Generated For: </strong> {{user.username}}</li>
+<li><strong>Name : </strong>{{user.studentdetail.last_name}} {{user.studentdetail.first_name}}</li>
+<li><strong>Current Class : </strong>{{user.studentdetail.current_class}}</li>
+
 </ul>
 </div>
 <div class="invoice-items">
@@ -76,51 +76,51 @@
 <table class="table table-bordered">
 <thead>
 <tr>
-<th class="per70 text-center">Payment Description</th>
+<th class="per70 text-center">Payment Details</th>
 <th class="per5 text-center">Note</th>
 <th class="per25 text-center">Amount Paid</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1024MB Cloud 2.0 Server - elisium.dynamic.com (12/04/2014 - 01/03/2015)</td>
+<td><strong>Payment Name:</strong> {{ my_receipt.payment_name }} </td>
 <td class="text-center">n/a</td>
-<td class="text-center">$25.00 USD</td>
+<td class="text-center">N {{ my_receipt.amount_paid}}</td>
 </tr>
 <tr>
-<td>Logo design</td>
+<td><strong>Payment Method: </strong>{{ my_receipt.payment_method }}</td>
 <td class="text-center">n/a</td>
-<td class="text-center">N200.00 USD</td>
+<td class="text-center"> - </td>
 </tr>
 <tr>
-<td>Backup - 1024MB Cloud 2.0 Server - elisium.dynamic.com</td>
+<td><strong>Other Information : </strong>{% if my_receipt.description%}{{ my_receipt.description }}{% else %} No description provided {% endif %}  </td>
 <td class="text-center">n/a</td>
-<td class="text-center">N12.00 USD</td>
+<td class="text-center"> - </td>
 </tr>
 </tbody>
 <tfoot>
 <tr>
 <th colspan="2" class="text-right">Sub Total:</th>
-<th class="text-center">N237.00 USD</th>
+<th class="text-center">N {{ my_receipt.amount_paid}}</th>
 </tr>
 <tr>
 <th colspan="2" class="text-right"> VAT:</th>
 <th class="text-center">N/A</th>
 </tr>
 <tr>
-<th colspan="2" class="text-right">Credit:</th>
-<th class="text-center">$00.00 USD</th>
+<th colspan="2" class="text-right"></th>
+<th class="text-center"></th>
 </tr>
 <tr>
 <th colspan="2" class="text-right">Total:</th>
-<th class="text-center">$284.4.40 USD</th>
+<th class="text-center">N {{ my_receipt.amount_paid}}</th>
 </tr>
 </tfoot>
 </table>
 </div>
 </div>
 <div class="invoice-footer mt25">
-<p class="text-center"><strong> Important!: </strong>Presentation of this receipt at the school will also be subjected to data check. <a href="#" class="btn btn-default ml15"><i class="fa fa-print mr5"></i> Print</a></p>
+<p class="text-center"><strong> Important!: </strong>Presentation of this receipt at the school will also be subjected to data check. <a href="#" class="btn btn-default ml15"><i class="fa fa-print mr5"></i> >> Home</a></p>
 </div>
 </div>
 

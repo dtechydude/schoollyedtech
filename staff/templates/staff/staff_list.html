@@ -1,6 +1,8 @@
 {% extends 'portal/portal-home.html'%}
 {% load crispy_forms_tags %}
 {% load static %}
+{% block title %}<title> Staff List</title>{% endblock title%}
+
 
 {% block content_body %}
 
@@ -72,10 +74,9 @@
 														<th>Staff Identity</th>
 														<th>Category</th>
 														<th>Department</th>
-														<th>Phone</th>
-														<th>Class</th>
-														<th>Guarantor</th>
-														<th class="">Status</th>
+														<th>Phone No.</th>
+														<th>Class-in-charge</th>
+														<th>Status</th>
 														
 													</tr>
 												</thead>
@@ -99,32 +100,23 @@
 														<td class="text-nowrap">
 															<span>{{ staff.user.staffprofile.cat_name}}</span>
 														</td>
-														<td>
-															<div>
-																<h6 class="text-nowrap">{{ staff.user.staffprofile.department}}</h6>
-																
-															</div>
-														</td>
-														<td>
-															<div>
-																<h6 class="text-nowrap">{{ staff.user.staffprofile.phone }}</h6>
+														<td class="text-nowrap">
+															
+																<span>{{ staff.user.staffprofile.department}}</span>
 																<span></span>
-															</div>
 														</td>
-														<td>
-														<div>
-															<h6 class="text-nowrap">{{ staff.user.staffprofile.class_in_charge }}</h6>
+														<td class="text-nowrap">
+															
+																<span>{{ staff.user.staffprofile.phone }}</span>
+																<span></span>
+														
+														</td>
+														<td class="text-nowrap">
+															<span>{{ staff.user.staffprofile.class_in_charge }}</span>
 															<span></span>
 														</div>
 														
 														</td>
-														<td>
-															<div>
-																<h6 class="text-nowrap">{{ staff.user.staffprofile.guarantor_phone }}</h6>
-																<span></span>
-															</div>
-															
-															</td>
 														<td>
 															<div class="center">
 																{% if staff.user.profile.user_type == 'inactive' %}
