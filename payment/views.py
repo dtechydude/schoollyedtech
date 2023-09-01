@@ -107,6 +107,7 @@ def paymentlist(request):
         'paymentlist_filter': paymentlist_filter,
         'paymentlist' : paymentlist,
         'balance_pay': balance_pay,
+        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
       
      
 
@@ -201,7 +202,7 @@ def download(request,path):
 #  Function for pdf and csv
 
 # Generate a PDF staff list
-def mypayment_pdf(request):
+def allpayment_pdf(request):
     # create Bytestream buffer
     buf = io.BytesIO()
     #create a canvas
@@ -226,7 +227,7 @@ def mypayment_pdf(request):
 
     for payments in payment:
         lines.append(""),
-        lines.append("Username: " + payments.user.username),
+        lines.append("Username: " + payments.payee.username),
         lines.append("Amount: " + str(payments.amount_paid)),
         lines.append("Date: " + str(payments.payment_date)),
         lines.append("Method:" + payments.payment_method),
@@ -247,7 +248,7 @@ def mypayment_pdf(request):
 
 
 # Generate a CSV staff list
-def mypayment_csv(request):
+def allpayment_csv(request):
     response = HttpResponse(content_type ='text/csv')
     response['Content-Disposition'] = 'attachment; filename=payment.csv'
 
@@ -257,12 +258,12 @@ def mypayment_csv(request):
     payment = PaymentDetail.objects.all()
 
     # Add column headings to the csv files
-    writer.writerow(['USERNAME ', 'FIRST NAME', 'LAST NAME', 'AMOUNT PAID', 'PURPOSE', 'PAYMENT DATE', 'METHOD', 'DEPOSITOR', 'BANK', 'DESCRIPTION', 'IS_CONFIRMED'])
+    writer.writerow(['USERNAME ', 'AMOUNT PAID', 'PURPOSE', 'PAYMENT DATE', 'METHOD', 'DEPOSITOR', 'BANK', 'DESCRIPTION', 'IS_CONFIRMED'])
 
 
     # Loop thru and output
     for payments in payment:
-        writer.writerow([payments.payee.username, payments.payee.profile.code, payments.payee.profile.code,
+        writer.writerow([payments.payee.username,
         payments.amount_paid, payments.payment_name, payments.payment_date, payments.payment_method, payments.depositor, payments.bank_name, payments.description, payments.confirmed])
 
     return response

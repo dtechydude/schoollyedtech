@@ -129,7 +129,7 @@
 																	{% if payment.confirmed %}
                                                                     <a href="{% url 'payment:payment_detail' pk=payment.pk  %}">Receipt</a>
                                                                     {% else %}
-                                                                    <a href="">Not Yet Confirmed</a>
+                                                                    <span style="color:red;">Not Yet Confirmed</span>
                                                                     {% endif %}
 															    </div>																										
 															   </td>	

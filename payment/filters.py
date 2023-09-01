@@ -16,7 +16,7 @@ class MyPaymentFilter(django_filters.FilterSet):
         model = PaymentDetail
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
-        fields = {'payment_name', 'payment_date'}
+        fields = {'payment_name', 'payment_method'}
 
 class PaymentChartFilter(django_filters.FilterSet):
 
