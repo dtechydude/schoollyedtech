@@ -39,20 +39,38 @@ class PaymentChart(models.Model):
     
 
 class PaymentDetail(models.Model):
-    payee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None)
+    payee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True)
+    student_detail = models.ForeignKey(StudentDetail, on_delete=models.CASCADE, default=None, null=True)
     payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE)
     amount_paid = models.DecimalField(max_digits=15, decimal_places=2, default=0.0)
+
+    first = 'First_payment'
+    second = 'Second_payment'
+    third = 'Third_payment'
+    fourth = 'Fourth_payment'
+    complete = 'Complete_once'
+
+    installment_level = [
+        (first, 'First_payment'),
+        (second, 'Second_payment'),
+        (third, 'Third_payment'),
+        (fourth, 'Fourth_payment'),
+        (complete, 'Complete_once'),
+    ]
+    installment_level = models.CharField(max_length=50, choices=installment_level, default='select_installment')  
       
     payment_date = models.DateField()  
 
     cash = 'cash'
     bank_deposit = 'bank_deposit'
+    bank_transfer = 'bank_transfer'
     cheque = 'cheque'
     pos = 'pos'
 
     payment_methods = [
         (cash, 'cash'),
         (bank_deposit, 'bank_deposit'),
+        (bank_transfer, 'bank_transfer'),
         (cheque, 'cheque'),
         (pos, 'pos'),
     ]

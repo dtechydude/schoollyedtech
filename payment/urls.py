@@ -9,6 +9,7 @@ app_name = 'payment'
 
 urlpatterns = [
     path('payment-form/', payment_views.payment_form, name="payment_form"),   
+    path('payment-report/', payment_views.payment_report, name="payment_report"),   
     path('payment-cat-form/', payment_views.payment_cat_form, name="payment_cat_form"),
     path('payment-chart-form/', payment_views.payment_chart_form, name="payment_chart_form"),
     path('payment-record/', payment_views.paymentlist, name="payment_record"),

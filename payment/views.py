@@ -114,6 +114,8 @@ def paymentlist(request):
     }
     return render (request, 'payment/all_payments.html', context )
 
+    # return render(request, 'payment/schoolly_test_table.html',)
+
 
 
 @login_required
@@ -158,6 +160,8 @@ def payment_chart_form(request):
         'payment_chart_form' : payment_chart_form
     }
     return render(request, 'payment/payment_chart_form.html', context)
+
+    
 
 
 @login_required
@@ -345,3 +349,37 @@ class PaymentDetailView(LoginRequiredMixin, DetailView):
         queryset = queryset.filter(pk=new_str)
         obj = queryset.get()
         return obj
+
+
+@login_required
+def payment_report(request):
+    paymentlist = PaymentDetail.objects.all()
+    paymentlist_filter = PaymentFilter(request.GET, queryset=paymentlist)
+    balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
+  
+
+    paymentlist = paymentlist_filter.qs
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(paymentlist, 10)
+    try:
+        paymentlist = paginator.page(page)
+    except PageNotAnInteger:
+        paymentlist = paginator.page(1)
+    except EmptyPage:
+        paymentlist = paginator.page(paginator.num_pages)
+
+
+    context = {
+        'paymentlist': PaymentDetail.objects.all(),
+        'paymentlist_filter': paymentlist_filter,
+        'paymentlist' : paymentlist,
+        'balance_pay': balance_pay,
+        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
+      
+     
+
+    }
+   
+
+    return render(request, 'payment/payment_report_table.html', context )
