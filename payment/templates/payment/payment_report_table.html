@@ -44,9 +44,9 @@
                                         <form action="" method="get">
                                     
                                         <!-- {{ StudentFilter.form|crispy}} -->
-                                        <!-- {{ paymentlist_filter.form }} -->
-<!--                                         
-                                        <button class="btn btn-primary" type="submit">Search </button> -->
+                                        {{ paymentreport_filter.form }}
+                                       
+                                        <button class="btn btn-primary" type="submit">Search </button>
                                     </form>	</div>
                                 </div>
                             
@@ -142,12 +142,7 @@
 																<span></span>
 															
 														</td>
-														<!-- <td class="text-nowrap">
-														
-															<span class="text-nowrap">{{ balance.payment_name.term }}</span>
-															<span></span>
-																											
-														</td> -->
+												
 														
 														<td class="text-nowrap">
 															<div>
@@ -164,24 +159,26 @@
                                             
 										{% if paymentlist.has_other_pages %}
 										{% if paymentlist.has_previous %}
-										<a class="btn btn-outline-info mb-4" href="?page={{ paymentlist.previous_page_number }}">&laquo;</a>
-										{% else %}
-										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+                                            <a class="btn btn-outline-info mb-4" href="?page={{ paymentlist.previous_page_number }}">&laquo;</a>
+                                        {% else %}
+                                            <a class="btn btn-outline-info mb-4" href="">&raquo;</a>
 
 										{% endif %}
+
 										{% for i in paymentlist.paginator.page_range %}
 										{% if paymentlist.number == i %}
 
-										<a class="btn btn-info mb-4" href="">{{ i }}</a>
+										    <a class="btn btn-info mb-4" href="">{{ i }}</a>
 										{% else %}
-										<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+										    <a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
 										{% endif %}
 										{% endfor %}
-										{% if paymentlist.has_next %}
-										<a class="btn btn-outline-info mb-4" href="?page={{ paymentlist.next_page_number }}">&raquo;</a>
+										
+                                        {% if paymentlist.has_next %}
+										    <a class="btn btn-outline-info mb-4" href="?page={{ paymentlist.next_page_number }}">&raquo;</a>
 										{% else %}
 										
-										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+										    <a class="btn btn-outline-info mb-4" href="">&raquo;</a>
 										{% endif %}
 									
 									{% endif %}
@@ -211,14 +208,11 @@
 			
 			{% block scripts %}
 
-
 			<script src="{% static 'portal/vendor/moment/moment.min.js' %}"></script>
     		<script src="{% static 'portal/vendor/bootstrap-daterangepicker/daterangepicker.js' %}"></script>
 			<script src="{% static 'portal/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
 			<script src="{% static 'portal/js/plugins-init/datatables.init.js' %}"></script>
 	
-
-
             <script src="{% static 'portal/vendor/global/global.min.js' %}"></script>
 
             <script src="{% static 'portal/vendor/jquery-nice-select/js/jquery.nice-select.min.js' %}"></script>

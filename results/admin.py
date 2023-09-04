@@ -1,7 +1,7 @@
 from doctest import Example
 from django.contrib import admin
 
-from results.models import Examination, UploadResult, Result, Session
+from results.models import Examination, UploadResult, Result, Session, ResultSheet
 
 # Register your models here.
 
@@ -16,3 +16,5 @@ admin.site.register(Result)
 admin.site.register(Examination)
 # admin.site.register(Session)
 admin.site.register(UploadResult, UploadResultAdmin)
+
+admin.site.register(ResultSheet)

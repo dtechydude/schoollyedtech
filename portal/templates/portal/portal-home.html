@@ -194,7 +194,11 @@
 						</a>
 						<ul aria-expanded="false">
 							{% if user.is_authenticated and user.profile.user_type == 'student' %}
+							{% for idcard in my_idcard%}
+
+							<a href="{% url 'portal:my_idcard' pk=idcard.pk  %}">My ID CARD</a>
 							
+							{% endfor %}
 							<li><a href="{% url 'results:my-result' %}">Download Result</a></li>
 							<li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li>
 							<li><a href="{% url 'payment:payment-create' %}">Make Payment</a></li>
@@ -826,7 +830,13 @@
 															</div>
 														</div>
 														<!-- <div id="profile-settings" class="tab-pane fade"> -->									
-														<div align="center"><button class="btn btn-danger"  ><a href="{% url 'profile' %}"><span style="color:white;">Update My Profile</span></a></button></div>
+														<div align="center"><button class="btn btn-danger"  ><a href="{% url 'profile' %}"><span style="color:white;">Update My Profile</span></a></button>
+														
+														{% for idcard in my_idcard%}
+
+														<span align="left"><button class="btn btn-success"  ><a href="{% url 'portal:my_idcard' pk=idcard.pk  %}"><span style="color:white;">Print My ID CARD</span></a></button></span></div>
+														
+														{% endfor %}
 																					
 															</form>
 														</div>

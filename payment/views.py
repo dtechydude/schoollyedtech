@@ -20,7 +20,7 @@ from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 
 # For Filter
-from .filters import PaymentFilter, MyPaymentFilter, PaymentChartFilter
+from .filters import PaymentFilter, MyPaymentFilter, PaymentChartFilter, PaymentReportFilter
 from django_filters.views import FilterView
 # For panigation
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -354,11 +354,11 @@ class PaymentDetailView(LoginRequiredMixin, DetailView):
 @login_required
 def payment_report(request):
     paymentlist = PaymentDetail.objects.all()
-    paymentlist_filter = PaymentFilter(request.GET, queryset=paymentlist)
+    paymentreport_filter = PaymentReportFilter(request.GET, queryset=paymentlist)
     balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
   
 
-    paymentlist = paymentlist_filter.qs
+    paymentlist = paymentreport_filter.qs
 
     page = request.GET.get('page', 1)
     paginator = Paginator(paymentlist, 10)
@@ -372,14 +372,11 @@ def payment_report(request):
 
     context = {
         'paymentlist': PaymentDetail.objects.all(),
-        'paymentlist_filter': paymentlist_filter,
+        'paymentreport_filter': paymentreport_filter,
         'paymentlist' : paymentlist,
         'balance_pay': balance_pay,
         'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
-      
-     
-
+   
     }
    
-
     return render(request, 'payment/payment_report_table.html', context )

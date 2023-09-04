@@ -5,15 +5,20 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.urls import reverse_lazy, reverse
-from results.forms import PrintResultForm, ResultUploadForm
+from results.forms import PrintResultForm, ResultUploadForm, ResultCreateForm
 from django.contrib import messages
-from results.models import UploadResult, Result
-from results.filters import MyresultFilter
+from results.models import UploadResult, Result, ResultSheet
+from results.filters import MyresultFilter, MyResultSheetFilter
 from students.models import StudentDetail
 import os
 from django_filters.views import FilterView
 # For panigation
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.views.generic import(TemplateView, DetailView,
+                                ListView, FormView, CreateView, 
+                                UpdateView, DeleteView)
 
 
 # Create your views here.
@@ -156,3 +161,75 @@ def view_self_reportsheet(request, **kwargs):
                                 )
       
         
+
+def resultsheet(request):
+    resultsheet = ResultSheet.objects.all()
+    context = {
+        'resultsheet':resultsheet
+    }
+    
+    return render(request, 'results/result_sheet.html', context)
+
+
+def result_create_form(request):
+    if request.method == 'POST':       
+        result_create_form = ResultCreateForm(request.POST)
+
+        if result_create_form.is_valid():         
+            result_create_form_form.save()
+            messages.success(request, f'The Result has been entered successfully')
+            return redirect('result:result-create')
+    else:
+        result_create_form = ResultCreateForm()
+
+    context ={
+        'result_create_form' : result_create_form
+    }
+    return render(request, 'results/result_create_form.html', context)
+
+
+
+class ResultDetailView(LoginRequiredMixin, DetailView):
+    model = ResultSheet
+    context_object_name = 'my_resultsheet'
+    template_name = 'results/result_sheet.html'
+
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        new_str = self.kwargs.get('pk') or self.request.GET.get('pk') or None
+
+        queryset = queryset.filter(pk=new_str)
+        obj = queryset.get()
+        return obj
+
+    def result_calculation(request):
+       
+        total_score = ResultSheet.objects.annotate(total_score= F('score_1ca') + F('score_1exam'))
+
+@login_required
+def view_self_result(request):
+    # mypayment = PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user))
+    myresultsheet = ResultSheet.objects.filter(student_id=User.objects.get(username=request.user))
+    myresultsheet_filter = MyResultSheetFilter(request.GET, queryset=myresultsheet)
+    myresultsheet = myresultsheet_filter.qs
+
+    page = request.GET.get('page', 1)
+    paginator = Paginator(myresultsheet, 20)
+    try:
+        myresultsheet = paginator.page(page)
+    except PageNotAnInteger:
+        myresultsheet = paginator.page(1)
+    except EmptyPage:
+        myresultsheet = paginator.page(paginator.num_pages)
+    context = {
+        # 'mypayment' : PaymentDetail.objects.filter(student=StudentDetail.objects.get(user=request.user)).order_by("-payment_date"),
+        'myresultsheet' : ResultSheet.objects.filter(student_id=User.objects.get(username=request.user)).order_by("exam_date"),
+        'myresultsheet':myresultsheet,
+        'myresultsheet_filter' : myresultsheet_filter,
+    }
+
+    return render(request, 'results/result_self_list.html', context)
+
+
+

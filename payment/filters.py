@@ -25,6 +25,14 @@ class PaymentChartFilter(django_filters.FilterSet):
         # # fields = '__all__'
         # fields = {'current_class': ['exact']}
         fields = {'session', 'payment_cat', 'term',}
-        
+
+
+class PaymentReportFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = PaymentDetail
+        # # fields = '__all__'
+        # fields = {'current_class': ['exact']}
+        fields = {'payment_name', 'payment_method'}
         
 

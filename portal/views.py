@@ -6,7 +6,8 @@ from django.db.models import Count
 from students.models import StudentDetail
 from staff.models import StaffProfile
 from notification.models import SchoolCalendar
-from django.views.generic import  ListView
+from django.views.generic import  ListView, DetailView
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from .forms import ClassRegisterForm, ClassgroupRegisterForm, SessionRegisterForm, ExamRegisterForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -24,6 +25,7 @@ def portal_home(request):
     suspended = StudentDetail.objects.filter(student_status='suspended').count()
     active = StudentDetail.objects.filter(student_status='active').count()
     staff_num = StaffProfile.objects.count()
+    my_idcard = StudentDetail.objects.filter(user=User.objects.get(username=request.user))
     students = StudentDetail.objects.filter().order_by('current_class').values('current_class__name').annotate(count=Count('current_class__name'))
     
     # Build a paginator with function based view
@@ -50,6 +52,7 @@ def portal_home(request):
         'active': active,
         'queryset': queryset,
         'events':events,
+        'my_idcard':my_idcard,
     }
     return render(request, 'portal/portal-home.html', context)
 
@@ -143,3 +146,16 @@ def register_exam(request):
 
 
     
+class StudentCardDetailView(LoginRequiredMixin, DetailView):
+    model = StudentDetail
+    context_object_name = 'my_idcard'
+    template_name = 'students/student_id_card.html'
+
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        new_str = self.kwargs.get('pk') or self.request.GET.get('pk') or None
+
+        queryset = queryset.filter(pk=new_str)
+        obj = queryset.get()
+        return obj

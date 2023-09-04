@@ -11,3 +11,11 @@ class MyresultFilter(django_filters.FilterSet):
         fields = {'exam', 'session',}
         
 
+class MyResultSheetFilter(django_filters.FilterSet):
+
+    class Meta:
+        model = UploadResult
+        # # fields = '__all__'
+        # fields = {'current_class': ['exact']}
+        fields = {'exam', 'session',}
+        

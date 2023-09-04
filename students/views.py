@@ -140,7 +140,7 @@ class StudentListView(LoginRequiredMixin, ListView):
     
 
 
-class StudentDetailView(DetailView):  
+class StudentDetailView(LoginRequiredMixin, DetailView):  
     model = StudentDetail
     template_name = 'students/student_detail_view.html'
     # queryset = User.objects.all()
@@ -356,3 +356,18 @@ class StudentResultUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         print(form.cleaned_data)
         return super().form_valid(form)
+
+
+class StudentCardDetailView(LoginRequiredMixin, DetailView):
+    model = StudentDetail
+    context_object_name = 'my_idcard'
+    template_name = 'students/student_id_card.html'
+
+    def get_object(self, queryset=None):
+        if queryset is None:
+            queryset = self.get_queryset()
+        new_str = self.kwargs.get('pk') or self.request.GET.get('pk') or None
+
+        queryset = queryset.filter(pk=new_str)
+        obj = queryset.get()
+        return obj
