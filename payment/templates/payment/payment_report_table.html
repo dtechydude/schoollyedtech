@@ -72,6 +72,7 @@
 															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
 															</div>
 														</th>
+														<th>NO.</th>
 														<th>PAYEE ID</th>
                                                         <th>DESCRIPTION</th>                                                        
 														<th>AMOUNT DUE</th>
@@ -88,20 +89,25 @@
 								
 							
 													<tr>
-														
+																												
 														<td>
 															<div class="form-check style-1">
 															  <input class="form-check-input" type="checkbox" value="">
 															</div>
 														</td>
 														<td>
-															
-																	<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
-																		<!-- if it is a student that paid -->
-																		<span>{{ balance.payee.studentdetail.first_name }} {{ balance.payee.studentdetail.last_name}}</span><br>
-																		{{balance.payee }} </a></span>
-																		
+															<div>
+																{{ forloop.counter }}
+															</div>
+														</td>	
+														<td>
 													
+															<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
+																<!-- if it is a student that paid -->
+																<span>{{ balance.payee.studentdetail.first_name }} {{ balance.payee.studentdetail.last_name}}</span><br>
+																{{balance.payee }} </a></span>
+																
+											
 																</div>
 															</div>
 														</td>

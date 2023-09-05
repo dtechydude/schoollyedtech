@@ -67,6 +67,7 @@
 															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
 															</div>
 														</th>
+														<th>No.</th>
 														<th>Payment Name</th>
                                                         <th>Amount</th>
 														<th>Date</th>
@@ -84,7 +85,12 @@
 															<div class="form-check style-1">
 															  <input class="form-check-input" type="checkbox" value="">
 															</div>
-														</td>														
+														</td>	
+														<td>
+															<div>
+																{{ forloop.counter }}
+															</div>
+														</td>													
 														<td>
                                                             <div>
                                                         <!-- <h5 class="text-nowrap">{{ payment.payment_name }}</h5> -->

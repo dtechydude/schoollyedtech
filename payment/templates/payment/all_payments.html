@@ -71,6 +71,7 @@
 															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
 															</div>
 														</th>
+														<th>NO.</th>
 														<th>PAYEE ID</th>
 														<th>STUDENT ID</th>
 														<th>DEPOSITOR</th>
@@ -84,22 +85,26 @@
 													{% for payment in paymentlist %}
 							
 													<tr>
-														
+																												
 														<td>
 															<div class="form-check style-1">
 															  <input class="form-check-input" type="checkbox" value="">
 															</div>
 														</td>
 														<td>
-															
-																	<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
-																		<!-- if it is a student that paid -->
-																		<span>{{ payment.payee.studentdetail.first_name}} {{ payment.payee.studentdetail.last_name}}</span><br>
-																		{{payment.payee }} <span style="color:red;">{{ payment.payee.studentdetail.current_class}}</span> </a></span>
-																		<!-- if it is admin or staff that paid -->
-																		<span>{{ payment.payee.staffprofile.first_name}} {{ payment.payee.staffprofile.last_name}}</span><br>
-																		<span>{{ payment.payee.first_name}} {{ payment.payee.last_name}}</span><br>
-													
+															<div>
+																{{ forloop.counter }}
+															</div>
+														</td>	
+														<td>
+														<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
+															<!-- if it is a student that paid -->
+															<span>{{ payment.payee.studentdetail.first_name}} {{ payment.payee.studentdetail.last_name}}</span><br>
+															{{payment.payee }} <span style="color:red;">{{ payment.payee.studentdetail.current_class}}</span> </a></span>
+															<!-- if it is admin or staff that paid -->
+															<span>{{ payment.payee.staffprofile.first_name}} {{ payment.payee.staffprofile.last_name}}</span><br>
+															<span>{{ payment.payee.first_name}} {{ payment.payee.last_name}}</span><br>
+										
 																</div>
 															</div>
 														</td>

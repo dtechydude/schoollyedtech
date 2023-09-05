@@ -1,0 +1,323 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Student Report Card</title>
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="col-sm-12" style="padding-top:20px; text-align:center">
+        <img src="{% static 'pages/report_card_header.png' %}" width="100%" height="100px">
+
+        </div>
+
+      <!-- <div class="col-sm-12" style="padding-top:20px;">
+        <div class="col-sm-4 bg-light p-3 mb-2" style="float:right"><p>STUDENT IDENTITY<br> Name: </p></div>
+        <div class="col-sm-4 bg-light p-3 mb-2" style="float:right"><p>ACADEMIC CALENDAR<br> Session: <br> Term: </p></div>
+        <div class="col-sm-4 bg-light p-3 mb-2" style="float:right;"><p>STUDENT IDENTITY<br> Name:<br> Class:  </p></div>
+      </div> -->
+      <div  style="padding-top:20px;"></div>
+      <div class=" col-sm-6" style="float:right;">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" colspan="2" >CLASS / SUBJECT / TERM STATISTIC</th>
+                       
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              
+              <td>
+                No. of days school open : <br>
+                No. of day present : <br> 
+                No. of days absent : <br> 
+                Next Term Begins :  </td>
+               
+                
+            </tr>
+              
+          </tbody>
+        </table>
+        </div>
+        <div class=" col-sm-6" style="float:right;">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <tr>
+                <th scope="col" colspan="2" >STUDENT INFORMATION</th>
+                       
+              </tr>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>STUDENT NAME : {{my_resultsheet.student_detail.first_name}}  {{my_resultsheet.student_detail.middle_name}}  {{my_resultsheet.student_detail.last_name}} <br>
+                ADMISSION CODE : {{my_resultsheet.student_id.username}}<br>
+                CURRENT CLASS : {{my_resultsheet.student_detail.current_class}} <br>
+                SESSION :{{my_resultsheet.session}}  | TERM : {{my_resultsheet.term}}
+              </td>
+                
+            </tr>
+            
+          </tbody>
+        </table>
+      </div>
+      </div>
+      
+     
+    <table class="table table-bordered" style="width:70%; margin:0 auto;">
+      <thead>
+        <tr>
+          <th scope="col">No.</th>
+          <th scope="col">SUBJECT</th>
+          <th scope="col">C.A (40)</th>
+          <th scope="col">EXAM (60)</th>
+          <th scope="col">TOTAL (100)</th>
+          <th scope="col">REMARK</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% if my_resultsheet.subject_1 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_1}} </td>
+          <td>{{ my_resultsheet.score_1ca}}</td>
+          <td>{{ my_resultsheet.score_1exam}}</td>          
+          <td>{{ my_resultsheet.total_score_1 }}</td>
+          <td>{% if my_resultsheet.total_score_1 > 70  %}Perfect {% elif my_resultsheet.total_score_1  > 60 %}V.Good {% elif my_resultsheet.total_score_1  > 50 %}Good  {% else %}Fail{% endif %}</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_2 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_2}}</td>
+          <td>{{ my_resultsheet.score_2ca}}</td>
+          <td>{{ my_resultsheet.score_2exam}}</td>  
+          <td>{{ my_resultsheet.total_score_2 }}</td>
+          <td>{% if my_resultsheet.total_score_2 > 70  %}Perfect {% elif my_resultsheet.total_score_2  > 60 %}V.Good {% elif my_resultsheet.total_score_2  > 50 %}Good  {% else %}Fail{% endif %}</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_3 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_3}}</td>
+          <td>{{ my_resultsheet.score_3ca}}</td>
+          <td>{{ my_resultsheet.score_3exam}}</td>
+          <td>{{ my_resultsheet.total_score_3 }}</td>
+          <td>{% if my_resultsheet.total_score_3 > 70  %}Perfect {% elif my_resultsheet.total_score_3  > 60 %}V.Good {% elif my_resultsheet.total_score_3  > 50 %}Good  {% else %}Fail{% endif %}</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_4 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_4}}</td>
+          <td>{{ my_resultsheet.score_4ca}}</td>
+          <td>{{ my_resultsheet.score_4exam}}</td>
+          <td>{{ my_resultsheet.total_score_4 }}</td>
+          <td>{% if my_resultsheet.total_score_4 > 70  %}Perfect {% elif my_resultsheet.total_score_4  > 60 %}V.Good {% elif my_resultsheet.total_score_4  > 50 %}Good  {% else %}Fail{% endif %}</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_5 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_5}} </td>
+          <td>{{ my_resultsheet.score_5ca}}</td>
+          <td>{{ my_resultsheet.score_5exam}}</td>
+          <td>{{ my_resultsheet.total_score_5 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_6 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_6}} </td>
+          <td>{{ my_resultsheet.score_6ca}}</td>
+          <td>{{ my_resultsheet.score_6exam}}</td>
+          <td>{{ my_resultsheet.total_score_6 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_7 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_7}} </td>
+          <td>{{ my_resultsheet.score_7ca}}</td>
+          <td>{{ my_resultsheet.score_7exam}}</td>
+          <td>{{ my_resultsheet.total_score_7 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_8 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_8}} </td>
+          <td>{{ my_resultsheet.score_8ca}}</td>
+          <td>{{ my_resultsheet.score_8exam}}</td>
+          <td>{{ my_resultsheet.total_score_8 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_9 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_9}} </td>
+          <td>{{ my_resultsheet.score_9ca}}</td>
+          <td>{{ my_resultsheet.score_9exam}}</td>
+          <td>{{ my_resultsheet.total_score_9 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_10 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_10}} </td>
+          <td>{{ my_resultsheet.score_10ca}}</td>
+          <td>{{ my_resultsheet.score_10exam}}</td>
+          <td>{{ my_resultsheet.total_score_10 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_11 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_11}} </td>
+          <td>{{ my_resultsheet.score_11ca}}</td>
+          <td>{{ my_resultsheet.score_11exam}}</td>
+          <td>{{ my_resultsheet.total_score_11 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_12 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_12}} </td>
+          <td>{{ my_resultsheet.score_12ca}}</td>
+          <td>{{ my_resultsheet.score_12exam}}</td>
+          <td>{{ my_resultsheet.total_score_12 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_13 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_13}} </td>
+          <td>{{ my_resultsheet.score_13ca}}</td>
+          <td>{{ my_resultsheet.score_13exam}}</td>
+          <td>{{ my_resultsheet.total_score_13 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_14 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_14}} </td>
+          <td>{{ my_resultsheet.score_14ca}}</td>
+          <td>{{ my_resultsheet.score_14exam}}</td>
+          <td>{{ my_resultsheet.total_score_14 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_15 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_15}} </td>
+          <td>{{ my_resultsheet.score_15ca}}</td>
+          <td>{{ my_resultsheet.score_15exam}}</td>
+          <td>{{ my_resultsheet.total_score_15 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+        {% if my_resultsheet.subject_16 %}
+        <tr>
+          <th scope="row">1</th>
+          <td>{{ my_resultsheet.subject_16}} </td>
+          <td>{{ my_resultsheet.score_16ca}}</td>
+          <td>{{ my_resultsheet.score_16exam}}</td>
+          <td>{{ my_resultsheet.total_score_16 }}</td>
+          <td>Excellent</td>
+        </tr>
+        {% endif %}
+            
+      </tbody>
+      <!-- FOR CALCULATING OVERALL PERCENTAGE AND OTHERS -->
+      <tr>
+        <th scope="row" colspan="2" style="text-align:center;">TOTAL</th>
+        <td colspan=""><strong>{{ my_resultsheet.total_score_ca }}</strong></td>
+        <td><strong>{{ my_resultsheet.total_score_exam }}</strong></td>
+        <td><strong>{{ my_resultsheet.overall_total }}</strong></td>
+        <td style="font-size:14px; text-align:center;"><strong>Total Subject Taken<br>{{ my_resultsheet.empty_fields_count }}</strong></td>
+       
+       
+       
+       
+      </tr>
+      <tr>
+        <th scope="row" colspan="2"></th>
+         <td class="p-3 mb-2 bg-info text-white" colspan="2" ><strong>OVERALL PERCENTAGE : </strong> <span style="font-size:20px;">{{ my_resultsheet.overall_percentage }}% </span></td>
+        <td></td>
+        <td style="text-align:center;"><img src="{% static 'pages/qr_code.png' %}" width="50px" height="50px"></td>
+      </tr>
+    </table>
+   
+    <div  style="padding-top:20px;">
+    <div class=" col-sm-6" style="float:right;">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" colspan="2" style="text-align:center;">Principal Comment</th>
+                   
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:center;">hello</td>
+            
+        </tr>
+      
+      </tbody>
+    </table>
+    </div>
+    <div class=" col-sm-6" style="float:right;">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <tr>
+            <th scope="col" colspan="2" style="text-align:center;">Class Teacher's Comment</th> 
+          </tr>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="text-align:center;">hello</td>    
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+
+  <div class="col-sm-12 " style="padding-top:20px;">
+    
+    <img src="{% static 'pages/barcode.png' %}" width="100%" height="60">
+
+    </div>
+ 
+  </div>
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>

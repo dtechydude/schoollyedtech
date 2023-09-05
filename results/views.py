@@ -44,8 +44,6 @@ def printresultform(request):
              messages.success(request, f'Your upload is successful, enter another or refresh the page')
              
              return HttpResponseRedirect(reverse("results:print-resultform"))
-             
-
         
     else:
         print_form = PrintResultForm()
@@ -161,7 +159,7 @@ def view_self_reportsheet(request, **kwargs):
                                 )
       
         
-
+@login_required
 def resultsheet(request):
     resultsheet = ResultSheet.objects.all()
     context = {
@@ -171,6 +169,7 @@ def resultsheet(request):
     return render(request, 'results/result_sheet.html', context)
 
 
+@login_required
 def result_create_form(request):
     if request.method == 'POST':       
         result_create_form = ResultCreateForm(request.POST)
