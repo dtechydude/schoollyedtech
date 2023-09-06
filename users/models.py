@@ -53,6 +53,9 @@ class Profile(models.Model):
 
     user_type = models.CharField(max_length=15, choices=user_types, default=inactive)
 
+    class Meta:
+        ordering = ['user']
+
 
 #this function returns the profile name in the admin panel profile table
     def __str__ (self):

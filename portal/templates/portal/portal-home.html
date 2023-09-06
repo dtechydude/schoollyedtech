@@ -206,6 +206,7 @@
 							{% endif %}
 							{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
 							<li>Noting to show</li>
+							{% endif %}
 							
 							{% if user.is_authenticated and user.profile.user_type == 'teacher'%}
 							<li><a href="{% url 'staff:my-students' %}">My Student List</a></li>
@@ -238,7 +239,7 @@
 							
 							{% endif %}
 						
-							{% endif %}
+						
 						</ul>
 						
 					</li>
@@ -871,7 +872,7 @@
 								  </div>
 								  <div class="profile-info">
 									  <div class="profile-photo">
-										  <img src="{{user.staffprofile.user.profile.image.url}}" class="img-fluid rounded-circle" alt="">
+										  <img src="{{user.profile.image.url}}" class="img-fluid rounded-circle" alt="">
 									  </div>
 									  <div class="profile-details">
 										  <div class="profile-name px-3 pt-2">

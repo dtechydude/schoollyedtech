@@ -130,6 +130,9 @@ class StudentDetail(models.Model):
 
     student_status = models.CharField(max_length=15, choices=student_status, default=active)
 
+    class Meta:
+        ordering = ['user']
+
 #this function returns the profile name in the admin panel profile table
     def __str__ (self):
         # return f'{self.user.username} - {self.user.last_name }  {self.user.first_name}'
