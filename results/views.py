@@ -25,7 +25,7 @@ from django.views.generic import(TemplateView, DetailView,
 
 @login_required
 def printresult(request):
-    result = UploadResult.objects.all()
+    result = ResultSheet.objects.all()
     context = {
         'result':result
     }

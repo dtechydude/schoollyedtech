@@ -3,6 +3,7 @@
 {% block title %}<time>Student Results</time>{% endblock title%}
 
 {% block content_body %}
+{% if user.is_superuser or user.profile.user_type == "teacher" %}
 
 <div class="content-body">
     <div class="container-fluid">
@@ -16,7 +17,7 @@
 
                         <h4 class="card-title">Student Result Management</h4>
                     </div>
-                    {% if user.is_superuser or user.profile.user_type == 'parent' %}
+                 
                     <div class="card-body">
                         <div class="table-responsive">
                             
@@ -25,7 +26,7 @@
                                 <thead>
                                     
                                     <tr>
-                                        <th>Result ID</th>
+                                      
                                         <th>Student Identity</th>
                                         <th>Exam</th>
                                         <th>Session</th>
@@ -41,8 +42,8 @@
                                 <tbody>
                                                                     
                                     <tr>                                    
-                                        <td> {{ res.id }}</td>
-                                        <td> {{ res.student }}</td>
+                                   
+                                        <td> {{ res.student_id }}</td>
                                         <td> {{ res.exam}}</td>
                                         <td> {{ res.session }}</td>
                                         <td> {{ res.term }}</td>

@@ -4,6 +4,7 @@
 {% block title %}<title>Schoolly - Class Subjects List </title>{% endblock title %}
 
 {% block content_body %}
+
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles">
@@ -30,7 +31,7 @@
                     <div class="card-body">
                         <div id="DZ_W_TimeLine" class="widget-timeline dlab-scroll height770">
                             
-                            {% if user.is_authenticated and user.is_superuser %}
+                            {% if user.is_superuser or user.profile.user_type == "admin" %}
                            <form method="post">
                             {% csrf_token%}
                             {{ form|crispy}}
@@ -49,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            
+          
                         </div>
                     </div>
                 </div>

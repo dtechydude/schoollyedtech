@@ -204,6 +204,7 @@
 							<li><a href="{% url 'results:my-result' %}">Result History</a></li>
 							<li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li>
 							{% endif %}
+
 							{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
 							<li>Noting to show</li>
 							{% endif %}
@@ -215,14 +216,14 @@
 							{% if user.is_authenticated and user.profile.user_type == 'admin' %}
 							<li><a href="{% url 'students:student-list' %}">Student List</a></li>
 							<li><a href="{% url 'students:student-registration' %}">Add New Student</a></li>
-							{% endif %}
+							
 							<li><a href="{% url 'results:print-result' %}">View Students Result</a></li>
 							<li><a href="{% url 'results:print-resultform' %}">Upload Students Result</a></li>
-							<li><a href="{% url 'results:upload-result' %}">Enter Marksheet</a></li>	
+							<li><a href="{% url 'results:result-create' %}">Load Report Sheet</a></li>	
 							<li><a href="{% url 'attendance:attendance_form' %}">Take Attendance</a></li>
 							<li><a href="{% url 'attendance:attendance_view' %}">View Attendance</a></li>
 								
-							
+							{% endif %}
 						</ul>
 
 					</li>
