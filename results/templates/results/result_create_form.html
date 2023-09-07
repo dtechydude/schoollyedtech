@@ -19,15 +19,15 @@
                <div class="card">
                    <div class="card-header">
                     <h5>You are using this form to Create Result Sheet. Enter Accurate Data</h5>
-                   
-                       
-                           {% if messages %}
-                           {% for message in messages %}
-                           <div class ="alert alert-{{ message.tags }}">{{ message }}</div>
-                           {% endfor%}
-                           {% endif%}
-                       
+                                          
                    </div>
+                   <div>
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class ="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor%}
+                    {% endif%}
+                </div>
             
                    <div class="card-body">
                     

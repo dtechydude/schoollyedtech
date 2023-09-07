@@ -175,9 +175,9 @@ def result_create_form(request):
         result_create_form = ResultCreateForm(request.POST)
 
         if result_create_form.is_valid():         
-            result_create_form_form.save()
-            messages.success(request, f'The Result has been entered successfully')
-            return redirect('result:result-create')
+            result_create_form.save()
+            messages.success(request, f'The Result has been entered successfully, add another one')
+            return redirect('results:result-create')
     else:
         result_create_form = ResultCreateForm()
 

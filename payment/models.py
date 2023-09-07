@@ -36,13 +36,20 @@ class PaymentChart(models.Model):
     
     def __str__ (self):
         return f'{self.name}' 
+
+    class Meta:
+        ordering:['-session']
     
 
 class PaymentDetail(models.Model):
     payee = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default=None, null=True)
     student_detail = models.ForeignKey(StudentDetail, on_delete=models.CASCADE, default=None, null=True)
-    payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE)
-    amount_paid = models.DecimalField(max_digits=15, decimal_places=2, default=0.0)
+    # Single payment
+    payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE, default= None)
+    amount_paid = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)   
+    description = models.CharField(max_length=200, blank=True)
+
+    payment_date = models.DateField()  
 
     first = 'First_payment'
     second = 'Second_payment'
@@ -57,9 +64,7 @@ class PaymentDetail(models.Model):
         (fourth, 'Fourth_payment'),
         (complete, 'Complete_once'),
     ]
-    installment_level = models.CharField(max_length=50, choices=installment_level, default='select_installment')  
-      
-    payment_date = models.DateField()  
+    installment_level = models.CharField(max_length=50, choices=installment_level, default='select_installment')
 
     cash = 'cash'
     bank_deposit = 'bank_deposit'
@@ -77,11 +82,14 @@ class PaymentDetail(models.Model):
     payment_method = models.CharField(max_length=50, choices=payment_methods)  
     depositor = models.CharField(max_length=150) 
     bank_name = models.CharField(max_length=150) 
-    teller = models.CharField(max_length=150, blank=True) 
-    description = models.CharField(max_length=200, blank=True)
+    teller = models.CharField(max_length=150, blank=True)  
+    
+    # payment confirmation
     confirmed = models.BooleanField(default=False) 
     payment_recorded_date = models.DateField(auto_now_add=True)     
 
+    class Meta:
+        ordering = ['-payment_date' ]
 
     def __str__ (self):
         return f'{self.payee}'

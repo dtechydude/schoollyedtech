@@ -4,6 +4,8 @@ from embed_video.admin import AdminVideoMixin
 from curriculum.models import Lesson, Standard, Subject, Session, ClassGroup
 
 # Register your models here.
+
+
 class StandardAdmin(admin.ModelAdmin):
    
     list_display=('name', 'description')

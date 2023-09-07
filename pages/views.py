@@ -4,4 +4,4 @@ from django.contrib import messages
 
 # Create your views here.
 def schoolly_home(request):
-    return render(request, 'pages/schoolly-home.html')
+    return render(request, 'pages/schoollyedtech.html')

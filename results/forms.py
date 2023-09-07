@@ -45,7 +45,14 @@ class ResultCreateForm(forms.ModelForm):
             fields =  '__all__'
 
             widgets = {
-            'exam_year': forms.DateInput(
+            'exam_date' : forms.DateInput(
+                format=('%d/%m/%Y'),
+                attrs={'class': 'form-control', 
+                       'placeholder': 'Select a date',
+                       'type': 'date'  # <--- IF I REMOVE THIS LINE, THE INITIAL VALUE IS DISPLAYED
+                      }),
+
+             'next_term_resume' : forms.DateInput(
                 format=('%d/%m/%Y'),
                 attrs={'class': 'form-control', 
                        'placeholder': 'Select a date',

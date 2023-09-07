@@ -7,7 +7,7 @@ class PaymentCategoryAdmin(admin.ModelAdmin):
 
 class PaymentChartAdmin(admin.ModelAdmin):
     
-    list_display=('name', 'payment_cat', 'amount_due')
+    list_display=('name', 'payment_cat', 'amount_due', 'session', 'term')
 
 class PaymentDetailAdmin(admin.ModelAdmin):
     

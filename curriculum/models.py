@@ -12,6 +12,7 @@ from django.utils.html import strip_tags
 
 
 
+
 class ClassGroup(models.Model):
     name = models.CharField(max_length=50, blank=True)
     slug = models.SlugField(null=True, blank=True)
