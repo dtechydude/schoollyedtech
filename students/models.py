@@ -133,14 +133,14 @@ class StudentDetail(models.Model):
     class Meta:
         ordering = ['user']
 
-#this function returns the profile name in the admin panel profile table
     def __str__ (self):
-        # return f'{self.user.username} - {self.user.last_name }  {self.user.first_name}'
         return f'{self.user.username} - {self.last_name }  {self.first_name}'
 
 
     def get_absolute_url(self):
         return reverse('students:students-detail', kwargs={'id':self.id})
+
+    
 
 
 

@@ -31,6 +31,7 @@ from .filters import StudentFilter
 from django_filters.views import FilterView
 # For panigation
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 
 # @login_required
@@ -371,3 +372,35 @@ class StudentCardDetailView(LoginRequiredMixin, DetailView):
         queryset = queryset.filter(pk=new_str)
         obj = queryset.get()
         return obj
+
+
+# Student Search Query App
+
+def student_search_list(request):
+    student = StudentDetail.objects.all()
+     # PAGINATOR METHOD
+    page = request.GET.get('page', 1)
+    paginator = Paginator(student, 30)
+    try:
+        student = paginator.page(page)
+    except PageNotAnInteger:
+        student = paginator.page(1)
+    except EmptyPage:
+        student = paginator.page(paginator.num_pages)
+
+    return render(request, 'students/search_student_list.html', {'student': student })
+
+# Define function to search student
+def search(request):
+    results = []
+
+    if request.method == "GET":
+        query = request.GET.get('search')
+
+        if query == '':
+            query = 'None'
+
+        results = StudentDetail.objects.filter(Q(first_name__icontains=query) | Q(last_name__icontains=query) | Q(guardian_name__icontains=query) | Q(class_teacher__first_name__icontains=query))
+
+        
+    return render(request, 'students/search.html', {'query': query, 'results': results})

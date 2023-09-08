@@ -36,6 +36,10 @@ urlpatterns = [
     path('student-pdf', student_views.mystudent_pdf, name="student-pdf"),
     path('student-csv', student_views.mystudent_csv, name="student-csv"),
 
+    # Search student detail app
+    path('student-search/', student_views.student_search_list, name='student_search_list'),
+    path('search/', student_views.search, name='search'),
+
     #for my rest_framework
     path('api-auth/', MyStudentList.as_view(), name="apiview"),
     

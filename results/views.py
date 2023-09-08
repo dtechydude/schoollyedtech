@@ -8,7 +8,7 @@ from django.urls import reverse_lazy, reverse
 from results.forms import PrintResultForm, ResultUploadForm, ResultCreateForm
 from django.contrib import messages
 from results.models import UploadResult, Result, ResultSheet
-from results.filters import MyresultFilter, MyResultSheetFilter
+from results.filters import MyresultFilter, MyResultSheetFilter, ResultSheetFilter
 from students.models import StudentDetail
 import os
 from django_filters.views import FilterView
@@ -26,11 +26,40 @@ from django.views.generic import(TemplateView, DetailView,
 @login_required
 def printresult(request):
     result = ResultSheet.objects.all()
-    context = {
-        'result':result
-    }
+    resultsheet_filter = ResultSheetFilter(request.GET, queryset=result) 
+    result = resultsheet_filter.qs
     
-    return render(request, 'results/view_result.html', context)
+
+     # PAGINATOR METHOD
+    page = request.GET.get('page', 1)
+    paginator = Paginator(result, 20)
+    try:
+        result = paginator.page(page)
+    except PageNotAnInteger:
+        result = paginator.page(1)
+    except EmptyPage:
+        result = paginator.page(paginator.num_pages)
+   
+
+
+    try:     
+        # result = ResultSheet.objects.filter(student_id=StudentDetail.objects.get(user_id=request.user))
+    
+        context = {
+            # 'result' : resultsheet_filter.objects.filter(student_id=StudentDetail.objects.get(student_id=request.user)),
+            'result':result,
+            'resultsheet_filter' : resultsheet_filter,
+            
+        }
+
+        return render(request, 'results/view_result.html', context)
+
+    except StudentDetail.DoesNotExist:
+        return HttpResponse('<div style="text-align:center; padding-top:100px;"><h1 > Oops! You are not a student</h1>'
+                            '<p>Please <a href="#">register</a> as a student</p>'
+                            '</div>'
+                            )
+        
 
 
 
