@@ -35,18 +35,20 @@ class Profile(models.Model):
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     
+   
+    admin = 'admin'
     teacher = 'teacher'
     student = 'student'
     parent = 'parent'
-    admin = 'admin'
     inactive = 'inactive'
  
 
     user_types = [
+        
+        (admin, 'admin'),
         (teacher, 'teacher'),
         (student, 'student'),
         (parent, 'parent'),
-        (admin, 'admin'),
         (inactive, 'inactive'),
       
     ]

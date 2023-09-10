@@ -289,7 +289,7 @@
 							{% elif user.is_authenticated and user.profile.user_type == 'teacher' or user.profile.user_type == 'admin' %}
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
 							
-							{% if user.is_authenticated and user.is_superuser %}
+							{% if user.is_authenticated and user.is_superuser or user.profile.user_type == "admin" %}
 							<li><a href="{% url 'portal:register-session' %}">Add New Session </a></li>
 							<li><a href="{% url 'portal:register-class' %}">Add New class</a></li>
 							<li><a href="{% url 'portal:register-classgroup' %}">Add ClassArm </a></li>
@@ -329,7 +329,7 @@
 				
 				<ul aria-expanded="false">
 					<li><a href="{% url 'notification:calendar' %}">School Calendar</a></li>
-					{% if user.is_authenticated and user.is_superuser %}
+					{% if user.is_authenticated and user.is_superuser or user.profile.user_type == "admin" %}
 					<li><a href="{% url 'notification:calendar-form' %}">Add Events</a></li>
 					<li><a href="{% url 'notification:new-mail' %}">Send Mail</a></li>
 					{% endif %}
@@ -442,7 +442,7 @@
 														</svg>
 													</span>
 													<div class="ms-4">
-														{% if user.is_authenticated and user.is_superuser %}
+														{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' %}
 														<h4 class="mb-0 font-w600">{{ student_num }}</h4>
 														<p class="mb-0">Total Students</p>
 													</div>

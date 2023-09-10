@@ -3,7 +3,7 @@
 {% block title %}<title> Delete Lesson</title>{% endblock title%}
 
 {% block content_body %}
-    
+{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'admin' or user.profile.user_type == 'teacher' %}
     </div>
 
     <body class="vh-100">    
@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-
+        {% endif %}
 
     {% endblock content_body %}
 
