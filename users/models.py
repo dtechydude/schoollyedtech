@@ -41,6 +41,7 @@ class Profile(models.Model):
     student = 'student'
     parent = 'parent'
     inactive = 'inactive'
+    
  
 
     user_types = [
