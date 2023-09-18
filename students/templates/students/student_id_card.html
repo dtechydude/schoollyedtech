@@ -33,9 +33,9 @@
           <td class="bg-transparent text-white " scope="row"  style="text-align:center;"><img src="{{my_idcard.user.studentdetail.user.profile.image.url}}" width="200px" height="200px" style="border-radius:10% " ></td></div>
           <td  scope="row" style="text-align:left;"><h4>{{my_idcard.user.studentdetail.first_name}} {{my_idcard.user.studentdetail.middle_name}} {{my_idcard.user.studentdetail.last_name}} | Badge: {{my_idcard.user.studentdetail.badge}}</h4><br>
             <span style="font-size:18px;">Current Class: <span style="color:rgb(0, 183, 255);"><strong>{{my_idcard.user.studentdetail.current_class}}</strong></span></span><br>
-            <span>Class Group: {{my_idcard.user.studentdetail.class_group}}</span><br>
-            <span>Student Type: {{my_idcard.user.studentdetail.student_type}}</span><br>
-            <span>Class Teacher: {{my_idcard.user.studentdetail.class_teacher}}</span></td>
+            <span style="color:blue;"><em>Class Group: </em></span><span>{{my_idcard.user.studentdetail.class_group}}</span><br>
+            <span style="color:blue;"><em>Student Type: </em></span><span>{{my_idcard.user.studentdetail.student_type}}</span><br>
+            <span style="color:blue;"><em>Class Teacher: </em></span><span>{{my_idcard.user.studentdetail.class_teacher}}</span></td>
           
           
         </tr>
@@ -61,13 +61,12 @@
       <tbody>
         <tr>
           
-          <td>Mark<br>
-        <span><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque itaque, 
-            inventore ratione, consequuntur aspernatur iusto reprehenderit omnis, eaque 
-            sequi placeat tenetur labore esse nam delectus quo id illum! Reprehenderit, neque.</p>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque itaque, 
-                inventore ratione, consequuntur aspernatur iusto reprehenderit omnis, eaque 
-                sequi placeat tenetur labore esse nam delectus quo id illum! Reprehenderit, neque.</p></span>
+          <td>
+        <span><p>This Document is a property of -----name----of---my---- Schools If found, 
+          please return to the school authority<br> Contact details as stated below;</p>
+            <p>Hon. Abiodun Oni str. Off kuforiji Olubi drive,<br>
+              Adigbe, Abeokuta, Ogun State, Nigeria.<br>
+              Phone: +234 8030000000</p></span>
                 <img src="{% static 'pages/qr_code.png' %}" width="100px" height="100px"></td>
           
         </tr>
@@ -77,7 +76,7 @@
   </div>
   <div class="col-sm-10 " style="padding-top:20px; margin: 0 auto;">
     
-    <img src="barcode.png" width="100%" height="60">
+    <img src="{% static 'pages/barcode2.jpg' %}" width="100%" height="60">
 
     </div>
  

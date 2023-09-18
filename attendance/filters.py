@@ -7,5 +7,5 @@ class AttendanceFilter(django_filters.FilterSet):
     class Meta:
         model = Attendance
   
-        fields = {'student_id', 'standard',}
+        fields = {'student_id', 'session', 'term'}
         

@@ -4,7 +4,7 @@ from students.models import Mystudents, StudentDetail, Badge
 
 class StudentAdmin(admin.ModelAdmin):
        
-    list_display=('user', 'current_class', 'date_admitted', 'guardian_phone')
+    list_display=('user', 'last_name', 'current_class', 'date_admitted', 'guardian_phone')
 
 class BadgeAdmin(admin.ModelAdmin):
        

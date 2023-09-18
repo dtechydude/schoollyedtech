@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from attendance.models import Attendance
 from attendance.forms import StudentAttendanceForm
+from students.models import StudentDetail
 # For Filter
 from .filters import AttendanceFilter
 from django_filters.views import FilterView
@@ -65,6 +66,30 @@ def attendance_view(request):
     }
 
     return render(request, 'attendance/attendance_view.html', context)
+
+
+def my_student_att_form(request):
+    # my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
+    if request.method == 'POST':
+        my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
+        attd_form = StudentAttendanceForm(request.POST)
+      
+        if attd_form.is_valid():
+            attd_form.save()
+            
+            messages.success(request, f'Attendance taken. exit or enter another')
+            return redirect('attendance:my-std-att-form')
+    else:
+         attd_form = StudentAttendanceForm()
+                  
+    context = {
+        'attd_form': attd_form,
+        'my_students':StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
+         
+    }
+
+    return render(request, 'attendance/my-std-att-form.html', context)
+
 
 
 

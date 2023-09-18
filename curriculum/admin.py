@@ -1,7 +1,7 @@
 from django.contrib import admin
 from embed_video.admin import AdminVideoMixin
 
-from curriculum.models import Lesson, Standard, Subject, Session, ClassGroup
+from curriculum.models import Lesson, Standard, Subject, Session, ClassGroup, Term
 
 # Register your models here.
 
@@ -25,6 +25,10 @@ class SessionAdmin(admin.ModelAdmin):
 class ClassGroupAdmin(admin.ModelAdmin):
        
     list_display=('name', 'description',)
+
+class TermAdmin(admin.ModelAdmin):
+       
+    list_display=('name', 'session', 'start_date', 'end_date')
     
 
 admin.site.register(Standard, StandardAdmin)
@@ -32,6 +36,7 @@ admin.site.register(ClassGroup, ClassGroupAdmin)
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Session, SessionAdmin)
+admin.site.register(Term, TermAdmin)
 
 
 

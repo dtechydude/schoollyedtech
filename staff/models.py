@@ -132,6 +132,9 @@ class StaffProfile(models.Model):
     next_of_kin_address = models.CharField(max_length=150, blank=True)  
     next_of_kin_phone = models.CharField(max_length=15, blank=True) 
 
+    class Meta:
+        ordering = ['user']
+
 
 #this function returns the profile name in the admin panel profile table
     def __str__ (self):

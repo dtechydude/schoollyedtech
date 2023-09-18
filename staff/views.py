@@ -8,11 +8,13 @@ from staff.forms import StaffRegisterForm, StaffUpdateForm
 from staff.models import StaffProfile
 from students.models import StudentDetail
 from curriculum.models import Standard
+from attendance.models import Attendance
 from django.contrib.auth.models import User
 from users.models import Profile
 from users.forms import UserUpdateForm, UserRegisterForm
 from django.http import HttpResponse
 from django.views.generic import DetailView, UpdateView, DeleteView, ListView
+from django.db.models import Count
 # For Filter
 from .filters import StaffFilter
 from django_filters.views import FilterView
@@ -76,6 +78,7 @@ def stafflist(request):
     }
     return render (request, 'staff/staff_list.html', context)
 
+#teachers seeing the students in their class
 @login_required
 def self_student_list(request):
     my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
@@ -85,6 +88,26 @@ def self_student_list(request):
     }
 
     return render (request, 'staff/my_students.html', context)
+
+
+@login_required
+def self_student_attendance(request):
+    my_students_attendance = Attendance.objects.filter(student_id__class_teacher__user=request.user).order_by('student_id')
+    att_count = Attendance.objects.values('student_id__first_name').annotate(c=Count('student_id__first_name')).order_by('-c')
+    student_att = Attendance.objects.filter().order_by('student_id').values('student_id__last_name').annotate(count=Count('student_id__last_name'))
+    my_own_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
+
+
+    
+    context = {
+        'my_students_attendance': my_students_attendance,
+        'att_count' : Attendance.objects.values('student_id__first_name').annotate(c=Count('student_id__first_name')).order_by('-c'),
+        'student_att' : student_att,
+        'my_own_students': my_own_students
+
+    }
+
+    return render (request, 'staff/my_students_attendance.html', context)
 
 
 

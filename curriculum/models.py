@@ -12,19 +12,6 @@ from django.utils.html import strip_tags
 
 
 
-
-class ClassGroup(models.Model):
-    name = models.CharField(max_length=50, blank=True)
-    slug = models.SlugField(null=True, blank=True)
-    description = models.CharField(max_length=120, blank=True)
-    
-    def __str__ (self):
-        return f'{self.name}'
-        
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
 class Session(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(null=True, blank=True)
@@ -36,6 +23,22 @@ class Session(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+class Term(models.Model):
+    name = models.CharField(max_length=100, blank=True, default='select_term')
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, related_name='session')
+    start_date = models.DateField(blank=True, null=True, verbose_name='Start Date(YYYY-MM-DD)')
+    end_date = models.DateField(blank=True, null=True, verbose_name='End Date(YYYY-MM-DD)')
+    slug = models.SlugField(null=True, blank=True)
+    description = models.TextField(max_length=500, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
 
 
 class Standard(models.Model):
@@ -49,6 +52,20 @@ class Standard(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+
+
+class ClassGroup(models.Model):
+    name = models.CharField(max_length=50, blank=True)
+    slug = models.SlugField(null=True, blank=True)
+    description = models.CharField(max_length=120, blank=True)
+    
+    def __str__ (self):
+        return f'{self.name}'
+        
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
 
 
 

@@ -82,7 +82,7 @@ class StudentDetail(models.Model):
 
     dob = models.DateField(blank=True, null=True, verbose_name='Date of Birth (YYYY-MM-DD)')
     # class_on_admission = models.ForeignKey(Standard, on_delete=models.CASCADE)
-    date_admitted = models.DateField( verbose_name='Admission date (YYYY-MM-DD)')
+    date_admitted = models.DateField( verbose_name='Admission date (MM-DD-YYYY)')
     # class_on_admission = models.CharField(max_length=50, blank=True, null=True, default=None)
     class_on_admission = models.ForeignKey(Standard, on_delete=models.CASCADE, related_name='studentdetails', verbose_name='class_on_admission') 
     
