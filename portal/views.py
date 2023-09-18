@@ -27,7 +27,7 @@ def portal_home(request):
     staff_num = StaffProfile.objects.count()
     my_idcard = StudentDetail.objects.filter(user=User.objects.get(username=request.user))
     students = StudentDetail.objects.filter().order_by('current_class').values('current_class__name').annotate(count=Count('current_class__name'))
-    
+    my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
     # Build a paginator with function based view
     queryset = SchoolCalendar.objects.all().order_by("-id")
     page = request.GET.get('page', 1)
@@ -53,6 +53,7 @@ def portal_home(request):
         'queryset': queryset,
         'events':events,
         'my_idcard':my_idcard,
+        'my_students':my_students
     }
     return render(request, 'portal/portal-home.html', context)
 
