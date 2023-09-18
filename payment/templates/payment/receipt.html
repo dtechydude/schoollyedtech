@@ -29,7 +29,7 @@
 
 <div class="col-lg-6">
 
-<div class="invoice-logo"><img width="300" src="{% static 'pages/schoolly_banner.png' %}" alt="Invoice logo"></div>
+<div class="invoice-logo"><img width="600" height="100px" src="{% static 'pages/schoolly_banner.png' %}" alt="Invoice logo"></div>
 </div>
 
 <div class="col-lg-6">
@@ -37,10 +37,10 @@
 
 <div class="invoice-from">
 <ul class="list-unstyled text-right">
-<li>SCHOOL NAME</li>
-<li>SCHOOL FULL ADDRESS</li>
-<li>SCHOOL PHONE NUMBER</li>
-<li>SCHOOL IDENTIFICATION</li>
+<li>My School Name</li>
+<li>My School Full Address</li>
+<li>My School Phone</li>
+<li>My School Email</li>
 </ul>
 </div>
 </div>
@@ -120,7 +120,7 @@
 </div>
 </div>
 <div class="invoice-footer mt25">
-<p class="text-center"><strong> Important!: </strong>Presentation of this receipt at the school will also be subjected to data check. <a href="#" class="btn btn-default ml15"><i class="fa fa-print mr5"></i> >> Home</a></p>
+<p class="text-center"><strong> Important!: </strong>Presentation of this receipt at the school will also be subjected to data check. <a href="{% url 'portal:portal-home' %}" class="btn btn-default ml15"><i class="fa fa-print mr5"></i> >> Portal Home</a></p>
 </div>
 </div>
 

@@ -10,7 +10,7 @@ from students.models import StudentDetail
 class Attendance(models.Model):
     student_id = models.ForeignKey(StudentDetail, on_delete=models.CASCADE, blank=True, null=True)
     standard = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True)
-    session = models.ForeignKey(Session, on_delete=models.CASCADE, blank=True, null=True)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, blank=True, null=True, default='2023/2024')
     term = models.ForeignKey(Term, on_delete=models.CASCADE, blank=True, null=True)
     attendance_date = models.DateField(null=True)
     morning_status = models.BooleanField(default=False)

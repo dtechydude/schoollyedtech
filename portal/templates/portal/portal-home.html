@@ -202,7 +202,7 @@
 							<li><a href="{% url 'payment:payment_chart' %}">Payment Chart</a></li>
 							<!-- <li><a href="{% url 'results:my-reportsheet' %}">Result History</a></li> -->
 							<li><a href="{% url 'results:my-result' %}">Result History</a></li>
-							<li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li>
+							<!-- <li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li> -->
 							{% endif %}
 
 							{% if user.is_authenticated and user.profile.user_type == 'inactive' %}
@@ -211,8 +211,10 @@
 							
 							{% if user.is_authenticated and user.profile.user_type == 'teacher'%}
 							<li><a href="{% url 'staff:my-students' %}">My Student List</a></li>
-							<li><a href="{% url 'attendance:attendance_form' %}">Take Attendance</a></li>
+							<!-- <li><a href="{% url 'attendance:attendance_form' %}">Take Attendance</a></li> -->
+							<li><a href="{% url 'attendance:my-std-att-form' %}">Attendance Register</a></li>
 							<li><a href="{% url 'attendance:attendance_view' %}">View Attendance</a></li>
+							<li><a href="{% url 'staff:my-students-attendance' %}">Attendance Report</a></li>
 							{% endif %}
 															
 							{% if user.is_authenticated and user.profile.user_type == 'admin' %}
@@ -221,7 +223,7 @@
 							<li><a href="{% url 'students:student-registration' %}">Add New Student</a></li>
 							
 							<li><a href="{% url 'results:print-result' %}">View Students Result</a></li>
-							<li><a href="{% url 'results:print-resultform' %}">Upload Students Result</a></li>
+							<!-- <li><a href="{% url 'results:print-resultform' %}">Upload Students Result</a></li> -->
 							<li><a href="{% url 'results:result-create' %}">Load Report Sheet</a></li>	
 							<li><a href="{% url 'attendance:attendance_form' %}">Take Attendance</a></li>
 							<li><a href="{% url 'attendance:attendance_view' %}">View Attendance</a></li>
@@ -315,8 +317,8 @@
 						<li>Noting to show</li>
 						{% else %}
 						{% if user.is_authenticated and user.profile.user_type == 'admin' %}
-						<li><a href="#">Set Exam</a></li>
-						<li><a href="#">Set Test</a></li>
+						<!-- <li><a href="#">Set Exam</a></li> -->
+						<!-- <li><a href="#">Set Test</a></li> -->
 						{% endif%}
 						<li><a href="{% url 'quizes:main-view' %}">Take Exam/Test</a></li>
 						{% endif %}

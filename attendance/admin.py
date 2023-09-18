@@ -5,6 +5,6 @@ from attendance.models import Attendance
 
 class AttendanceAdmin(admin.ModelAdmin):
        
-    list_display=('student_id', 'standard', 'date_taken', 'morning_status', 'afternoon_status')
+    list_display=('student_id', 'session', 'term', 'date_taken', 'morning_status', 'afternoon_status')
 
 admin.site.register(Attendance, AttendanceAdmin)

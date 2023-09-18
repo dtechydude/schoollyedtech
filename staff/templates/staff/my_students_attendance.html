@@ -11,10 +11,11 @@
     <title>Student Attendance</title>
   </head>
   <body>
+    {% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'teacher' or user.profile.user_type == 'admin'%}
     <div class="container">
         <div class="col-sm-12" style="padding-top:20px; text-align:center">
             <h2 style="color:red;">Portal: Attendance Report</h2>
-             {{user.staffprofile.class_in_charge__name}}
+             <a href="{% url 'portal:portal-home' %}" class="btn btn-default ml15"><i class="fa fa-print mr5"></i> >> Portal Home</a>
           </div>
 
         <div  style="padding-top:20px;"></div>
@@ -41,14 +42,43 @@
                     <td scope="row">{{ att.student_id }}</td>
                     <td scope="row">{{ att.attendance_date }}</td>
                     
-                    <td scope="row">{% if att.morning_status %}Present{% else %}Absent{% endif %}</td>
-                    <td scope="row">{% if att.afternoon_status %}Present{% else %}Absent{% endif %}</td>
+                    <td scope="row">{% if att.morning_status %}<em>Present</em>{% else %}<span style="color:red;"><em>Absent</em></span>{% endif %}</td>
+                    <td scope="row">{% if att.afternoon_status %}<em>Present</em>{% else %}<span style="color:red;"><em>Absent</em></span>{% endif %}</td>
                     
                            
                   </tr>
                   {% endfor %}
               </tbody>
             </table>
+            <!-- Page Paginator start -->
+			
+										{% if my_students_attendance.has_other_pages %}
+										{% if my_students_attendance.has_previous %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ my_students_attendance.previous_page_number }}">&laquo;</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+
+										{% endif %}
+										{% for i in my_students_attendance.paginator.page_range %}
+										{% if my_students_attendance.number == i %}
+
+										<a class="btn btn-info mb-4" href="">{{ i }}</a>
+										{% else %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+										{% endif %}
+										{% endfor %}
+										{% if my_students_attendance.has_next %}
+										<a class="btn btn-outline-info mb-4" href="?page={{ my_students_attendance.next_page_number }}">&raquo;</a>
+										{% else %}
+										
+										<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+										{% endif %}
+									
+									{% endif %}
+									<!-- Page Paginator end -->
+
+
+
           </div>
         <div class=" col-sm-4" style="float:right;">
           <table class="table table-sm">
@@ -84,4 +114,5 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
+{% endif %}
 </html>

@@ -50,7 +50,7 @@ def attendance_view(request):
     
     # PAGINATOR METHOD
     page = request.GET.get('page', 1)
-    paginator = Paginator(attendance, 10)
+    paginator = Paginator(attendance, 30)
     try:
         attendance = paginator.page(page)
     except PageNotAnInteger:

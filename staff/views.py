@@ -97,6 +97,16 @@ def self_student_attendance(request):
     student_att = Attendance.objects.filter().order_by('student_id').values('student_id__last_name').annotate(count=Count('student_id__last_name'))
     my_own_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
 
+    # PAGINATOR
+    page = request.GET.get('page', 1)
+    paginator = Paginator(my_students_attendance, 30)
+    try:
+        my_students_attendance = paginator.page(page)
+    except PageNotAnInteger:
+        my_students_attendance = paginator.page(1)
+    except EmptyPage:
+        my_students_attendance = paginator.page(paginator.num_pages)
+
 
     
     context = {
