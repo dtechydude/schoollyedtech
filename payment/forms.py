@@ -31,6 +31,7 @@ class PaymentChartForm(forms.ModelForm):
             Div('name', css_class="col-sm-2"),
             Div('payment_cat', css_class="col-sm-2"),
             Div('session', css_class="col-sm-2"),
+            Div('term', css_class="col-sm-2"),
             Div('amount_due', css_class="col-sm-2"),
             bootstrap.FormActions(
                 layout.Submit('submit', 'Add', css_class='btn btn-primary')),
@@ -40,7 +41,7 @@ class PaymentChartForm(forms.ModelForm):
 
     class Meta:
         model = PaymentChart
-        fields = ["name", "payment_cat", "session", "amount_due"]
+        fields = ["name", "payment_cat", "session", "term", "amount_due"]
 
 
 

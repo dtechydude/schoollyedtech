@@ -4,11 +4,12 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.db.models import Count
 from students.models import StudentDetail
-from staff.models import StaffProfile
+from staff.models import StaffProfile, StaffCategory, Department
+from results.models import ExamSubject, Examination
 from notification.models import SchoolCalendar
 from django.views.generic import  ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .forms import ClassRegisterForm, ClassgroupRegisterForm, SessionRegisterForm, ExamRegisterForm
+from .forms import ClassRegisterForm, ClassgroupRegisterForm, SessionRegisterForm, ExamRegisterForm, CategoryRegisterForm, DepartmentRegisterForm, SubjectRegisterForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 # Create your views here.
@@ -132,7 +133,7 @@ def register_exam(request):
         if new_exam.is_valid():
            
             new_exam.save()
-            messages.success(request, f'New Exam Registered successfully, Register another or go to class list')
+            messages.success(request, f'New Exam Registered successfully, Register another or go to Exam list')
             return redirect('portal:register-exam')
     else:
       
@@ -144,6 +145,71 @@ def register_exam(request):
     }
 
     return render(request, 'portal/register_exam.html', context)
+
+# Register Department For Staff
+@login_required
+def register_new_department(request):
+    if request.method == 'POST':
+        
+        new_department = DepartmentRegisterForm(request.POST)
+        if new_department.is_valid():
+           
+            new_department.save()
+            messages.success(request, f'New Department Registered successfully, Register another or go to department list')
+            return redirect('portal:department_list')
+    else:
+      
+        new_department = DepartmentRegisterForm
+
+    context = {
+        
+        'new_department': new_department,
+    }
+
+    return render(request, 'portal/register_new_department.html', context)
+
+# Register Category For Staff
+@login_required
+def register_new_category(request):
+    if request.method == 'POST':
+        
+        new_category = CategoryRegisterForm(request.POST)
+        if new_category.is_valid():
+           
+            new_category.save()
+            messages.success(request, f'New Department Category successfully, Register another or go to category list')
+            return redirect('portal:category_list')
+    else:
+      
+        new_category = CategoryRegisterForm
+
+    context = {
+        
+        'new_category': new_category,
+    }
+
+    return render(request, 'portal/register_new_category.html', context)
+
+@login_required
+def register_exam_subjects(request):
+    if request.method == 'POST':
+        
+        new_subject = SubjectRegisterForm(request.POST)
+        if new_subject.is_valid():
+           
+            new_subject.save()
+            messages.success(request, f'New Subject Registered successfully, Register another or go to Subject list')
+            return redirect('portal:subject_list')
+    else:
+      
+        new_department = DepartmentRegisterForm
+
+    context = {
+        
+        'new_subject': new_department,
+    }
+
+    return render(request, 'portal/register_exam_subjects.html', context)
 
 
     
@@ -160,3 +226,34 @@ class StudentCardDetailView(LoginRequiredMixin, DetailView):
         queryset = queryset.filter(pk=new_str)
         obj = queryset.get()
         return obj
+
+
+class CategoryListView(LoginRequiredMixin, ListView):
+    context_object_name = 'categorylist'
+    model = StaffCategory
+    queryset = StaffCategory.objects.all()
+    template_name = 'portal/category.html'
+    paginate_by = 10
+
+
+class DepartmentListView(LoginRequiredMixin, ListView):
+    context_object_name = 'departmentlist'
+    model = Department
+    queryset = Department.objects.all()
+    template_name = 'portal/department.html'
+    paginate_by = 10
+
+class SubjectListView(LoginRequiredMixin, ListView):
+    context_object_name = 'subjectlist'
+    model = ExamSubject
+    queryset = ExamSubject.objects.all()
+    template_name = 'portal/subjects_list.html'
+    paginate_by = 30
+
+
+class ExamListView(LoginRequiredMixin, ListView):
+    context_object_name = 'examlist'
+    model = Examination
+    queryset = Examination.objects.all()
+    template_name = 'portal/exam_list.html'
+    paginate_by = 30

@@ -17,10 +17,14 @@ class ResultSheetAdmin(admin.ModelAdmin):
        
     list_display=('student_id', 'session', 'exam',)
 
+class ExaminationAdmin(admin.ModelAdmin):
+       
+    list_display=('name', 'standard_name',)
+
 
 
 admin.site.register(Result)
-admin.site.register(Examination)
+admin.site.register(Examination, ExaminationAdmin)
 # admin.site.register(Session)
 admin.site.register(UploadResult, UploadResultAdmin)
 

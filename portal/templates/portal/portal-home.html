@@ -184,9 +184,35 @@
 						</a>
 						<li>
 							{% if user.is_authenticated and user.is_superuser or user.is_staff %}
-							<a href="/admin"><i style="font-size:14px;"><b>GO TO ADMIN PAGE</b></i></a>
+							<a href="/admin"><span style="font-size:14px; color:green;"><b>GO TO ADMIN PANEL</b></span></a>
 						{% endif %}
 						</li>
+
+							
+						<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-025-dashboard"></i>
+							<span class="nav-text">Setup School Info</span>
+						</a>
+						<ul aria-expanded="false">
+							{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'student' %}
+										
+							<li><a href="{% url 'portal:register-session' %}">Add New Session </a></li>
+							<li><a href="{% url 'portal:register-class' %}">Add New class</a></li>
+							<li><a href="{% url 'portal:register-classgroup' %}">Add ClassArm </a></li>
+							<li><a href="{% url 'portal:register-subject' %}">Add Exam Subjects</a></li>
+							<li><a href="{% url 'portal:subject_list' %}">Subjects List </a></li>
+							<li><a href="{% url 'portal:register-exam' %}">Add Exams </a></li>
+							<li><a href="{% url 'portal:exam_list' %}">Exam List </a></li>
+							<li><a href="{% url 'portal:register-category' %}">Add Staff Category </a></li>
+							<li><a href="{% url 'portal:register-department' %}">Add Department </a></li>
+							<li><a href="{% url 'portal:category_list' %}">Staff Category List </a></li>
+							<li><a href="{% url 'portal:department_list' %}">Department List </a></li>
+							<!-- <li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li> -->
+							{% endif %}
+						</ul>
+
+					</li>
+
 						
 						<li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-025-dashboard"></i>
@@ -239,7 +265,9 @@
 						<ul aria-expanded="false">
 							{% if user.is_authenticated and user.profile.user_type == 'admin'%}
 							<li><a href="{% url 'staff:staff_list' %}">Staff List</a></li>
+						
 							<li><a href="{% url 'staff:staff_create' %}">Add New Staff</a></li>
+							
 							{% else %}
 							<li><a href="{% url 'staff:staff_create' %}">Can't view Info</a></li>
 							
@@ -255,7 +283,7 @@
 						<span class="nav-text">Payments</span>
 					</a>
 					<ul aria-expanded="false">
-						<li><a href="#">Online Payment</a></li>
+						<li><a href="#">Online Payment (not implemented)</a></li>
 						<li><a href="{% url 'payment:payment_form' %}">Make Payment</a></li>
 						<li><a href="{% url 'payment:payment_record' %}">All Payments</a></li>
 						<li><a href="{% url 'payment:payment_cat_form' %}">Add New Category</a></li>
@@ -294,10 +322,8 @@
 							<li><a href="{% url 'curriculum:standard_list' %}">Class List</a></li>
 							
 							{% if user.is_authenticated and user.is_superuser or user.profile.user_type == "admin" %}
-							<li><a href="{% url 'portal:register-session' %}">Add New Session </a></li>
-							<li><a href="{% url 'portal:register-class' %}">Add New class</a></li>
-							<li><a href="{% url 'portal:register-classgroup' %}">Add ClassArm </a></li>
-							<li><a href="{% url 'portal:register-exam' %}">Register Exams </a></li>
+							<li><a href="/admin">Add Subjects & Lessons From Admin Panel (Curriculum) </a></li>
+							
 							{% else %}
 							<li><a href="">Nothing to show</a></li>
 							{% endif %}

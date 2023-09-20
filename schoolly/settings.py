@@ -234,7 +234,7 @@ EMAIL_HOST_PASSWORD = 'eawtvpskkrujiwgo'
 # AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 # AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
 
-# AWS without environment variable- Please use this during production
+# # # AWS without environment variable- Please use this during production
 # AWS_ACCESS_KEY_ID = "AKIAU7WRHVNVL3BEVXXW"
 # AWS_SECRET_ACCESS_KEY = "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"
 # AWS_STORAGE_BUCKET_NAME = "django-schoolly-files"
@@ -271,11 +271,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # CKEDITOR_BASEPATH = "/static/ckeditor/ckeditor/"
 
 
-# #AWS ACCESS WITH AWS MANAGEING STATIC FILES
+# # #AWS ACCESS WITH AWS MANAGEING STATIC FILES
 # AWS_ACCESS_KEY_ID = "AKIASGDZDIWWIYUWBVN3"
 # AWS_SECRET_ACCESS_KEY = "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"
 # AWS_STORAGE_BUCKET_NAME = "schoolly"
-# # ADDITIONAL CONFIG FOR USING AWS_BUCKET FOR STATIC
+
+# # # ADDITIONAL CONFIG FOR USING AWS_BUCKET FOR STATIC
 # AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 # AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 
@@ -283,14 +284,14 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 # STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
 
 # # AWS without environment variable- Please use this during production
-# AWS_ACCESS_KEY_ID = "AKIAU7WRHVNVL3BEVXXW"
-# AWS_SECRET_ACCESS_KEY = "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"
-# AWS_STORAGE_BUCKET_NAME = "django-schoolly-files"
+# # AWS_ACCESS_KEY_ID = "AKIAU7WRHVNVL3BEVXXW"
+# # AWS_SECRET_ACCESS_KEY = "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"
+# # # AWS_STORAGE_BUCKET_NAME = "django-schoolly-files"
 
 # AWS_S3_FILE_OVERWRITE = False
 # AWS_DEFAULT_ACL = None
 
-# # # # #add region name to connect
+# # # # # #add region name to connect
 # AWS_S3_REGION_NAME = 'us-west-2'
 # AWS_S3_ADDRESSING_STYLE = 'virtual'
 

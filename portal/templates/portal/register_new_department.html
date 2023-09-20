@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% load static %}
-{% block title %}<title>SchoollyEdTech | Register New Exam </title>{% endblock title %}
+{% block title %}<title>SchoollyEdTech | Register New Department </title>{% endblock title %}
 
 {% block content_body%}
 
@@ -10,7 +10,7 @@
     <div class="container-fluid">
         <div class="row page-titles">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Register New Exam</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Register Department</a></li>
                 <li class="breadcrumb-item"><a href="javascript:void(0)"></a></li>
             </ol>
         </div>
@@ -19,7 +19,7 @@
             <div class="col-xl-10 col-xxl-10">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Register Examinations</h4>
+                        <h4 class="card-title">Create Department</h4>
                     </div>
                     <div class="card-body">
                         <div id="smartwizard" class="form-wizard order-create">
@@ -36,11 +36,24 @@
                                             <div class="mb-3">
                                                 <form method="post" enctype="multipart/form-data">
                                                     {% csrf_token %}
-                                              {{ new_exam | crispy }}
-                                                </div>
+                                                <label class="text-label form-label">Department (e.g; science, art...)*</label>
+                                                <input type="text" name="name" maxlength="100" required id="id_department_id" class="form-control" placeholder="Department Name">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mb-2">
+                                            <div class="mb-3">
+                                                <label class="text-label form-label">Description*</label>
+                                                <input type="text" name="description" maxlength="250" required id="id_description" class="form-control" placeholder="Department Description">
+                                            </div>
+                                        </div>
+                                       
+                                                <!-- <input type="text" name="phoneNumber" class="form-control" placeholder="Other Info" required> -->
+                                            </div>
+                                        </div>
+                                        
                                       
                                     <div class="col-12">
-                                        <button type="submit" name="" value="Submit" class="btn btn-primary mb-2">Register Exam</button>
+                                        <button type="submit" name="" value="Submit" class="btn btn-primary mb-2">Add New Department</button>
                                     </div>
                                 </form>
                                 <hr>

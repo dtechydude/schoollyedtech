@@ -60,9 +60,6 @@ class PaymentCreateView(LoginRequiredMixin, CreateView):
         return super(PaymentCreateView, self).form_valid(form)
 
 
-
-
-
 @login_required
 def payment_cat_form(request):
     if request.method == 'POST':
@@ -80,6 +77,26 @@ def payment_cat_form(request):
         'payment_cat_form' : payment_cat_form
     }
     return render(request, 'payment/payment_cat_form.html', context)
+
+
+@login_required
+def payment_chart_form(request):
+    if request.method == 'POST':
+        payment_chart_form = PaymentChartForm(request.POST)
+        # p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if payment_chart_form.is_valid():
+            payment_chart_form.save()
+
+            messages.success(request, f'The Payment has been entered successfully')
+            return redirect('payment:payment_chart')
+    else:
+        payment_chart_form = PaymentChartForm()
+
+    context ={
+        'payment_chart_form' : payment_chart_form
+    }
+    return render(request, 'payment/payment_chart_form.html', context)
+
 
 
 
@@ -108,14 +125,12 @@ def paymentlist(request):
         'paymentlist' : paymentlist,
         'balance_pay': balance_pay,
         'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
-      
-     
+         
 
     }
     return render (request, 'payment/all_payments.html', context )
 
     # return render(request, 'payment/schoolly_test_table.html',)
-
 
 
 @login_required
@@ -142,24 +157,6 @@ def view_self_payments(request):
 
     return render(request, 'payment/view_self_payment.html', context)
 
-
-@login_required
-def payment_chart_form(request):
-    if request.method == 'POST':
-        payment_chart_form = PaymentChartForm(request.POST)
-        # p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        if payment_chart_form.is_valid():
-            payment_chart_form.save()
-
-            messages.success(request, f'The Payment has been entered successfully')
-            return redirect('payment:payment_record')
-    else:
-        payment_chart_form = PaymentChartForm()
-
-    context ={
-        'payment_chart_form' : payment_chart_form
-    }
-    return render(request, 'payment/payment_chart_form.html', context)
 
     
 
