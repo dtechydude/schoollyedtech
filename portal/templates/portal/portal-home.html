@@ -197,15 +197,18 @@
 							{% if user.is_authenticated and user.is_superuser or user.profile.user_type == 'student' %}
 										
 							<li><a href="{% url 'portal:register-session' %}">Add New Session </a></li>
+							<li><a href="{% url 'portal:session_list' %}">Session List </a></li>
 							<li><a href="{% url 'portal:register-class' %}">Add New class</a></li>
+							<li><a href="{% url 'curriculum:standard_list' %}">Class List </a></li>
 							<li><a href="{% url 'portal:register-classgroup' %}">Add ClassArm </a></li>
+							<li><a href="{% url 'portal:classgroup_list' %}">ClassArm List </a></li>
 							<li><a href="{% url 'portal:register-subject' %}">Add Exam Subjects</a></li>
 							<li><a href="{% url 'portal:subject_list' %}">Subjects List </a></li>
 							<li><a href="{% url 'portal:register-exam' %}">Add Exams </a></li>
 							<li><a href="{% url 'portal:exam_list' %}">Exam List </a></li>
 							<li><a href="{% url 'portal:register-category' %}">Add Staff Category </a></li>
-							<li><a href="{% url 'portal:register-department' %}">Add Department </a></li>
 							<li><a href="{% url 'portal:category_list' %}">Staff Category List </a></li>
+							<li><a href="{% url 'portal:register-department' %}">Add Department </a></li>
 							<li><a href="{% url 'portal:department_list' %}">Department List </a></li>
 							<!-- <li><a href="{% url 'results:my-reportsheet' %}">View Marksheet</a></li> -->
 							{% endif %}

@@ -20,6 +20,9 @@ urlpatterns = [
     path('department-list/', views.DepartmentListView.as_view(), name="department_list"),
     path('subjects-list/', views.SubjectListView.as_view(), name="subject_list"),
     path('exam-list/', views.ExamListView.as_view(), name="exam_list"),
+    path('session-list/', views.SessionListView.as_view(), name="session_list"),
+    path('class-group-list/', views.ClassGroupListView.as_view(), name="classgroup_list"),
+   
 
 
 ]

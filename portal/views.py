@@ -6,6 +6,7 @@ from django.db.models import Count
 from students.models import StudentDetail
 from staff.models import StaffProfile, StaffCategory, Department
 from results.models import ExamSubject, Examination
+from curriculum.models import Session, ClassGroup
 from notification.models import SchoolCalendar
 from django.views.generic import  ListView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -256,4 +257,19 @@ class ExamListView(LoginRequiredMixin, ListView):
     model = Examination
     queryset = Examination.objects.all()
     template_name = 'portal/exam_list.html'
+    paginate_by = 30
+
+
+class SessionListView(LoginRequiredMixin, ListView):
+    context_object_name = 'sessionlist'
+    model = Session
+    queryset = Session.objects.all()
+    template_name = 'portal/session_list.html'
+    paginate_by = 30
+
+class ClassGroupListView(LoginRequiredMixin, ListView):
+    context_object_name = 'classgrouplist'
+    model = ClassGroup
+    queryset = ClassGroup.objects.all()
+    template_name = 'portal/classgroup_list.html'
     paginate_by = 30
