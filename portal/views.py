@@ -90,7 +90,7 @@ def register_new_classgroup(request):
         if new_class_group.is_valid():
            
             new_class_group.save()
-            messages.success(request, f'New Class Group Registered successfully, Register another or go to class list')
+            messages.success(request, f'New Class Group Registered successfully, Register another or go to classgroup list')
             return redirect('portal:register-classgroup')
     else:
       
@@ -112,7 +112,7 @@ def register_new_session(request):
         if new_session.is_valid():
            
             new_session.save()
-            messages.success(request, f'New Session Registered successfully, Register another or go to class list')
+            messages.success(request, f'New Session Registered successfully, Register another or go to session list')
             return redirect('portal:register-session')
     else:
       
