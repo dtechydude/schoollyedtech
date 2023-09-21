@@ -203,11 +203,11 @@ def register_exam_subjects(request):
             return redirect('portal:subject_list')
     else:
       
-        new_department = DepartmentRegisterForm
+        new_subject = SubjectRegisterForm
 
     context = {
         
-        'new_subject': new_department,
+        'new_subject': new_subject,
     }
 
     return render(request, 'portal/register_exam_subjects.html', context)
