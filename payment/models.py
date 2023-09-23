@@ -8,7 +8,7 @@ from django.core.validators import MinLengthValidator
 
 
 class PaymentCategory(models.Model):
-    name = models.CharField(max_length=150, blank=True)
+    name = models.CharField(max_length=150, blank=True, unique=True)
     description = models.CharField(max_length=150, blank=True)
 
     def __str__(self):

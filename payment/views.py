@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 import os
-from payment.models import PaymentDetail, PaymentChart
+from payment.models import PaymentDetail, PaymentChart, PaymentCategory
 from students.models import StudentDetail
 from django.http import HttpResponse
 from django.http import FileResponse
@@ -69,7 +69,7 @@ def payment_cat_form(request):
             payment_cat_form.save()
 
             messages.success(request, f'The Payment Category has been entered successfully')
-            return redirect('payment:payment_chart')
+            return redirect('payment:payment-category')
     else:
         payment_cat_form = PaymentCatForm()
 
@@ -377,3 +377,11 @@ def payment_report(request):
     }
    
     return render(request, 'payment/payment_report_table.html', context )
+
+
+class PaymentCategoryListView(LoginRequiredMixin, ListView):
+    context_object_name = 'categorylist'
+    model = PaymentCategory
+    queryset = PaymentCategory.objects.all()
+    template_name = 'payment/payment_cat_list.html'
+    paginate_by = 30
