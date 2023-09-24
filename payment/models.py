@@ -7,6 +7,18 @@ from django.core.validators import MinLengthValidator
 # Create your models here.
 
 
+class BankDetail(models.Model):
+    name = models.CharField(max_length=150, blank=True)
+    acc_number = models.CharField(max_length=20, blank=True)
+    description = models.CharField(max_length=150, blank=True)
+
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        ordering:['name']
+
+
 class PaymentCategory(models.Model):
     name = models.CharField(max_length=150, blank=True, unique=True)
     description = models.CharField(max_length=150, blank=True)
@@ -46,7 +58,8 @@ class PaymentDetail(models.Model):
     student_detail = models.ForeignKey(StudentDetail, on_delete=models.CASCADE, default=None, null=True)
     # Single payment
     payment_name = models.ForeignKey(PaymentChart, on_delete=models.CASCADE, default= None)
-    amount_paid = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)   
+    amount_paid = models.DecimalField(max_digits=15, decimal_places=2, default=0.0, null=True)
+    bank_name = models.ForeignKey(BankDetail, on_delete=models.CASCADE, default=None, null=True)   
     description = models.CharField(max_length=200, blank=True)
 
     payment_date = models.DateField()  
@@ -81,7 +94,7 @@ class PaymentDetail(models.Model):
     ]
     payment_method = models.CharField(max_length=50, choices=payment_methods)  
     depositor = models.CharField(max_length=150) 
-    bank_name = models.CharField(max_length=150) 
+    # bank_name = models.CharField(max_length=150) 
     teller = models.CharField(max_length=150, blank=True)  
     
     # payment confirmation

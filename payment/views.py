@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.db.models import F
-from payment.forms import PaymentForm, PaymentChartForm, PaymentCatForm,PaymentCreateForm
+from payment.forms import PaymentForm, PaymentChartForm, PaymentCatForm,PaymentCreateForm, BankRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 import os
-from payment.models import PaymentDetail, PaymentChart, PaymentCategory
+from payment.models import PaymentDetail, PaymentChart, PaymentCategory, BankDetail
 from students.models import StudentDetail
 from django.http import HttpResponse
 from django.http import FileResponse
@@ -385,3 +385,21 @@ class PaymentCategoryListView(LoginRequiredMixin, ListView):
     queryset = PaymentCategory.objects.all()
     template_name = 'payment/payment_cat_list.html'
     paginate_by = 30
+
+class BankListView(LoginRequiredMixin, ListView):
+    context_object_name = 'banklist'
+    model = BankDetail
+    queryset = BankDetail.objects.all()
+    template_name = 'payment/bank_list.html'
+    paginate_by = 30
+
+
+class BankCreateView(LoginRequiredMixin, CreateView):
+    form_class = BankRegisterForm
+    template_name = 'payment/bank_register_form.html'
+    success_url = reverse_lazy('payment:bank-list')
+    # queryset= StudentDetail.objects.all()
+
+    # success_url = '/'
+    def form_valid(self, form):
+        return super().form_valid(form)

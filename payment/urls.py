@@ -25,4 +25,6 @@ urlpatterns = [
     path('payment-create/', views.PaymentCreateView.as_view(), name="payment-create"),
     path('<int:pk>/', views.PaymentDetailView.as_view(), name='payment_detail'),
     path('payment-category/', views.PaymentCategoryListView.as_view(), name='payment-category'),
+    path('bank-list/', views.BankListView.as_view(), name='bank-list'),
+    path('bank-create/', views.BankCreateView.as_view(), name="bank-create"),
 ]

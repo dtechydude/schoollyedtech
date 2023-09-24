@@ -1,5 +1,5 @@
 from django import forms
-from payment.models import PaymentDetail, PaymentCategory, PaymentChart
+from payment.models import PaymentDetail, PaymentCategory, PaymentChart, BankDetail
 
 # INLINE FORM STUFF
 from django import forms
@@ -80,9 +80,6 @@ class PaymentForm(forms.ModelForm):
 
 
 
-
-
-
           
 class PaymentCatForm(forms.ModelForm):
         
@@ -90,4 +87,13 @@ class PaymentCatForm(forms.ModelForm):
             model = PaymentCategory
             fields = '__all__'
            
+
+class BankRegisterForm(forms.ModelForm):
+        
+        class Meta:
+            model = BankDetail
+            fields = '__all__'
+           
+
+
 
