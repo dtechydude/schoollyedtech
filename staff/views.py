@@ -62,7 +62,7 @@ def stafflist(request):
     
     # PAGINATOR METHOD
     page = request.GET.get('page', 1)
-    paginator = Paginator(stafflist, 4)
+    paginator = Paginator(stafflist, 40)
     try:
         stafflist = paginator.page(page)
     except PageNotAnInteger:
@@ -96,6 +96,7 @@ def self_student_attendance(request):
     att_count = Attendance.objects.values('student_id__first_name').annotate(c=Count('student_id__first_name')).order_by('-c')
     student_att = Attendance.objects.filter().order_by('student_id').values('student_id__last_name').annotate(count=Count('student_id__last_name'))
     my_own_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
+    my_student_att = Attendance.objects.filter(student_id__class_teacher__user=request.user).order_by('student_id').values('student_id__last_name').annotate(count=Count('student_id__last_name'))
 
     # PAGINATOR
     page = request.GET.get('page', 1)
@@ -113,11 +114,14 @@ def self_student_attendance(request):
         'my_students_attendance': my_students_attendance,
         'att_count' : Attendance.objects.values('student_id__first_name').annotate(c=Count('student_id__first_name')).order_by('-c'),
         'student_att' : student_att,
-        'my_own_students': my_own_students
+        'my_own_students': my_own_students,
+        'my_student_att' : my_student_att
 
     }
 
     return render (request, 'staff/my_students_attendance.html', context)
+    # return render (request, 'staff/att_test.html', context)
+
 
 
 
@@ -189,7 +193,7 @@ def staff_csv(request):
     staff = StaffProfile.objects.all()
     
     # Add column headings to the csv files
-    writer.writerow(['UserName', 'First Name', 'Last Name', 'Gender', 'Date_Employed', 'Phone', 'Email', 'Qualification'])
+    writer.writerow(['USERNAME', 'FIRST NAME', 'LAST NAME', 'GENDER', 'DATE EMPLOYED', 'PHONE', 'EMAIL', 'QUALIFICATION'])
 
 
     # Loop thru and output

@@ -15,3 +15,7 @@ class InventoryItems(models.Model):
 
     def __str__ (self):    
         return f'{self.name}'
+
+    class Meta:
+        verbose_name = 'Inventory Items'
+        verbose_name_plural = 'Inventory Items'

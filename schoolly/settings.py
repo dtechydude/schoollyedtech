@@ -52,7 +52,7 @@ ALLOWED_HOSTS = ['127.0.0.1']
 # Application definition
 
 INSTALLED_APPS = [
-    
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -84,8 +84,9 @@ INSTALLED_APPS = [
     'embed_video',
     # 'bootstrap_datepicker_plus',
     'rest_framework',
-    
-    
+    'mathfilters',
+    'import_export',
+      
 ]
  
 
@@ -172,6 +173,7 @@ USE_THOUSAND_SEPARATOR = True
  
 # DEVELOPMENT STATIC AND MEDIA CONFIGURATION
 STATIC_URL = '/static/'
+# STATIC_URL = 'https://schoolly.com.ng/portal/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
@@ -224,8 +226,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'dtechydude@gmail.com'
-EMAIL_HOST_PASSWORD = 'eawtvpskkrujiwgo'
+# EMAIL_HOST_USER = 'dtechydude@gmail.com'
+EMAIL_HOST_USER = 'schoollyapp@gmail.com'
+# EMAIL_HOST_PASSWORD = 'eawtvpskkrujiwgo'
+EMAIL_HOST_PASSWORD = 'oert qkpu unec rpqq'
 
 
 
@@ -302,3 +306,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # STORAGES = {"staticfiles": {"BACKEND": "storages.backends.s3boto3.S3StaticStorage"}}
 
+IMPORT_EXPORT_IMPORT_PERMISSION_CODE = 'delete' 
+IMPORT_EXPORT_EXPORT_PERMISSION_CODE = 'delete'

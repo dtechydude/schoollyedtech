@@ -18,7 +18,7 @@
 	{% block title %}<title>Schoolly Admin </title>{% endblock title %}
 	
 	<!-- FAVICONS ICON -->
-	<link rel="shortcut icon" type="image/png" href="{% static 'portal/images/logo.png' %}" />
+	{% block favicon %}<link rel="shortcut icon" type="image/png" href="{% static 'portal/images/logo.png' %}" />{% endblock favicon %}
 	<link href="{% static 'portal/vendor/jquery-nice-select/css/nice-select.css' %}" rel="stylesheet">
 	<link href="{% static 'portal/vendor/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
 	<link href="{% static 'portal/vendor/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css' %}" rel="stylesheet">
@@ -240,10 +240,13 @@
 							{% endif %}
 							
 							{% if user.is_authenticated and user.profile.user_type == 'teacher'%}
+							{% if user.is_authenticated and user.staffprofile.staff_role == 'form_teacher' %}
+							<li><a href="#">You are a Form Teacher</a></li>
+							{% endif %}
 							<li><a href="{% url 'staff:my-students' %}">My Student List</a></li>
 							<!-- <li><a href="{% url 'attendance:attendance_form' %}">Take Attendance</a></li> -->
-							<li><a href="{% url 'attendance:my-std-att-form' %}">Attendance Register</a></li>
-							<li><a href="{% url 'attendance:attendance_view' %}">View Attendance</a></li>
+							<li><a href="/admin">Take Attendance</a></li>			
+							<!-- <li><a href="{% url 'attendance:attendance_view' %}">View Admin Att.</a></li>	 -->
 							<li><a href="{% url 'staff:my-students-attendance' %}">Attendance Report</a></li>
 							{% endif %}
 															
@@ -255,7 +258,7 @@
 							<li><a href="{% url 'results:print-result' %}">View Students Result</a></li>
 							<!-- <li><a href="{% url 'results:print-resultform' %}">Upload Students Result</a></li> -->
 							<li><a href="{% url 'results:result-create' %}">Load Report Sheet</a></li>	
-							<li><a href="{% url 'attendance:attendance_form' %}">Take Attendance</a></li>
+							<li><a href="/admin">Take Attendance</a></li>
 							<li><a href="{% url 'attendance:attendance_view' %}">View Attendance</a></li>
 								
 							{% endif %}
@@ -295,6 +298,7 @@
 						<li><a href="{% url 'payment:payment_chart_form' %}">Add New Payment Chart</a></li>
 						<li><a href="{% url 'payment:payment_chart' %}">Payment Chart</a></li>
 						<li><a href="{% url 'payment:payment_report' %}">Payment Report</a></li>
+						<li><a href="{% url 'payment:summary_payment_report' %}">Summary Report</a></li>
 												
 					</ul>
 
@@ -609,10 +613,11 @@
 																	<h6 class="m-b-0">{{ user.studentdetail.date_admitted }}</h6><span>Adm.Date</span>
 																</div>
 																<div class="col">
-																	<h4 class="m-b-0">{{ user.studentdetail.current_class}}</h4><span>Class</span>
+																	<h4 class="m-b-0">{{ user.studentdetail.current_class}}</h4><span>Current Class</span>
 																</div>
 																<div class="col">
-																	<h4 class="m-b-0">898</h4><span>Roll No.</span>
+																	<h4 class="m-b-0">{{num_inclass}}</h4><span>No. in class</span> 
+																				
 																</div>
 															</div>
 															<div class="mt-4">
@@ -1150,7 +1155,7 @@
 														  <h5 class="f-w-500">Department <span class="pull-end">:</span>
 														  </h5>
 													  </div>
-													  <div class="col-sm-9 col-7"><span>{{ user.studentdetail.department }}</span>
+													  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.department }}</span>
 													  </div>
 												  </div>
 												  <div class="row mb-2">
@@ -1171,12 +1176,7 @@
 													  </div>
 												  </div>
 												  <div class="row mb-2">
-												  <div class="col-sm-3 col-5">
-													  <h5 class="f-w-500">Relationship <span class="pull-end">: </span></h5>
-													  
-												  </div>
-												  <div class="col-sm-9 col-7"><span>{{ user.staffprofile.relationship }}</span>
-												  </div>
+												 
 											  </div>
 													  <div class="row mb-2">
 														  <div class="col-sm-3 col-5">
@@ -1208,14 +1208,7 @@
 														<div class="col-sm-9 col-7"><span>{{ user.staffprofile.next_of_kin_name }}</span>
 														</div>
 													</div>
-													<div class="row mb-2">
-													<div class="col-sm-3 col-5">
-														<h5 class="f-w-500">Relationship <span class="pull-end">: </span></h5>
-														
-													</div>
-													<div class="col-sm-9 col-7"><span>{{ user.staffprofile.relationship }}</span>
-													</div>
-												</div>
+													
 														<div class="row mb-2">
 															<div class="col-sm-3 col-5">
 																<h5 class="f-w-500"> Address. <span class="pull-end">:</span></h5>
@@ -1223,13 +1216,7 @@
 															<div class="col-sm-9 col-7"><span>{{ user.staffprofile.next_of_kin_address}}</span>
 															</div>
 														</div>
-														<div class="row mb-2">
-															<div class="col-sm-3 col-5">
-																<h5 class="f-w-500"> Email <span class="pull-end">:</span></h5>
-															</div>
-															<div class="col-sm-9 col-7"><span>{{ user.staffprofile.next_of_kin_email}}</span>
-															</div>
-														</div>
+														
 														<div class="row mb-2">
 															<div class="col-sm-3 col-5">
 																<h5 class="f-w-500">Phone No. <span class="pull-end">:</span></h5>
@@ -1283,8 +1270,8 @@
 															{% for n in students%}
 															<div class="list-group-item bg-transparent d-flex justify-content-between px-0 py-1">
 																<span class="mb-0"><i class="far fa-check-circle text-success"></i></span>
-																<h4 class="mb-0">{{ n.current_class__name}}</h4>
-																<h4 class="mb-0">{{n.count}}</h4>
+																<h6 class="mb-0">{{ n.current_class__name}}</h6>
+																<h6 class="mb-0">{{n.count}}</h6>
 																</div>
 															{% endfor %}
 																													

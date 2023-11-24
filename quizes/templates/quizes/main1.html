@@ -12,7 +12,6 @@ home
 {% block content %}
 
 
-
 <!-- Modal -->
 <div class="modal fade" id="quizStartModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -34,23 +33,27 @@ home
 
 
 <div class="h1">CBT List</div>
-<p>You are logged in as: <b>{{ user }}</b></p>
+
+<p>You are logged in as: <b>{{ user }} ---- {{ user.studentdetail.current_class }}</b></p>
 <p><b>Instruction:</b> Click cbt name to start</p>
 <hr>
 
+
 {% for obj in object_list %}
+{% if obj.standard == user.studentdetail.current_class %}
     <button
+        type="button"
         class="btn btn-link modal-button"
         data-pk="{{obj.pk}}"
-        data-quiz="{{obj.name}}"
+        data-quiz="{{obj.exam_name}}"
         data-questions="{{obj.number_of_questions}}"
         data-difficulty="{{obj.difficulty}}"
         data-time="{{obj.time}}"
         data-pass = "{{obj.required_score_to_pass}}"
         data-toggle="modal"
         data-target="#quizStartModal">
-       {{obj.pk}} - {{obj.name}}
+       {{obj.pk}} - {{obj.exam_name}} - {{obj.standard}}
     </button><br>
-
+{% endif %}
 {% endfor %}
 {% endblock content %}

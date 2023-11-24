@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 from .utils import generate_ref_code
+from staff.models import StaffProfile
 
 
 class Profile(models.Model):
@@ -54,6 +55,18 @@ class Profile(models.Model):
 
     user_type = models.CharField(max_length=15, choices=user_types, default=inactive)
 
+    # @property
+    # def is_student(self):
+    #     if hasattr(self, 'student'):
+    #         return True
+    #     return False
+
+    # @property
+    # def is_teacher(self):
+    #     if hasattr(self, 'teacher'):
+    #         return True
+    #     return False
+
     class Meta:
         ordering = ['user']
 
@@ -68,6 +81,9 @@ class Profile(models.Model):
             code = generate_ref_code()
             self.code = code
         super().save(*args, **kwargs)
+
+     
+
 
 
   

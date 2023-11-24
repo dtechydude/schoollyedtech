@@ -1,9 +1,9 @@
 from django.urls import path
-
 from django.conf.urls.static import static
 from results import views as result_views 
 from django.contrib.auth import views as auth_views
 from . import views
+from .views import ResultListView, ResultDetailView, ResultUpdateView
 # from . import views
 
 app_name = 'results'
@@ -20,6 +20,13 @@ urlpatterns = [
     path('my-reportsheet/', result_views.view_self_reportsheet, name="my-reportsheet"),
 
     path('<int:pk>/', views.ResultDetailView.as_view(), name='result_detail'),
+    path('<int:id>/result-update/', ResultUpdateView.as_view(), name="result-update"),
+
+    path('result-list/', ResultListView.as_view(), name='result-list'),
+    path('<int:pk>/', ResultDetailView.as_view(), name='result-detail'), 
+    path('result-csv', result_views.results_csv, name="result-csv"),
+
+    
 ]
     # path('self-result/', views.SelfResultListView.as_view(), name='self-result'),
     

@@ -12,11 +12,11 @@
 					<div class="card-action coin-tabs mb-2">
 						
 						<ul class="nav nav-tabs" role="tablist">
-							<li class="nav-item">
+							<!-- <li class="nav-item">
 								<a class="nav-link"href="{% url 'payment:payment-pdf' %}">View PDF</a>
-							</li>
+							</li> -->
 							<li class="nav-item">
-								<a class="nav-link" href="{% url 'payment:payment-csv' %}">Download CSV</a>
+								<a class="nav-link" href="{% url 'payment:payment-csv' %}">Download CSV (Ms Excel)</a>
 							</li>
 						</ul>
 					</div>
@@ -64,19 +64,20 @@
 									<div class="tab-pane active show" id="AllGuest">
 										<div class="table-responsive">
 											<table class="table card-table display mb-4 shadow-hover default-table table-responsive-lg" id="guestTable-all">
-												<thead style= color:green;">
+												<thead style= "color:green;">
 													<tr>
 														<th class="bg-none">
 															<div class="form-check style-1">
 															  <input class="form-check-input" type="checkbox" value="" id="checkAll">
 															</div>
 														</th>
-														<th>NO.</th>
-														<th>PAYEE ID</th>
-														<th>STUDENT ID</th>
-														<th>DEPOSITOR</th>
+														<!-- <th>NO.</th> -->
+														<th>STUDENT</th>
+														<!-- <th>STUDENT</th> -->
+														<!-- <th>DEPOSITOR</th> -->
 														<th>TYPE</th>
-                                                        <th>AMOUNT</th>
+														<th>FEE DUE</th>
+                                                        <th>PAID</th>
 														<th>DATE</th>
 														<th>STATUS</th>
 													</tr>
@@ -91,44 +92,59 @@
 															  <input class="form-check-input" type="checkbox" value="">
 															</div>
 														</td>
-														<td>
+														<!-- <td>
 															<div>
 																{{ forloop.counter }}
 															</div>
-														</td>	
+														</td>	 -->
 														<td>
 														<span class="fs-16 mb-0 text-nowrap"><a class="text-black" href="">
 															<!-- if it is a student that paid -->
 															<span>{{ payment.payee.studentdetail.first_name}} {{ payment.payee.studentdetail.last_name}}</span><br>
 															{{payment.payee }} <span style="color:red;">{{ payment.payee.studentdetail.current_class}}</span> </a></span>
 															<!-- if it is admin or staff that paid -->
-															<span>{{ payment.payee.staffprofile.first_name}} {{ payment.payee.staffprofile.last_name}}</span><br>
-															<span>{{ payment.payee.first_name}} {{ payment.payee.last_name}}</span><br>
+															<!-- <span>{{ payment.payee.staffprofile.first_name}} {{ payment.payee.staffprofile.last_name}}</span><br>
+															<span>{{ payment.payee.first_name}} {{ payment.payee.last_name}}</span><br> -->
 										
 																</div>
 															</div>
 														</td>
 														
-														<td class="text-nowrap">
+														<!-- <td class="text-nowrap">
 															<!-- if admin or other person paid for students -->
-															<span class="text-nowrap">{{ payment.student_detail.user.username }}</span>
+															<!-- <span class="text-nowrap">{{ payment.student_detail.user.username }}</span> --> 
 															<!-- if students paid by themselves -->
-															<span class="text-nowrap">{{ payment.payee.studentdetail.user }}</span>
+															<!-- <span class="text-nowrap">{{ payment.payee.studentdetail.user }}</span>
 														
-														</td>
+														</td> -->
 														
-														<td class="text-nowrap">
+														<!-- <td class="text-nowrap">
 															
 															<span class="text-nowrap">{{ payment.depositor}}</span>
 															<span></span>
 														
-														</td>
+														</td> -->
 														<td class="text-nowrap">
 															
-																<span class="text-nowrap">{{ payment.payment_name}}</span>
+																<span class="text-nowrap">{{ payment.payment_name.payment_cat}}</span>
 																<span></span>
 														
 														</td>
+														{% if payment.discount > 0 %}
+														<td class="text-nowrap">
+																														
+															<span class="text-nowrap">Discounted:<br>{{ payment.discounted_amount_due}}</span>
+															<span></span>															
+													
+													</td>
+													{% else %}
+														<td class="text-nowrap">
+															
+															<span class="text-nowrap">{{ payment.payment_name.amount_due}}</span>
+															<span></span>														
+													
+													</td>
+													{% endif %}
 														<td class="text-nowrap">
 															
 																<span class="text-nowrap">{{ payment.amount_paid }}
@@ -136,6 +152,7 @@
 																<span></span>
 															
 														</td>
+												
 														<td class="text-nowrap">
 														
 															<span class="text-nowrap">{{ payment.payment_date }}</span>

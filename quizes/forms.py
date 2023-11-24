@@ -10,3 +10,4 @@ class QuizForm(forms.ModelForm):
         model = Quiz
         fields = '__all__'
 
+

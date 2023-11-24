@@ -40,7 +40,7 @@
                     <tr>
                     
                     <td scope="row">{{ att.student_id }}</td>
-                    <td scope="row">{{ att.attendance_date }}</td>
+                    <td scope="row">{{ att.date_taken }}</td>
                     
                     <td scope="row">{% if att.morning_status %}<em>Present</em>{% else %}<span style="color:red;"><em>Absent</em></span>{% endif %}</td>
                     <td scope="row">{% if att.afternoon_status %}<em>Present</em>{% else %}<span style="color:red;"><em>Absent</em></span>{% endif %}</td>
@@ -93,7 +93,8 @@
           
             </thead>
             <tbody>
-                {% for n in student_att %}
+              
+                {% for n in my_student_att %}
                 <tr>
                     
                     <td scope="row">{{ n.student_id__last_name }}<br></td>
@@ -101,7 +102,7 @@
                    
               <tr>
                 {% endfor %}
-              
+        
             </tbody>
           </table>
           </div>

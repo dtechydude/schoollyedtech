@@ -1,12 +1,12 @@
 from django import forms
-from results.models import Result, UploadResult, ResultSheet
+from results.models import MarkedSheet, UploadResult, ResultSheet
 #from .widgets import DatePickerInput, TimePickerInput, DateTimePickerInput
 
 
 class ResultUploadForm(forms.ModelForm):
         
         class Meta:
-            model = Result
+            model = MarkedSheet
             fields = '__all__'
 
             widgets = {
@@ -59,3 +59,13 @@ class ResultCreateForm(forms.ModelForm):
                        'type': 'date'  # <--- IF I REMOVE THIS LINE, THE INITIAL VALUE IS DISPLAYED
                       }),
         }
+
+       
+
+class ResultUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = ResultSheet
+        fields = '__all__'
+        # exclude = ('user',)
+       

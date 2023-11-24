@@ -1,15 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Mystudents, StudentDetail
-from results.models import UploadResult
+from .models import StudentDetail
+from results.models import UploadResult, ResultSheet
 
-
-class StudentProfileForm(forms.ModelForm):
-
-    class Meta:
-        model = Mystudents
-        fields = '__all__'
 
 
 class StudentUpdateForm(forms.ModelForm):
@@ -56,12 +50,4 @@ class StudentRegisterForm(forms.ModelForm):
                        'type': 'date'  # <--- IF I REMOVE THIS LINE, THE INITIAL VALUE IS DISPLAYED
                       }),
         }
-        
-
-class StudentResultUpdateForm(forms.ModelForm):
-
-    class Meta:
-        model = UploadResult
-        fields = '__all__'
-        # exclude = ('user',)
-       
+ 

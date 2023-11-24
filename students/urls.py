@@ -9,8 +9,9 @@ from students.views import (StudentListView,
                             StudentUpdateView,
                             StudentDeleteView,
                             MyStudentList,
-                            StudentResultUpdateView,
+                            # StudentResultUpdateView,
                             StudentCardDetailView,
+                            GuardianListView,
 )
 
 app_name = 'students'
@@ -28,7 +29,9 @@ urlpatterns = [
     path('<int:id>/update/', StudentUpdateView.as_view(), name="students-update"),
     path('<int:id>/delete/', StudentDeleteView.as_view(), name="students-delete"),  
 
-    path('<int:id>/result-update/', StudentResultUpdateView.as_view(), name="result-update"),
+     path('guardian-list/', GuardianListView.as_view(), name="guardian-list"), 
+
+    # path('<int:id>/result-update/', StudentResultUpdateView.as_view(), name="result-update"),
 
     path('pdf/<pk>/', student_views.student_render_pdf_view, name="student-pdf-view"),
     path('test-view/', student_views.render_pdf_view, name="test-view"),

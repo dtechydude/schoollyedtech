@@ -11,10 +11,10 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from students.models import StudentDetail
-from students.forms import StudentUpdateForm, StudentRegisterForm, StudentResultUpdateForm
+from students.forms import StudentUpdateForm, StudentRegisterForm
 from users.forms import UserRegisterForm
 from curriculum.models import Standard
-from results.models import UploadResult
+from results.models import UploadResult, ResultSheet
 import io
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
@@ -93,7 +93,7 @@ def studentlist(request):
 
      # PAGINATOR METHOD
     page = request.GET.get('page', 1)
-    paginator = Paginator(studentlist, 10)
+    paginator = Paginator(studentlist, 40)
     try:
         studentlist = paginator.page(page)
     except PageNotAnInteger:
@@ -270,7 +270,7 @@ def mystudent_pdf(request):
 
     for students in student:
         lines.append(""),
-        lines.append("Username: " + students.user.username),
+        lines.append("Username: " + students.student_username),
         lines.append("Current Class: " + str(students.current_class)),
         lines.append("Class Teacher: " + str(students.class_teacher.user.username)), 
         lines.append("Student Type: " + students.student_type),
@@ -300,14 +300,12 @@ def mystudent_csv(request):
     students = StudentDetail.objects.all()
     
     # Add column headings to the csv files
-    writer.writerow(['USERNAME', 'FIRST NAME', 'MIDDLE NAME',
-                    'LAST NAME', 'GENDER', 'CURRENT CLASS', 'CLASS TEACHER', 'STUDENT TYPE', 'STATUS'])
+    writer.writerow(['USERNAME', 'FIRST NAME', 'MIDDLE NAME', 'LAST NAME', 'GENDER', 'CURRENT CLASS', 'ADMISSION DATE', 'CLASS TEACHER', 'STUDENT TYPE', 'STATUS', 'PARENT PHONE'])
 
 
     # Loop thru and output
     for student in students:
-        writer.writerow([student.user.username, student.first_name,
-                        student.middle_name, student.last_name, student.gender, student.current_class, student.class_teacher, student.student_type, student.student_status])
+        writer.writerow([student.student_username, student.first_name, student.middle_name, student.last_name, student.gender, student.current_class, student.date_admitted, student.class_teacher, student.student_type, student.student_status, student.guardian_phone])
         
     return response
 
@@ -345,18 +343,19 @@ def studentupdate(request):
     return render(request, 'users/student_update_form.html', context)
 
 
-class StudentResultUpdateView(LoginRequiredMixin, UpdateView):
-    form_class = StudentResultUpdateForm
-    template_name = 'students/student_result_update_form.html'
+# class ResultUpdateView(LoginRequiredMixin, UpdateView):
+#     form_class = ResultUpdateForm
+#     template_name = 'students/student_result_update_form.html'
+#     context_object_name = 'result'
  
 
-    def get_object(self):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(UploadResult, id=id_)
+#     def get_object(self):
+#         id_ = self.kwargs.get("id")
+#         return get_object_or_404(ResultSheet, id=id_)
 
-    def form_valid(self, form):
-        print(form.cleaned_data)
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         print(form.cleaned_data)
+#         return super().form_valid(form)
 
 
 class StudentCardDetailView(LoginRequiredMixin, DetailView):
@@ -378,6 +377,7 @@ class StudentCardDetailView(LoginRequiredMixin, DetailView):
 
 def student_search_list(request):
     student = StudentDetail.objects.all()
+    
      # PAGINATOR METHOD
     page = request.GET.get('page', 1)
     paginator = Paginator(student, 30)
@@ -404,3 +404,12 @@ def search(request):
 
         
     return render(request, 'students/search.html', {'query': query, 'results': results})
+
+
+class GuardianListView(LoginRequiredMixin, ListView):
+    context_object_name = 'guardian'
+    model = StudentDetail
+    queryset = StudentDetail.objects.all()
+    template_name = 'students/guardian_list.html'
+    paginate_by = 50
+    filterset_class = StudentFilter

@@ -14,8 +14,8 @@
 
 <div class="row">
     <div class="col">
-        <h5>Quiz Title: <span style="color:green;">{{obj.name}}</span></h5>
-        <p>You are logged in as: <b>{{ user }}</b></p>
+        <h5>Exam / Test / Quiz : <span style="color:green;">{{obj.exam_name}}</span></h5>
+        <p>You are logged in as: <b>{{ user }}</b> Your Current Class : <b>{{ user.studentdetail.current_class }}</b></p>
         <p>Instruction: Click the Submit once you are done, do not click twice</p>
 <hr>
         <p>score to pass: {{obj.required_score_to_pass}}%</p>
@@ -31,13 +31,13 @@
     <button type="submit" class="btn btn-primary mt-3">Submit Answer</button>
 </form>
 <hr />
-<div id="score-box" style="color:red; font-size:30px; padding-bottom:12px;"></div>
+<div id="score-box" style="color:red; font-size:20px; padding-bottom:12px;"></div>
 <hr />
 <!-- I removed the result box because it was repeating submission -->
 <!-- Uncomment if you want students to see the correct answers -->
 <!-- <div id="result-box"></div> -->
 
-<div style="padding-bottom:20px;"><button  class="btn btn-danger mt-3" a href="{% url 'user_logout' %}">Log Out</a></button></div>
+<div style="padding-bottom:20px;"><a href="{% url 'user_logout' %}"><button  class="btn btn-danger mt-3"> Log Out</button></a></div>
 {% endblock content %}
 
 {% block scripts %}

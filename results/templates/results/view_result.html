@@ -15,7 +15,7 @@
 						
 						<ul class="nav nav-tabs" role="tablist">
 							<li class="nav-item">
-								<a class="nav-link"href="{% url 'students:student-pdf' %}">All Students Results</a>
+								<a class="nav-link"href="{% url 'results:result-csv' %}"> Download CSV</a>
 							</li>
 							
 							
@@ -28,6 +28,7 @@
 								<i class="fas fa-user ms-3"></i>
 							</div>
 						</div>
+						
 						<div class="newest ms-3">
 							<!-- <select class="default-select"> -->
 								<!-- <option><a href="https://google.com">Teacher's List</a></option> -->
@@ -77,10 +78,28 @@
 														
 														<th>Student ID</th>
 														<th>Exam</th>
-                                                        <th>Session</th>
-                                                        <th>Term</th>
-                                                        <th>result</th>
-                                                        <th>Remark</th>
+                                                        <th>Subject-1</th>
+                                                        <th>Subject-2</th>
+                                                        <th>Subject-3</th>
+                                                        <th>Subject-4</th>
+														<th>Subject-5</th>
+														<th>Subject-6</th>
+                                                        <th>Subject-7</th>
+                                                        <th>Subject-8</th>
+                                                        <th>Subject-9</th>
+                                                        <th>Subject-10</th>
+														<th>Subject-11</th>
+                                                        <th>Subject-12</th>
+                                                        <th>Subject-13</th>
+                                                        <th>Subject-14</th>
+                                                        <th>Subject-15</th>
+														<th>Subject-16</th>
+														<th>Subject-17</th>
+														<th>Subject-18</th>
+														<th>Subject-19</th>
+														<th>Subject-20</th>
+                                                        <th>Action</th>
+                                                    
 																											
 													</tr>
 												</thead>
@@ -95,68 +114,154 @@
 															</div>
 														</td>
 														<td>
-															<div class="concierge-bx d-flex align-items-center">
+															<!-- <div class="concierge-bx d-flex align-items-center">
 																<img class="me-3 rounded" src="{{res.student_id.profile.image.url}}" alt="">
-																<div>
-																	<h5 class="fs-16 mb-0 text-nowrap">
-																	<a class="text-black" href="{% url 'students:students-detail' res.pk %}">{{ res.student_id.username}}- <span style="font-size:9px;, color:grey;">{{res.student_username}}</span></h5>
-																	<span class="text-primary fs-14">{{ res.student_detail.first_name}} {{ res.student_detail.last_name}}</span></a>
+																<div> -->
+																	<span class="fs-16 mb-0 text-nowrap">
+																	<a class="text-black" href="{% url 'results:result-update' res.pk %} ">{{ res.student_id.username}}</span>
+																	<span class="text-primary fs-14">{{ res.student_detail.last_name}} {{ res.student_detail.first_name}} - {{res.standard}}-{{ res.student_detail.class_group}}</span></a>
 																</div>
 															</div>
 														</td>
 														<td class="text-nowrap">
-															<span>{{ res.exam }}</span>
+															<span>{{ res.exam }}<br>{{ res.session}}<br>{{ res.term}}</span>
 														</td>
 														<td class="text-nowrap">
 															
-																<span>{{ res.session}}</span>	
+																<span><b>{{ res.subject_1}}</b><br>C.A: <b>{{ res.score_1ca }}</b><br>Exam: <b>{{ res.score_1exam}}</b></span>	
 																<span></span>										
 														</td>
 														<td class="text-nowrap">
-															<span>{{ res.term }}</span>
-																<span></span>
-														</td>
-                                                        {% if res.file %}
-                                                        <td><a href="{{ res.file.url }}" download = "{{ res.file.url }}" ><span style="color:red;">Download</span> </a></td>
-                                                        {% else %}
-                                                        <td><a href=""> No file!</a></td>
-                                                        {% endif%}
-														
-														
-														<td class="text-nowrap">
-															No detail
-														</td>	
+															
+															<span><b>{{ res.subject_2}}</b><br>C.A: <b>{{ res.score_2ca }}</b><br>Exam: <b>{{ res.score_2exam}}</b></span>	
+															<span></span>										
+													</td>
+													<td class="text-nowrap">
+															
+														<span><b>{{ res.subject_3}}</b><br>C.A: <b>{{ res.score_3ca }}</b><br>Exam: <b>{{ res.score_3exam}}</b></span>	
+														<span></span>										
+												</td>
+												<td class="text-nowrap">
+															
+													<span><b>{{ res.subject_4}}</b><br>C.A: <b>{{ res.score_4ca }}</b><br>Exam: <b>{{ res.score_4exam}}</b></span>	
+													<span></span>										
+											</td>
+											<td class="text-nowrap">
+															
+												<span><b>{{ res.subject_5}}</b><br>C.A: <b>{{ res.score_5ca }}</b><br>Exam: <b>{{ res.score_5exam}}</b></span>	
+												<span></span>										
+										</td>
+										<td class="text-nowrap">
+															
+											<span><b>{{ res.subject_6}}</b><br>C.A: <b>{{ res.score_6ca }}</b><br>Exam: <b>{{ res.score_6exam}}</b></span>	
+											<span></span>										
+									</td>
+									<td class="text-nowrap">
+															
+										<span><b>{{ res.subject_7}}</b><br>C.A: <b>{{ res.score_7ca }}</b><br>Exam: <b>{{ res.score_7exam}}</b></span>	
+										<span></span>										
+								</td>
+								<td class="text-nowrap">
+															
+									<span><b>{{ res.subject_8}}</b><br>C.A: <b>{{ res.score_8ca }}</b><br>Exam: <b>{{ res.score_8exam}}</b></span>	
+									<span></span>										
+							</td>
+							<td class="text-nowrap">
+															
+								<span><b>{{ res.subject_9}}</b><br>C.A: <b>{{ res.score_9ca }}</b><br>Exam: <b>{{ res.score_9exam}}</b></span>	
+								<span></span>										
+						</td>
+						<td class="text-nowrap">
+															
+							<span><b>{{ res.subject_10}}</b><br>C.A: <b>{{ res.score_10ca }}</b><br>Exam: <b>{{ res.score_10exam}}</b></span>	
+							<span></span>										
+					</td>
+					<td class="text-nowrap">
+															
+						<span><b>{{ res.subject_11}}</b><br>C.A: <b>{{ res.score_11ca }}</b><br>Exam: <b>{{ res.score_11exam}}</b></span>	
+						<span></span>										
+				</td>
+				<td class="text-nowrap">
+															
+					<span><b>{{ res.subject_12}}</b><br>C.A: <b>{{ res.score_12ca }}</b><br>Exam: <b>{{ res.score_12exam}}</b></span>	
+					<span></span>										
+			</td>
+			<td class="text-nowrap">
+															
+				<span><b>{{ res.subject_13}}</b><br>C.A: <b>{{ res.score_13ca }}</b><br>Exam: <b>{{ res.score_13exam}}</b></span>	
+				<span></span>										
+		</td>
+		<td class="text-nowrap">
+															
+			<span><b>{{ res.subject_14}}</b><br>C.A: <b>{{ res.score_14ca }}</b><br>Exam: <b>{{ res.score_14exam}}</b></span>	
+			<span></span>										
+	</td>
+	<td class="text-nowrap">
+															
+		<span><b>{{ res.subject_15}}</b><br>C.A: <b>{{ res.score_15ca }}</b><br>Exam: <b>{{ res.score_15exam}}</b></span>	
+		<span></span>										
+</td>
+<td class="text-nowrap">
+															
+	<span><b>{{ res.subject_16}}</b><br>C.A: <b>{{ res.score_16ca }}</b><br>Exam: <b>{{ res.score_16exam}}</b></span>	
+	<span></span>										
+</td>
+<td class="text-nowrap">
+															
+	<span><b>{{ res.subject_17}}</b><br>C.A: <b>{{ res.score_17ca }}</b><br>Exam: <b>{{ res.score_17exam}}</b></span>	
+	<span></span>										
+</td>
+<td class="text-nowrap">
+															
+	<span><b>{{ res.subject_18}}</b><br>C.A: <b>{{ res.score_18ca }}</b><br>Exam: <b>{{ res.score_18exam}}</b></span>	
+	<span></span>										
+</td>
+<td class="text-nowrap">
+															
+	<span><b>{{ res.subject_19}}</b><br>C.A: <b>{{ res.score_19ca }}</b><br>Exam: <b>{{ res.score_19exam}}</b></span>	
+	<span></span>										
+</td>
+<td class="text-nowrap">
+															
+	<span><b>{{ res.subject_20}}</b><br>C.A: <b>{{ res.score_20ca }}</b><br>Exam: <b>{{ res.score_20exam}}</b></span>	
+	<span></span>										
+</td>
 
-														{% endfor %}
-													</tr>	
-												</tbody>
-											</table>
-										
-											<!-- Page Paginator start -->
-											{% if result.has_other_pages %}
-											{% if result.has_previous %}
-											<a class="btn btn-outline-info mb-4" href="?page={{ studentlist.previous_page_number }}">&laquo;</a>
-											{% else %}
-											<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
-	
-											{% endif %}
-											{% for i in result.paginator.page_range %}
-											{% if result.number == i %}
-	
-											<a class="btn btn-info mb-4" href="">{{ i }}</a>
-											{% else %}
-											<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
-											{% endif %}
-											{% endfor %}
-											{% if result.has_next %}
-											<a class="btn btn-outline-info mb-4" href="?page={{ studentlist.next_page_number }}">&raquo;</a>
-											{% else %}
-											
-											<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
-											{% endif %}
-										
-										{% endif %}
-										<!-- Page Paginator end -->
+		<td>
+				<a class="text-black" href="{% url 'results:result-update' res.pk %}"><span style="color:green;">UPDATE</span></a><br>
+				<a class="text-black" href="{% url 'results:result-detail' pk=res.pk %}"><span style="color:red;">VIEW</span></a
+			</td>		
+
+							{% endfor %}
+						</tr>	
+					</tbody>
+				</table>
+			
+				<!-- Page Paginator start -->
+				{% if result.has_other_pages %}
+				{% if result.has_previous %}
+				<a class="btn btn-outline-info mb-4" href="?page={{ studentlist.previous_page_number }}">&laquo;</a>
+				{% else %}
+				<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+
+				{% endif %}
+				{% for i in result.paginator.page_range %}
+				{% if result.number == i %}
+
+				<a class="btn btn-info mb-4" href="">{{ i }}</a>
+				{% else %}
+				<a class="btn btn-outline-info mb-4" href="?page={{ i }}">{{ i }}</a>
+				{% endif %}
+				{% endfor %}
+				{% if result.has_next %}
+				<a class="btn btn-outline-info mb-4" href="?page={{ studentlist.next_page_number }}">&raquo;</a>
+				{% else %}
+				
+				<a class="btn btn-outline-info mb-4" href="">&raquo;</a>
+				{% endif %}
+			
+			{% endif %}
+			<!-- Page Paginator end -->
 
 										</div>	
 									</div>	

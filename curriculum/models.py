@@ -13,32 +13,36 @@ from django.utils.html import strip_tags
 
 
 class Session(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    slug = models.SlugField(null=True, blank=True)
+    name = models.CharField(max_length=100)
+    
+    first_term = 'First Term'
+    second_term = 'Second Term'
+    third_term = 'Third Term'
+    others = 'Others'
+
+    term_status = [
+        (first_term, 'First Term'),
+        (second_term, 'Second Term'),
+        (third_term, 'Third Term'),
+        (others, 'Others'),
+
+    ]
+
+    term = models.CharField(max_length=15, choices=term_status, default='First Term')
+    start_date = models.DateField(blank=True, null=True, verbose_name='Start Date')
+    end_date = models.DateField(blank=True, null=True, verbose_name='End Date')
     description = models.TextField(max_length=500, blank=True)
+    slug = models.SlugField(null=True, blank=True)
+
+    class Meta:
+        unique_together = ['name', 'term']
 
     def __str__(self):
-        return self.name
+        return f"{self.name} - {self.term}"
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-
-class Term(models.Model):
-    name = models.CharField(max_length=100, blank=True, default='select_term')
-    session = models.ForeignKey(Session, on_delete=models.CASCADE, related_name='session')
-    start_date = models.DateField(blank=True, null=True, verbose_name='Start Date(YYYY-MM-DD)')
-    end_date = models.DateField(blank=True, null=True, verbose_name='End Date(YYYY-MM-DD)')
-    slug = models.SlugField(null=True, blank=True)
-    description = models.TextField(max_length=500, blank=True)
-
-    def __str__(self):
-        return self.name
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
 
 
 class Standard(models.Model):
@@ -119,7 +123,7 @@ class Lesson(models.Model):
     video = EmbedVideoField(blank=True, null=True)
     # video = models.CharField(max_length=500, blank=True)
     # video_url = EmbedVideoField(null=True,blank=True)
-    ppt = models.FileField(upload_to='save_lesson_files', verbose_name="Presentation", blank=True)
+    # ppt = models.FileField(upload_to='save_lesson_files', verbose_name="Presentation", blank=True)
     Notes = models.FileField(upload_to='save_lesson_files', verbose_name="Notes", blank=True)
     comment = RichTextField(blank=True, null=True)
 

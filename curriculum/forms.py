@@ -9,7 +9,7 @@ class LessonForm(forms.ModelForm):
     class Meta:
         
         model = Lesson
-        fields = ('lesson_id', 'name', 'position', 'ppt', 'video', 'comment')
+        fields = ('lesson_id', 'name', 'position', 'video', 'comment')
         widgets = {
             'comment': forms.Textarea(attrs={'class':'form-control', 'rows':4, 'cols':70, 'placeholder':"Enter Your Comment"}),
         }
@@ -25,10 +25,6 @@ class CommentForm(forms.ModelForm):
             'body': forms.Textarea(attrs={'class':'form-control', 'rows':4, 'cols':70, 'placeholder':"Enter Your Comment"}),
         }
 
-        # def __init__(self, *args, **kwargs):
-        #     self.request = kwargs.pop('request', None)
-        #     super(CommentForm, self).__init__(*args, **kwargs)
-
 
 class ReplyForm(forms.ModelForm):
     class Meta:
@@ -38,9 +34,4 @@ class ReplyForm(forms.ModelForm):
         widgets = {
             'reply_body': forms.Textarea(attrs={'class':'form-control', 'rows':2, 'cols':10}),
         }
-
-
-    # def __init__(self, *args, **kwargs):
-    #     self.request = kwargs.pop('request', None)
-    #     super(ReplyForm, self).__init__(*args, **kwargs)
 

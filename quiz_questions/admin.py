@@ -7,7 +7,11 @@ class AnswerInline(admin.TabularInline):
     model = Answer
 
 class QuestionAdmin(admin.ModelAdmin):
-    inlines = [AnswerInline]
+    inlines = [AnswerInline]    
+    list_display=('text', 'quiz')
+    list_filter  = ['quiz__standard', 'quiz']
+    search_fields = ('text',)
+    
 
 
 admin.site.register(Question, QuestionAdmin)

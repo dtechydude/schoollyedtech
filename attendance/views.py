@@ -18,6 +18,8 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 
+# from dal import autocomplete
+
 # for csv
 import csv
 
@@ -72,6 +74,7 @@ def my_student_att_form(request):
     # my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
     if request.method == 'POST':
         my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
+        my_student_att = Attendance.objects.filter(student_id__class_teacher__user=request.user).order_by('student_username')
         attd_form = StudentAttendanceForm(request.POST)
       
         if attd_form.is_valid():
@@ -84,11 +87,13 @@ def my_student_att_form(request):
                   
     context = {
         'attd_form': attd_form,
-        'my_students':StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
+        'my_students':StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username'),
+        'my_student_att': Attendance.objects.filter(student_id__class_teacher__user=request.user)
          
     }
 
     return render(request, 'attendance/my-std-att-form.html', context)
+    # return render(request, 'attendance/test_form.html', context)
 
 
 
@@ -162,3 +167,26 @@ def attendance_csv(request):
         
     return response
 
+
+
+
+#Attendance logic
+@login_required()
+def e_confirm(request, student_id):
+    ass = get_object_or_404(StudentDetail, id=student_id)
+    cr = ass.current_class
+    cl = ass.class_teacher
+    assc = ass.attendance_set.create(morning_status=True, attendance_date=request.POST['attendance_date'])
+    assc.save()
+
+    for i, s in enumerate(cl.current_class_set.all()):
+        morning_status = request.POST[s.first_name]
+        if morning_status == 'present':
+            morning_status = 'True'
+        else:
+            morning_status = 'False'
+        attendance_date = request.POST['attendance_date']
+        a = Attendance(student_id=cr, session=s, morning_status=morning_status, attendance_date=attendance_date, term=assc, afternoon_status=afternoon_status, authorized_sign=authorized_sing5)
+        a.save()
+
+    return HttpResponseRedirect(reverse('t_clas', args=(ass.teacher_id, 1)))

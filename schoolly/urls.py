@@ -6,6 +6,8 @@ from django.conf.urls.static import static
 from django.conf.urls import url
 from django.views.static import serve
 
+# from attendance.views import AttendanceAutocomplete
+
 
 
 
@@ -37,6 +39,10 @@ urlpatterns = [
 
 #PATH FOR DOWNLOAD URL
    url(r'^download/(?P<path>.*)$',serve,{'document_root':settings.MEDIA_ROOT}),
+
+
+#    url( r'^attendance-autocomplete/$', AttendanceAutocomplete.as_view(), name='attendance-autocomplete',
+#     ),
 
   
 

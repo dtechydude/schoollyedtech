@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.http import Http404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -17,9 +18,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 @login_required
 def portal_home(request):
+    # if request.user.studentdetail.is_student:
     users_num = User.objects.count()
     student_num = StudentDetail.objects.count()
-    num_inclass = StudentDetail.objects.filter(current_class__name='Jss1').count()
     num_student_inclass = StudentDetail.objects.filter().count()
     graduated = StudentDetail.objects.filter(student_status='graduated').count()
     dropped = StudentDetail.objects.filter(student_status='dropped').count()
@@ -30,10 +31,14 @@ def portal_home(request):
     my_idcard = StudentDetail.objects.filter(user=User.objects.get(username=request.user))
     students = StudentDetail.objects.filter().order_by('current_class').values('current_class__name').annotate(count=Count('current_class__name'))
     my_students = StudentDetail.objects.filter(class_teacher__user=request.user).order_by('student_username')
+    try:
+        num_inclass = StudentDetail.objects.filter(current_class__name = request.user.studentdetail.current_class).count()
+    except StudentDetail.DoesNotExist:
+        num_inclass = StudentDetail.objects.filter()
     # Build a paginator with function based view
     queryset = SchoolCalendar.objects.all().order_by("-id")
     page = request.GET.get('page', 1)
-    paginator = Paginator(queryset, 4)
+    paginator = Paginator(queryset, 40)
     try:
         events = paginator.page(page)
     except PageNotAnInteger:
@@ -55,8 +60,9 @@ def portal_home(request):
         'queryset': queryset,
         'events':events,
         'my_idcard':my_idcard,
-        'my_students':my_students
+        'my_students':my_students,
     }
+    
     return render(request, 'portal/portal-home.html', context)
 
 

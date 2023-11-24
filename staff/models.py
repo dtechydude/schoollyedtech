@@ -20,6 +20,10 @@ class StaffCategory(models.Model):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+    class Meta:
+        verbose_name = 'Staff Category'
+        verbose_name_plural = 'Staff Categories'
+
 class Department(models.Model):
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(null=True, blank=True)
@@ -37,7 +41,7 @@ class StaffProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     staff_username = models.CharField(max_length=20, unique=True)
     first_name = models.CharField(max_length=20)
-    middle_name = models.CharField(max_length=20)
+    middle_name = models.CharField(max_length=20, blank=True)
     last_name = models.CharField(max_length=20)
     phone = models.CharField(max_length=15, blank=True)
     female = 'female'
@@ -74,7 +78,7 @@ class StaffProfile(models.Model):
     region_origin = models.CharField(max_length=20, choices=region_origin, default=select)
     cat_name = models.ForeignKey(StaffCategory, on_delete=models.CASCADE, blank=True, null=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, blank=True, null=True)
-    class_in_charge = models.ForeignKey(Standard, on_delete=models.CASCADE, blank=True, null=True)
+    class_in_charge = models.ForeignKey(Standard, on_delete=models.SET_DEFAULT, default='no teacher', blank=True, null=True)
     class_group = models.ForeignKey(ClassGroup, on_delete=models.CASCADE, blank=True, null=True)
     date_employed = models.DateField()
 
@@ -131,6 +135,12 @@ class StaffProfile(models.Model):
     next_of_kin_name = models.CharField(max_length=60, blank=True)  
     next_of_kin_address = models.CharField(max_length=150, blank=True)  
     next_of_kin_phone = models.CharField(max_length=15, blank=True) 
+
+    @property
+    def is_teacher(self):
+        if hasattr(self, 'user'):
+            return True
+        return False
 
     class Meta:
         ordering = ['user']

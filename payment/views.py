@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
-from django.db.models import F
+from django.db.models import F, Sum, Q
 from payment.forms import PaymentForm, PaymentChartForm, PaymentCatForm,PaymentCreateForm, BankRegisterForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -20,7 +20,7 @@ from reportlab.lib.units import inch
 from reportlab.lib.pagesizes import letter
 
 # For Filter
-from .filters import PaymentFilter, MyPaymentFilter, PaymentChartFilter, PaymentReportFilter
+from .filters import PaymentFilter, MyPaymentFilter, PaymentChartFilter, PaymentReportFilter, PaymentSummaryFilter
 from django_filters.views import FilterView
 # For panigation
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -110,7 +110,7 @@ def paymentlist(request):
     paymentlist = paymentlist_filter.qs
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(paymentlist, 10)
+    paginator = Paginator(paymentlist, 40)
     try:
         paymentlist = paginator.page(page)
     except PageNotAnInteger:
@@ -141,7 +141,7 @@ def view_self_payments(request):
     mypayment = mypayment_filter.qs
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(mypayment, 20)
+    paginator = Paginator(mypayment, 40)
     try:
         mypayment = paginator.page(page)
     except PageNotAnInteger:
@@ -169,7 +169,7 @@ def payment_chart_list(request):
    
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(payment_chart_list, 15)
+    paginator = Paginator(payment_chart_list, 40)
     try:
         payment_chart_list = paginator.page(page)
     except PageNotAnInteger:
@@ -259,13 +259,13 @@ def allpayment_csv(request):
     payment = PaymentDetail.objects.all()
 
     # Add column headings to the csv files
-    writer.writerow(['USERNAME ', 'AMOUNT PAID', 'PURPOSE', 'PAYMENT DATE', 'METHOD', 'DEPOSITOR', 'BANK', 'DESCRIPTION', 'IS_CONFIRMED'])
+    writer.writerow(['STUDENT ID', 'SURNAME ', 'FIRSTNAME', 'CURRENT CLASS', 'FEE DUE', 'AMOUNT PAID', 'BALANCE', 'PURPOSE', 'PAYMENT DATE', 'METHOD', 'DEPOSITOR', 'BANK', 'DESCRIPTION', 'IS_CONFIRMED', 'SESSION', 'TERM'])
 
 
     # Loop thru and output
     for payments in payment:
-        writer.writerow([payments.payee.username,
-        payments.amount_paid, payments.payment_name, payments.payment_date, payments.payment_method, payments.depositor, payments.bank_name, payments.description, payments.confirmed])
+        writer.writerow([payments.payee.username, payments.student_detail.last_name, payments.student_detail.first_name, payments.student_detail.current_class, payments.payment_name.amount_due, payments.amount_paid, payments.payment_name.amount_due - payments.amount_paid, 
+        payments.payment_name, payments.payment_date, payments.payment_method, payments.depositor, payments.bank_name, payments.description, payments.confirmed, payments.payment_name.session, payments.payment_name.term])
 
     return response
 
@@ -337,6 +337,7 @@ class PaymentDetailView(LoginRequiredMixin, DetailView):
     model = PaymentDetail
     context_object_name = 'my_receipt'
     template_name = 'payment/receipt.html'
+    
 
     def get_object(self, queryset=None):
         if queryset is None:
@@ -351,14 +352,16 @@ class PaymentDetailView(LoginRequiredMixin, DetailView):
 @login_required
 def payment_report(request):
     paymentlist = PaymentDetail.objects.all()
+    total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'payment_name__amount_due', 'payment_name__name').annotate(total_payment=Sum('amount_paid')).order_by('student_detail')
     paymentreport_filter = PaymentReportFilter(request.GET, queryset=paymentlist)
     balance_pay = PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
+
   
 
     paymentlist = paymentreport_filter.qs
 
     page = request.GET.get('page', 1)
-    paginator = Paginator(paymentlist, 10)
+    paginator = Paginator(paymentlist, 40)
     try:
         paymentlist = paginator.page(page)
     except PageNotAnInteger:
@@ -372,11 +375,49 @@ def payment_report(request):
         'paymentreport_filter': paymentreport_filter,
         'paymentlist' : paymentlist,
         'balance_pay': balance_pay,
-        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due'))
+        'total_pay': total_pay,
+        'balance_pay' : PaymentDetail.objects.annotate(balance_pay= F('amount_paid') - F('payment_name__amount_due')),
    
     }
    
     return render(request, 'payment/payment_report_table.html', context )
+    
+    
+@login_required
+def summary_payment_report(request):
+    allpayments = PaymentDetail.objects.all()
+    total_pay = PaymentDetail.objects.values('student_detail__student_username', 'student_detail__first_name', 'student_detail__last_name',
+                                            'payment_name__amount_due', 'payment_name__name', 'payment_name__session__name', 'student_detail__current_class__name',
+                                            'payment_name__term', 'discount').annotate(total_payment=Sum('amount_paid')).order_by('student_detail')
+    
+    allpayments_filter = PaymentSummaryFilter(request.GET, queryset=total_pay)
+    
+    allpayments = allpayments_filter.qs
+
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(total_pay, 40)
+    try:
+        total_pay = paginator.page(page)
+    except PageNotAnInteger:
+        total_pay = paginator.page(1)
+    except EmptyPage:
+        total_pay = paginator.page(paginator.num_pages)
+
+
+    context = {
+
+        'total_pay': total_pay,
+        'allpayments':allpayments,
+        'allpayments': PaymentDetail.objects.all(),
+        'allpayments_filter' : allpayments_filter,
+     
+
+   
+    }
+   
+    return render(request, 'payment/summary_report.html', context )
+
 
 
 class PaymentCategoryListView(LoginRequiredMixin, ListView):
@@ -403,3 +444,34 @@ class BankCreateView(LoginRequiredMixin, CreateView):
     # success_url = '/'
     def form_valid(self, form):
         return super().form_valid(form)
+
+# Payment Search 
+
+def student_search_list(request):
+    student = PaymentDetail.objects.all()
+     # PAGINATOR METHOD
+    page = request.GET.get('page', 1)
+    paginator = Paginator(student, 30)
+    try:
+        payment = paginator.page(page)
+    except PageNotAnInteger:
+        payment = paginator.page(1)
+    except EmptyPage:
+        payment = paginator.page(paginator.num_pages)
+
+    return render(request, 'payment/debtors.html', {'payment': payment })
+
+# Define function to search student
+def search(request):
+    results = []
+
+    if request.method == "GET":
+        query = request.GET.get('search')
+
+        if query == '':
+            query = 'None'
+
+        debtor = PaymentDetail.objects.filter(Q(student_detail__last_name__icontains=query) | Q(student_detail__current_class__icontains=query) | Q(installment_level__icontains=query) | Q(balance_pay__icontains=query) | Q(student_detail__first_name__icontains=query))
+
+        
+    return render(request, 'payment/search.html', {'query': query, 'debtor': results})

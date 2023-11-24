@@ -6,7 +6,7 @@ class StudentAttendanceForm(forms.ModelForm):
     
     class Meta:
         model = Attendance
-        fields = ['student_id', 'session', 'term', 'morning_status', 'afternoon_status', 'attendance_date', 'authorized_sign']
+        fields = ['student_id', 'session', 'term', 'attendance_date', 'morning_status', 'afternoon_status', 'authorized_sign']
         widgets = {
             'attendance_date': forms.DateInput(
                 format=('%d/%m/%Y'),

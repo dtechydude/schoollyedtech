@@ -1,0 +1,6 @@
+{% for result in std_results %}
+<a class="text-black" href="{% url 'results:result_detail' result.pk %}">{{ result.student_detail}}</a> - {{result.subject_1}} - {{result.score_1ca}} - 
+{{result.subject_2}} - {{result.score_2ca}}
+{{result.subject_3}} - {{result.score_3ca}}
+{{result.subject_4}} - {{result.score_4ca}}<br>
+{% endfor %}
