@@ -10,78 +10,96 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Student ID CARD</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+          html, body {
+            width: 210mm;
+            height: 297mm;
+        }
+        /* ... the rest of the rules ... */
+        }
+    </style>
   </head>
   <body>
 
     <div class="container">
-      <div class="col-sm-12" style="padding-top:10px; text-align:center; width:100%; white-space:nowrap;">
-        <img src="{% static 'pages/school_id_header.png' %} " width="100%" height="auto">
+      <div class="col-sm-12" style="padding:10px; text-align:center; width:100%; white-space:nowrap;">
+        <img src="https://goldencitadelschool.org/portal/static/pages/school_id_header.jpg " width="100%" height="auto">
        </div>
-     
-    <table class="table table" style="white-space:nowrap; width:100%; ">
+    <div class=" col-sm-8" style="margin: 0 auto; text-align:center;">
+        <div class="profile-picture profile-picture-lg bg-gradient bg-warning mb-2">
+          <p class="bg-transparent text-white " scope="row"  style="text-align:center;"><img src="/media/default.jpg" width="100px" height="100px" style="border-radius:10% " ></p>
+          </div>
+
+          <table class="table table-bordered">
       <thead>
         <tr>
-          <td class="bg-info p-3 mb-2 text-white " scope="col" style=" width:100px;" >Student ID: <span style="font-size:20px; text-align:center;"><strong> {{my_idcard.user.username}}</strong></span></td>
-          <td scope="col" style="width:500px;" class="bg-info text-white "> <span>STUDENT DETAIL INFORMATION </span></td>
-         
-         
+          <td colspan="2">STUDENT IDENTIFICATION <br>
+          </td>
+
         </tr>
+
       </thead>
       <tbody>
-        <tr>
-          <div class="profile-picture profile-picture-lg bg-gradient bg-primary mb-4">
-          <td class="bg-transparent text-white " scope="row"  style="text-align:center;"><img src="{{my_idcard.user.studentdetail.user.profile.image.url}}" width="200px" height="200px" style="border-radius:10% " ></td></div>
-          <td  scope="row" style="text-align:left;"><h4>{{my_idcard.user.studentdetail.first_name}} {{my_idcard.user.studentdetail.middle_name}} {{my_idcard.user.studentdetail.last_name}} | Badge: {{my_idcard.user.studentdetail.badge}}</h4><br>
-            <span style="font-size:18px;">Current Class: <span style="color:rgb(0, 183, 255);"><strong>{{my_idcard.user.studentdetail.current_class}}</strong></span></span><br>
-            <span style="color:blue;"><em>Class Group: </em></span><span>{{my_idcard.user.studentdetail.class_group}}</span><br>
-            <span style="color:blue;"><em>Student Type: </em></span><span>{{my_idcard.user.studentdetail.student_type}}</span><br>
-            <span style="color:blue;"><em>Class Teacher: </em></span><span>{{my_idcard.user.studentdetail.class_teacher}}</span></td>
-          
-          
+        <tr col-span="2">
+
+          <td colspan="2" scope="row" style="text-align:center;">
+            <span style="text-transform: uppercase"><strong> IDRIS O OYEWUSI</strong></span><br>
+            <span style=" text-align:left;">Student ID: <strong>2024GCIS659</strong></span><br>
+            <span>Current Class: <span style="color:orange;"><strong><br>10TH GRADE A (SSS 1A)</strong></span></span> |
+            <span style="color:orange;"><span>IVY</span></span><br>
+            <span>Student Type : <span style="color:orange;"> day_student</span></span> <br>
+            <span>Class Teacher : <span style="color:orange;"> - CHINEDU  OLUEBUBE</span></span></td>
+
+
         </tr>
         <tr>
-          <td class="bg-info p-3 mb-2 text-white" scope="row" ">Student Since: {{my_idcard.user.studentdetail.date_admitted}}</td>
-          <td class="bg-info p-1 mb-1 text-white" colspan="">Emergency Contact: <span style="font-size:20px; text-align:center;"><strong>{{my_idcard.user.studentdetail.guardian_phone}}</strong></span></td>
-         
+          <td class=" p-3 mb-2 text-rgb(0, 183, 255)" scope="row" style="font-size:11px;">Student Since: <br>Jan. 8, 2024</td>
+          <td class=" p-3 mb-2 text-rgb(0, 183, 255)"  scope="row" style="font-size:11px;">Emergency Contact: <br><span style="text-align:center;">08065160766</td>
+
           </tr>
-        
+
       </tbody>
     </table>
-    <div style="padding-top:10px; text-align:center;"><h3>---------------------------------------</h3></div>
-   
-    </div>
-    <div class=" col-sm-8" style="margin: 0 auto; text-align:center;">
+    <div style="padding-top:10px; text-align:center; color:#cccccc"><h4>-----BACK-------</h4></div>
+
+    <div  style="margin: 0 auto; text-align:center;">
     <table class="table table-noborder">
       <thead>
         <tr>
-          <th scope="col">Authorized by the School</th>
-          
+          <th>Authorized by the School</th>
+
         </tr>
       </thead>
       <tbody>
         <tr>
-          
+
           <td>
-        <span><p>This Document is a property of -----name----of---my---- Schools If found, 
+        <span><p>This Document is a property of <strong>Golden Citadel Int'l School</strong>. If found,
           please return to the school authority<br> Contact details as stated below;</p>
-            <p>Hon. Abiodun Oni str. Off kuforiji Olubi drive,<br>
-              Adigbe, Abeokuta, Ogun State, Nigeria.<br>
-              Phone: +234 8030000000</p></span>
-                <img src="{% static 'pages/qr_code.png' %}" width="100px" height="100px"></td>
-          
+            <p>1 Aker Road, opposite First Sawaco Filling Station [now IMW fuel station],<br>
+             before Naval Base Pathfinder, RUMUOLUMENI. , Port Harcourt.<br>
+              Phone:+234 7067083278</p></span>
+                <img src="https://goldencitadelschool.org/portal/static/pages/qr_code.png" width="100px" height="100px"></td>
+
         </tr>
-       
+
       </tbody>
     </table>
   </div>
-  <div class="col-sm-10 " style="padding-top:20px; margin: 0 auto;">
-    
-    <img src="{% static 'pages/barcode2.jpg' %}" width="100%" height="60">
+  <div class="col-sm-10 " style="padding-top:20px; margin: 0 auto; text-align:center">
+
+    <img src="https://goldencitadelschool.org/portal/static/pages/barcode2.jpg" width="50%" height="60">
 
     </div>
- 
+
   </div>
-    
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
